@@ -39,23 +39,43 @@ module.exports = {
       })
     }
   },
+  modules: [
+    // Or you can customize
+    ['nuxt-buefy', { css: false, materialDesignIcons: false }],
+  ],
   /*
   ** Customize the progress bar color
   */
-  // loading: { color: 'rgba(0, 0, 0, 0.5)' },
-  loading: '~/components/loading.vue',
+  loading: { color: 'rgba(255, 0, 0, 0.5)' },
+  // loading: '~/components/loading.vue',
   /*
   ** Build configuration
   */
+
+  plugins: [
+    { src: '~/plugins/buefy.js', ssr: true }
+  ],
+  // babel: {
+  //   "plugins": [["import", {
+  //     "libraryName": "iview",
+  //     "libraryDirectory": "src/components"
+  //   }]]
+  // },
+  // vendor: ['axios', 'lodash', 'iview'],
   build: {
     /*
     ** Run ESLint on save
     */
+    postcss: {
+      plugins: {
+        'postcss-custom-properties': false
+      }
+    },
     filenames: {
       vendor: 'v.[hash].js',
       app: 'a.[chunkhash].js'
     },
-    extend (config, { isDev, isClient }) {
+    extend(config, { isDev, isClient }) {
       if (isDev && isClient) {
         config.module.rules.push({
           enforce: 'pre',

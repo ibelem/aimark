@@ -16,13 +16,22 @@
     "ajv": "^6.5.2",
     "axios": "^0.18.0",
     "axios-https-proxy-fix": "^0.17.1",
-    "nuxt": "latest"
+    "buefy": "^0.6.6",
+    "css-loader": "^1.0.0",
+    "iview": "^3.0.0",
+    "node-sass": "^4.9.3",
+    "nuxt": "latest",
+    "nuxt-buefy": "^0.1.0",
+    "sass-loader": "^7.1.0",
+    "vue-style-loader": "^4.1.1"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",
     "eslint": "^4.15.0",
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-loader": "^1.7.1",
-    "eslint-plugin-vue": "^4.0.0"
+    "eslint-plugin-vue": "^4.0.0",
+    "less": "^3.8.1",
+    "less-loader": "^4.1.0"
   }
 }
