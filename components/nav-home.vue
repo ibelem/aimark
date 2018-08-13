@@ -1,66 +1,129 @@
 <template>
   <nav class="navbar">
-  <div class="navbar-brand">
-    <nuxt-link class="navbar-item" to="/">
-        <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
-    </nuxt-link>
-    <div class="navbar-burger burger" data-target="navMenuColorwhite" for="nav-toggle-state">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-  </div>
-
-  <div id="navMenuColorwhite" class="navbar-menu">
-    <div class="navbar-start">
-    </div>
-    <div class="navbar-end">
-       <nuxt-link class="navbar-item" to="benchmark">
-        Benchmark
+    <div class="navbar-brand">
+      <nuxt-link class="navbar-item" to="/">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 224 56" width="168" height="42">
+          <defs><clipPath id="_clipPath_3kp6XmP9DdK05Pm9I8veyngzPjTE0jr3"><rect width="224" height="56"/></clipPath></defs>
+          <g clip-path="url(#_clipPath_3kp6XmP9DdK05Pm9I8veyngzPjTE0jr3)"><rect x="167.75" y="5.5" width="40" height="21" transform="matrix(1,0,0,1,0,0)" fill="rgb(0,0,0)" fill-opacity="0.5"/>
+            <g transform="matrix(0.25,0,0,0.25,-1,-3)"><text id="l1" transform="matrix(1,0,0,1,0,180)" style="font-size:200px;fill:#FFFFFF;stroke:none;">a</text></g>
+            <g transform="matrix(0.25,0,0,0.25,23.00,-3)"><text id="l2" transform="matrix(1,0,0,1,0,180)" style="font-size:200px;fill:#FFFFFF;stroke:none;">i</text></g>
+            <g transform="matrix(0.25,0,0,0.25,32.00,-3)"><text id="l3" transform="matrix(1,0,0,1,0,180)" style="font-size:200px;fill:#FFFFFF;stroke:none;">m</text></g>
+            <g transform="matrix(0.25,0,0,0.25,74.25,-3)"><text id="l4" transform="matrix(1,0,0,1,0,180)" style="font-size:200px;fill:#FFFFFF;stroke:none;">a</text></g>
+            <g transform="matrix(0.25,0,0,0.25,99,-3)"><text id="l5" transform="matrix(1,0,0,1,0,180)" style="font-size:200px;fill:#FFFFFF;stroke:none;">r</text></g>
+            <g transform="matrix(0.25,0,0,0.25,115,-3)"><text id="l6" transform="matrix(1,0,0,1,0,180)" style="font-size:200px;fill:#FFFFFF;stroke:none;">k</text></g>
+            <g transform="matrix(0.25,0,0,0.25,142.25,5.5)"><text class="l7" transform="matrix(1,0,0,1,0,64.8)" style="font-size:72px;fill:#FFFFFF;stroke:none;">for</text></g>
+            <g transform="matrix(0.25,0,0,0.25,170.5,5.25)"><text class="l7" transform="matrix(1,0,0,1,0,64.8)" style="font-size:72px;fill:#FFFFFF;stroke:none;">w</text></g>
+            <g transform="matrix(0.25,0,0,0.25,184.25,5.25)"><text class="l7" transform="matrix(1,0,0,1,0,64.8)" style="font-size:72px;fill:#FFFFFF;stroke:none;">e</text></g>
+            <g transform="matrix(0.25,0,0,0.25,194.75,5.25)"><text class="l7" transform="matrix(1,0,0,1,0,64.8)" style="font-size:72px;fill:#FFFFFF;stroke:none;">b</text></g>
+          </g>
+        </svg>
       </nuxt-link>
-      <div class="navbar-item has-dropdown is-hoverable">
-        <nuxt-link class="navbar-link" to="ranking">
+      <div class="navbar-burger burger" data-target="navMenuColorwhite" for="nav-toggle-state">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  
+    <div id="navMenuColorwhite" class="navbar-menu">
+      <div class="navbar-start">
+      </div>
+      <div class="navbar-end">
+        <nuxt-link class="navbar-item" to="benchmark">
+          Benchmark
+        </nuxt-link>
+        <nuxt-link class="navbar-item" to="ranking">
           Ranking
         </nuxt-link>
-        <div class="navbar-dropdown is-boxed is-right">
-          <nuxt-link class="navbar-item" to="overview">
-            Overview
-          </nuxt-link>
-          <hr class="navbar-divider">
-          <nuxt-link class="navbar-item" to="platforms">
-            Platforms
-          </nuxt-link>
-        </div>
+        <nuxt-link class="navbar-item" to="tests">
+          Tests
+        </nuxt-link>
+        <nuxt-link class="navbar-item" to="faq">
+          FAQ
+        </nuxt-link>
+        <nuxt-link class="navbar-item" to="about">
+          About
+        </nuxt-link>
       </div>
-      <nuxt-link class="navbar-item" to="tests">
-        Tests
-      </nuxt-link>
-      <nuxt-link class="navbar-item" to="faq">
-        FAQ
-      </nuxt-link>
-      <nuxt-link class="navbar-item" to="about">
-        About
-      </nuxt-link>
     </div>
-  </div>
   </nav>
 </template>
 
 <script>
-    export default {
-        name: 'nav-home',
-        mounted() {
-            let navbar = document.querySelector('.navbar-burger');
-            navbar.addEventListener('click', function () {
-                let target = navbar.dataset.target;
-                let $target = document.getElementById(target);
-                navbar.classList.toggle('is-active');
-                $target.classList.toggle('is-active');
-
-            });
-        }
+  export default {
+    name: "nav-home",
+    mounted() {
+      let navbar = document.querySelector(".navbar-burger");
+      navbar.addEventListener("click", function() {
+        let target = navbar.dataset.target;
+        let $target = document.getElementById(target);
+        navbar.classList.toggle("is-active");
+        $target.classList.toggle("is-active");
+      });
     }
+  };
 </script>
 
 <style scoped>
+  svg {
+    font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-weight: 200;
+    font-style: normal;
+  }
+  
+  svg text {
+    stroke-dasharray: 100% 0;
+  }
+  
+  svg #l1 {
+    animation: stroke-offset 0.25s ease-out;
+  }
+  
+  svg #l2 {
+    animation: stroke-offset 0.25s ease-out;
+  }
+  
+  svg #l3 {
+    animation: stroke-offset 0.65s ease-out;
+  }
+  
+  svg #l4 {
+    animation: stroke-offset 0.85s ease-out;
+  }
+  
+  svg #l5 {
+    animation: stroke-offset 0.95s ease-out;
+  }
+  
+  svg #l6 {
+    animation: stroke-offset 1.0s ease-out;
+  }
+  
+  svg .l7 {
+    animation: stroke-offset 2.0s ease-in;
+  }
+  
+  svg rect {
+    animation: stroke-offset 2.0s ease-in;
+  }
+  
+  @keyframes stroke-offset {
+    0% {
+      fill-opacity: 0;
+      stroke-width: 0;
+      stroke-dasharray: 0% 100%;
+    }
+    25% {
+      stroke-width: 3px;
+    }
+    50% {
+      fill-opacity: 0;
+    }
+    75% {
+      stroke-width: 3px;
+    }
+    100% {
+      stroke-width: 0;
+    }
+  }
 </style>

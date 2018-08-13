@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-  <nav-common/>
+    <nav-common/>
     <div>
-      About  
+      About
       <h2 class="subtitle">
         Nuxt.js project
       </h2>
@@ -10,26 +10,28 @@
       <br><br>
       <nuxt-link to='/'>Go to Home</nuxt-link>
     </div>
+    <footer-common/>
   </div>
 </template>
 
 <script>
-import NavCommon from "~/components/nav-common.vue";
-
-export default {
-  components: {
-    NavCommon
-  },
-  asyncData() {
-    return new Promise(resolve => {
-      setTimeout(function() {
-        resolve({});
-      }, 1000);
-    });
-  }
-};
+  import NavCommon from "~/components/nav-common.vue";
+  import FooterCommon from "~/components/footer-common.vue";
+  
+  export default {
+    components: {
+      NavCommon, FooterCommon
+    },
+    asyncData() {
+      return new Promise(resolve => {
+        setTimeout(function() {
+          resolve({});
+        }, 1000);
+      });
+    }
+  };
 </script>
 
 <style scoped>
-
+  
 </style>
