@@ -11,7 +11,11 @@ module.exports = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    ],
+    script: [
+      // { src: 'https://bulma.io/lib/navbar.js' }
+      // { src: 'https://use.fontawesome.com/releases/v5.1.0/js/all.js' , defer: false },
+    ],
   },
   /*
   css: [
@@ -41,7 +45,7 @@ module.exports = {
   },
   modules: [
     // Or you can customize
-    ['nuxt-buefy', { css: false, materialDesignIcons: false }],
+    ['nuxt-buefy', { css: false, materialDesignIcons: true }],
   ],
   /*
   ** Customize the progress bar color

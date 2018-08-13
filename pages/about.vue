@@ -1,5 +1,6 @@
 <template>
-  <section class="container">
+  <div class="container">
+  <nav-common/>
     <div>
       About  
       <h2 class="subtitle">
@@ -9,15 +10,16 @@
       <br><br>
       <nuxt-link to='/'>Go to Home</nuxt-link>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
+import NavCommon from "~/components/nav-common.vue";
+
 export default {
-  // transition: {
-  //   name: "test",
-  //   mode: "out-in"
-  // },
+  components: {
+    NavCommon
+  },
   asyncData() {
     return new Promise(resolve => {
       setTimeout(function() {
@@ -29,9 +31,5 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  font-size: 20px;
-  text-align: center;
-  padding-top: 100px;
-}
+
 </style>

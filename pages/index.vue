@@ -1,43 +1,9 @@
 <template>
 <div>
-<section class="hero is-primary is-medium">
+<section class="hero is-primary is-fullheight">
   <!-- Hero head: will stick at the top -->
   <div class="hero-head">
-    <nav class="navbar">
-      <div class="container">
-        <div class="navbar-brand">
-          <a class="navbar-item">
-            <img src="https://bulma.io/images/bulma-type-white.png" alt="Logo">
-          </a>
-          <span class="navbar-burger burger" data-target="navbarMenuHeroA">
-            <span></span>
-            <span></span>
-            <span></span>
-          </span>
-        </div>
-        <div id="navbarMenuHeroA" class="navbar-menu">
-          <div class="navbar-end">
-            <a class="navbar-item is-active">
-              Home
-            </a>
-            <a class="navbar-item">
-              Examples
-            </a>
-            <a class="navbar-item">
-              Documentation
-            </a>
-            <span class="navbar-item">
-              <a class="button is-primary is-inverted">
-                <span class="icon">
-                  <i class="fab fa-github"></i>
-                </span>
-                <span>Download</span>
-              </a>
-            </span>
-          </div>
-        </div>
-      </div>
-    </nav>
+    <nav-home/>
   </div>
 
   <!-- Hero content: will be in the middle -->
@@ -50,22 +16,6 @@
         Subtitle
       </h2>
     </div>
-  </div>
-
-  <!-- Hero footer: will stick at the bottom -->
-  <div class="hero-foot">
-    <nav class="tabs">
-      <div class="container">
-        <ul>
-          <li class="is-active"><a>Overview</a></li>
-          <li><a>Modifiers</a></li>
-          <li><a>Grid</a></li>
-          <li><a>Elements</a></li>
-          <li><a>Components</a></li>
-          <li><a>Layout</a></li>
-        </ul>
-      </div>
-    </nav>
   </div>
 </section>
 
@@ -85,6 +35,12 @@
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
             <b-loading :is-full-page="isFullPage" :active.sync="isLoading" :can-cancel="true"></b-loading>
         </b-notification>
+            <b-field label="Select a date">
+        <b-datepicker
+            placeholder="Click to select..."
+            icon="calendar-today">
+        </b-datepicker>
+    </b-field>
     </section>
   </div>
   <footer class="footer">
@@ -101,7 +57,12 @@
 </template>
 
 <script>
+import NavHome from "~/components/nav-home.vue";
+
 export default {
+  components: {
+    NavHome
+  },
   data() {
     return {
       isLoading: false,
