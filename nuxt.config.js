@@ -10,7 +10,7 @@ module.exports = {
       { hid: 'description', name: 'description', content: 'Web AI Benchmark' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }
     ],
     script: [
       // { src: 'https://bulma.io/lib/navbar.js' }
@@ -50,7 +50,7 @@ module.exports = {
   /*
   ** Customize the progress bar color
   */
-  loading: { color: 'rgba(255, 0, 0, 0.5)' },
+  loading: { color: 'rgba(98, 58, 25, 1.0)', height: '1px' },
   // loading: '~/components/loading.vue',
   /*
   ** Build configuration

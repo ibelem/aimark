@@ -3,20 +3,21 @@
     <div class="navbar-brand">
       <nuxt-link class="navbar-item" to="/">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 224 56" width="168" height="42">
-          <defs><clipPath id="_clipPath_NaafQerNX9oYqPYPML1NpC0noDNNJjZs"><rect width="224" height="56"/></clipPath></defs>
-          <g clip-path="url(#_clipPath_NaafQerNX9oYqPYPML1NpC0noDNNJjZs)"><rect x="167.75" y="5.5" width="40" height="21" transform="matrix(1,0,0,1,0,0)" fill="rgb(0,0,0)" fill-opacity="0.5"/>
-            <g transform="matrix(0.25,0,0,0.25,-1,-3)"><text id="l1" transform="matrix(1,0,0,1,0,180)" style="font-size:200px;fill:rgba(193, 143, 58, 1.0);stroke:none;">a</text></g>
-            <g transform="matrix(0.25,0,0,0.25,23.00,-3)"><text id="l2" transform="matrix(1,0,0,1,0,180)" style="font-size:200px;fill:rgba(193, 143, 58, 1.0);stroke:none;">i</text></g>
-            <g transform="matrix(0.25,0,0,0.25,32.00,-3)"><text id="l3" transform="matrix(1,0,0,1,0,180)" style="font-size:200px;fill:rgba(193, 143, 58, 1.0);stroke:none;">m</text></g>
-            <g transform="matrix(0.25,0,0,0.25,74.25,-3)"><text id="l4" transform="matrix(1,0,0,1,0,180)" style="font-size:200px;fill:rgba(193, 143, 58, 1.0);stroke:none;">a</text></g>
-            <g transform="matrix(0.25,0,0,0.25,99,-3)"><text id="l5" transform="matrix(1,0,0,1,0,180)" style="font-size:200px;fill:rgba(193, 143, 58, 1.0);stroke:none;">r</text></g>
-            <g transform="matrix(0.25,0,0,0.25,115,-3)"><text id="l6" transform="matrix(1,0,0,1,0,180)" style="font-size:200px;fill:rgba(193, 143, 58, 1.0);stroke:none;">k</text></g>
-            <g transform="matrix(0.25,0,0,0.25,142.25,5.5)"><text class="l7" transform="matrix(1,0,0,1,0,64.8)" style="font-size:72px;fill:rgba(193, 143, 58, 1.0);stroke:none;">for</text></g>
-            <g transform="matrix(0.25,0,0,0.25,170.5,5.25)"><text class="l7" transform="matrix(1,0,0,1,0,64.8)" style="font-size:72px;fill:#FFFFFF;stroke:none;">w</text></g>
-            <g transform="matrix(0.25,0,0,0.25,184.25,5.25)"><text class="l7" transform="matrix(1,0,0,1,0,64.8)" style="font-size:72px;fill:#FFFFFF;stroke:none;">e</text></g>
-            <g transform="matrix(0.25,0,0,0.25,194.75,5.25)"><text class="l7" transform="matrix(1,0,0,1,0,64.8)" style="font-size:72px;fill:#FFFFFF;stroke:none;">b</text></g>
-          </g>
-        </svg>
+              <defs><clipPath id="_clipPath_NaafQerNX9oYqPYPML1NpC0noDNNJjZs"><rect width="224" height="56"/></clipPath></defs>
+              <g clip-path="url(#_clipPath_NaafQerNX9oYqPYPML1NpC0noDNNJjZs)">
+                <rect x="172.75" y="5.5" width="40" height="21" transform="matrix(1,0,0,1,0,0)" fill="rgb(98, 58, 25)" fill-opacity="0.9"/>
+                <g transform="matrix(0.25,0,0,0.25,4,-3)"><text id="l1" transform="matrix(1,0,0,1,0,180)" style="font-size:200px;fill:rgba(98, 58, 25, 1.0);stroke:none;">a</text></g>
+                <g transform="matrix(0.25,0,0,0.25,28.00,-3)"><text id="l2" transform="matrix(1,0,0,1,0,180)" style="font-size:200px;fill:rgba(98, 58, 25, 1.0);stroke:none;">i</text></g>
+                <g transform="matrix(0.25,0,0,0.25,37.00,-3)"><text id="l3" transform="matrix(1,0,0,1,0,180)" style="font-size:200px;fill:rgba(98, 58, 25, 1.0);stroke:none;">m</text></g>
+                <g transform="matrix(0.25,0,0,0.25,79.25,-3)"><text id="l4" transform="matrix(1,0,0,1,0,180)" style="font-size:200px;fill:rgba(98, 58, 25, 1.0);stroke:none;">a</text></g>
+                <g transform="matrix(0.25,0,0,0.25,104,-3)"><text id="l5" transform="matrix(1,0,0,1,0,180)" style="font-size:200px;fill:rgba(98, 58, 25, 1.0);stroke:none;">r</text></g>
+                <g transform="matrix(0.25,0,0,0.25,120,-3)"><text id="l6" transform="matrix(1,0,0,1,0,180)" style="font-size:200px;fill:rgba(98, 58, 25, 1.0);stroke:none;">k</text></g>
+                <g transform="matrix(0.25,0,0,0.25,147.25,5.5)"><text class="l7" transform="matrix(1,0,0,1,0,64.8)" style="font-size:72px;fill:rgba(98, 58, 25, 1.0);stroke:none;">for</text></g>
+                <g transform="matrix(0.25,0,0,0.25,175.5,5.25)"><text class="l7" transform="matrix(1,0,0,1,0,64.8)" style="font-size:72px;fill:#FFFFFF;stroke:none;">w</text></g>
+                <g transform="matrix(0.25,0,0,0.25,189.25,5.25)"><text class="l7" transform="matrix(1,0,0,1,0,64.8)" style="font-size:72px;fill:#FFFFFF;stroke:none;">e</text></g>
+                <g transform="matrix(0.25,0,0,0.25,199.75,5.25)"><text class="l7" transform="matrix(1,0,0,1,0,64.8)" style="font-size:72px;fill:#FFFFFF;stroke:none;">b</text></g>
+              </g>
+            </svg>
       </nuxt-link>
       <div class="navbar-burger burger" data-target="navMenuColorwhite" for="nav-toggle-state">
         <span></span>
@@ -26,8 +27,6 @@
     </div>
   
     <div id="navMenuColorwhite" class="navbar-menu">
-      <div class="navbar-start">
-      </div>
       <div class="navbar-end">
         <nuxt-link class="navbar-item" to="benchmark">
           Benchmark
@@ -35,8 +34,8 @@
         <nuxt-link class="navbar-item" to="ranking">
           Ranking
         </nuxt-link>
-        <nuxt-link class="navbar-item" to="tests">
-          Tests
+        <nuxt-link class="navbar-item" to="test">
+          Test
         </nuxt-link>
         <nuxt-link class="navbar-item" to="faq">
           FAQ
@@ -71,7 +70,7 @@
     font-weight: 200;
     font-style: normal;
   }
-
+  
   svg text {
     stroke-dasharray: 100% 0;
   }

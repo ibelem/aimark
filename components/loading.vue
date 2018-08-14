@@ -32,7 +32,7 @@ export default {
   padding-top: 200px;
   font-size: 30px;
   font-family: sans-serif;
-  color: red;
+  color: rgba(98, 58, 25, 1.0);
   z-index: 1000;
 }
 </style>

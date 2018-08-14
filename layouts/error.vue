@@ -1,29 +1,46 @@
 <template>
-  <div class="container">
-    <h1 v-if="error.statusCode === 404">Page not found</h1>
-    <h1 v-else>An error occured</h1>
-    <nuxt-link to="/">Home page</nuxt-link>
+  <div>
+    <section class="hero">
+      <div class="container">
+        <nav-common/>
+        <div class="er">
+          <h1 v-if="error.statusCode === 404">Oops, page not found</h1>
+          <h1 v-else>An error occured</h1>
+        </div>
+      </div>
+    </section>
+    <div class="container">
+      <footer-common/>
+    </div>
   </div>
 </template>
 
 <script>
-export default {
-  props: {
-    error: {
-      type: Object,
-      default: null
+  import NavCommon from "~/components/nav-common.vue";
+  import FooterCommon from "~/components/footer-common.vue";
+  
+  export default {
+    components: {
+      NavCommon,
+      FooterCommon
+    },
+    props: {
+      error: {
+        type: Object,
+        default: null
+      }
     }
-  }
-}
+  };
 </script>
 
 <style scoped>
-.container {
-  font-family: sans-serif;
-  padding-top: 10%;
-  text-align: center;
-}
-h1 {
-  font-size: 20px;
-}
+  .er {
+    margin: 4rem auto;
+    text-align: center;
+    font-size: 1.0rem;
+    font-weight: 200;
+  }
+  .er h1 {
+    font-weight: 200;
+  }
 </style>

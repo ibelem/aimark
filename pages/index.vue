@@ -6,13 +6,21 @@
       </div>
   
       <div class="hero-body">
-        <div class="container has-text-centered">
-          <h1 class="title">
-            Title
-          </h1>
-          <h2 class="subtitle">
-            Subtitle
-          </h2>
+        <div class="container has-text-left">
+          <div class="entrance">
+            <h2 class="featured">
+              Featured
+            </h2>
+            <h1 class="title">
+              WebML Benchmark
+            </h1>
+            <h2 class="subtitle">
+              The WebML Benchmark consists of multiple AI tasks performed by separate neural networks on your pc or smartphone.
+            </h2>
+            <nuxt-link to="benchmark" class="button is-primary">
+                  Run Benchmark Now
+            </nuxt-link>
+          </div>
         </div>
       </div>
     </section>
@@ -23,8 +31,8 @@
         <section>
           <b-field>
             <button class="button is-primary is-medium" @click="openLoading">
-                  Launch loading
-              </button>
+                    Launch loading
+                </button>
           </b-field>
           <b-field>
             <b-switch v-model="isFullPage">Display loader over full page</b-switch>
@@ -50,7 +58,8 @@
   
   export default {
     components: {
-      NavHome, FooterCommon
+      NavHome,
+      FooterCommon
     },
     data() {
       return {
@@ -73,7 +82,48 @@
   .hero {
     background-image: url("../assets/img/home-hero.jpg");
     background-attachment: fixed;
+    background-size: cover;
+    background-position: center center;
     transition: opacity .35s ease-in-out;
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.3);
+  }
+
+  .hero.is-primary, .button.is-primary {
+    background-color: rgba(98, 58, 25, 0.6);
+  }
+
+  .button.is-primary:hover {
+    background-color: rgba(98, 58, 25, 1.0);
+  }
+  
+  .entrance {
+    max-width: 400px;
+    text-align: left;
+    padding: 1.5rem;
+  }
+
+  .featured {
+    font-size: 1.0rem;
+    display: inline-block;
+    font-variant-caps: all-petite-caps;
+    border-bottom: rgba(98, 58, 25, 0.8) 2px solid;
+    margin-bottom: 1rem;
+  }
+
+  .entrance:hover {
+    background-color: rgba(98, 58, 25, 0.2);
+  }
+  
+  .title {
+    font-weight: 200;
+  }
+  
+  .subtitle {
+    font-weight: 300;
+    font-size: 0.9rem;
+  }
+  .button {
+    font-weight: 200;
   }
 </style>
 
