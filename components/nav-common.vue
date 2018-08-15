@@ -28,19 +28,19 @@
   
     <div id="navMenuColorwhite" class="navbar-menu">
       <div class="navbar-end">
-        <nuxt-link class="navbar-item" to="benchmark">
+        <nuxt-link class="navbar-item" to="../benchmark">
           Benchmark
         </nuxt-link>
-        <nuxt-link class="navbar-item" to="ranking">
+        <nuxt-link class="navbar-item" to="../ranking">
           Ranking
         </nuxt-link>
-        <nuxt-link class="navbar-item" to="test">
+        <nuxt-link class="navbar-item" to="../test">
           Test
         </nuxt-link>
-        <nuxt-link class="navbar-item" to="faq">
+        <nuxt-link class="navbar-item" to="../faq">
           FAQ
         </nuxt-link>
-        <nuxt-link class="navbar-item" to="about">
+        <nuxt-link class="navbar-item" to="../about">
           About
         </nuxt-link>
       </div>

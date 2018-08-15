@@ -1,15 +1,11 @@
 <template>
   <div class="container">
     <nav-common/>
-    <div>
-      About
-      <h2 class="subtitle">
-        Nuxt.js project
-      </h2>
-      <button class="button--grey" @click="$store.commit('increment')">{{ $store.state.counter }}</button>
+    <section class="section">
+      About Page
       <br><br>
-      <nuxt-link to='/'>Go to Home</nuxt-link>
-    </div>
+      <button class="button is-primary" @click="$store.commit('increment')">{{ $store.state.counter }}</button>
+    </section>
     <footer-common/>
   </div>
 </template>
