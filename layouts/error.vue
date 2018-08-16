@@ -2,7 +2,7 @@
   <div>
     <section class="hero">
       <div class="container">
-        <nav-common/>
+        <ai_nav/>
         <div class="er">
           <h1 v-if="error.statusCode === 404">Oops, page not found</h1>
           <h1 v-else>An error occured</h1>
@@ -10,19 +10,19 @@
       </div>
     </section>
     <div class="container">
-      <footer-common/>
+      <ai_footer/>
     </div>
   </div>
 </template>
 
 <script>
-  import NavCommon from "~/components/nav-common.vue";
-  import FooterCommon from "~/components/footer-common.vue";
+  import ai_nav from "~/components/ai_nav.vue";
+  import ai_footer from "~/components/ai_footer.vue";
   
   export default {
     components: {
-      NavCommon,
-      FooterCommon
+      ai_nav,
+      ai_footer
     },
     props: {
       error: {

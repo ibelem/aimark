@@ -1,24 +1,24 @@
 <template>
   <div class="container">
-    <nav-common/>
+    <ai_nav/>
     <section class="section">
       <h2 class="subtitle">
-        The WebML Benchmark consists of multiple AI tasks performed by separate neural networks on your pc or smartphone.
+        The WebML Benchmark consists of multiple AI tasks performed by separate neural networks on your desktop or smartphone.
       </h2>
-      <test-common/>
+      <ai_test/>
     </section>
-    <footer-common/>
+    <ai_footer/>
   </div>
 </template>
 
 <script>
-  import NavCommon from "~/components/nav-common.vue";
-  import FooterCommon from "~/components/footer-common.vue";
-  import TestCommon from "~/components/test-common.vue";
+  import ai_nav from "~/components/ai_nav.vue";
+  import ai_footer from "~/components/ai_footer.vue";
+  import ai_test from "~/components/ai_test.vue";
 
   export default {
     components: {
-      NavCommon, FooterCommon, TestCommon
+      ai_nav, ai_footer, ai_test
     },
     asyncData() {
       return new Promise(resolve => {

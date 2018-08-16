@@ -2,7 +2,7 @@
   <div>
     <section class="hero is-primary is-fullheight">
       <div class="hero-head container">
-        <nav-home/>
+        <ai_nav_home/>
       </div>
   
       <div class="hero-body">
@@ -47,19 +47,19 @@
           </b-field>
         </section>
       </div>
-      <footer-common/>
+      <ai_footer/>
     </div>
   </div>
 </template>
 
 <script>
-  import NavHome from "~/components/nav-home.vue";
-  import FooterCommon from "~/components/footer-common.vue";
+  import ai_nav_home from "~/components/ai_nav-home.vue";
+  import ai_footer from "~/components/ai_footer.vue";
   
   export default {
     components: {
-      NavHome,
-      FooterCommon
+      ai_nav_home,
+      ai_footer
     },
     data() {
       return {

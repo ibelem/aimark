@@ -51,7 +51,7 @@
 
 <script>
   export default {
-    name: "nav-home",
+    name: "ai_nav-home",
     mounted() {
       let navbar = document.querySelector(".navbar-burger");
       navbar.addEventListener("click", function() {

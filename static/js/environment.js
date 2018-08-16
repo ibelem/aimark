@@ -1,3 +1,7 @@
+/*
+    Min Zhang belem@163.com
+*/
+
 let uaparser = new UAParser();
 let uaresult = uaparser.getResult();
 let canvas, gl, glVender, glRenderer, debugInfo;

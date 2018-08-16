@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <run-common/>
+    <ai_run/>
   </div>
 </template>
 

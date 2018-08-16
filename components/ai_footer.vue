@@ -1,7 +1,7 @@
 <template>
   <footer class="footer">
     <div class="content has-text-centered">
-      <environment-common/>
+      <Environment/>
       <br>
       <p>
         &copy;2018 <strong>AIMark</strong> - <a href='https://github.com/intel/webml-polyfill'>WebML Polyfill Project</a> / <nuxt-link to="/">WebML Team</nuxt-link>
@@ -11,11 +11,11 @@
 </template>
 
 <script>
-  import EnvironmentCommon from "~/components/environment-common.vue";
+  import Environment from "~/components/ai_environment.vue";
   
   export default {
     components: {
-      EnvironmentCommon,
+      Environment,
     }
   };
 </script>

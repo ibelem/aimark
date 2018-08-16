@@ -1,22 +1,22 @@
 <template>
   <div class="container">
-    <nav-common/>
+    <ai_nav/>
     <section class="section">
       About Page
       <br><br>
       <button class="button is-primary" @click="$store.commit('increment')">{{ $store.state.counter }}</button>
     </section>
-    <footer-common/>
+    <ai_footer/>
   </div>
 </template>
 
 <script>
-  import NavCommon from "~/components/nav-common.vue";
-  import FooterCommon from "~/components/footer-common.vue";
+  import ai_nav from "~/components/ai_nav.vue";
+  import ai_footer from "~/components/ai_footer.vue";
   
   export default {
     components: {
-      NavCommon, FooterCommon
+      ai_nav, ai_footer
     },
     asyncData() {
       return new Promise(resolve => {
