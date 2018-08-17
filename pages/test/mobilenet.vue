@@ -9,16 +9,12 @@
   
     <div class="columns section">
       <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd">
-        <div class="card">
-          <div class="card-image">
-            <canvas></canvas>
-            <!-- <div v-for="u in task.test_images.url" :key="u.id"> -->
-            <!-- <img id='image' v-if="u" :src="u" alt="Test Image"> -->
-              <figure class="image">
-                <img id='image' :src="task.test_images.url[0]" alt="Test Image">
-              </figure>
-            <!-- </div> -->
-          </div>
+        <div class="card is448">
+          <canvas class="image"></canvas>
+          <!-- <div v-for="u in task.test_images.url" :key="u.id"> -->
+          <!-- <img id='image' v-if="u" :src="u" alt="Test Image"> -->
+          <img id='image' :src="task.test_images.url[0]" alt="Test Image">
+          <!-- </div> -->
         </div>
       </div>
       <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd">
@@ -35,8 +31,8 @@
   
     <progress class="progress is-info" :value="progress.value" :max="progress.max">{{ progress_text }}</progress>
     <button class="button is-primary" @click="run">
-            Run Testing
-          </button>
+                Run Testing
+              </button>
   
     <ai_footer/>
   </div>
@@ -88,8 +84,26 @@
       }]
     },
     methods: {
-      run: function(){
-        run_mobilenet();
+      run: function() {
+        // for (let i of this.task.backend) {
+        //   let configuration = {
+        //     framework: "webml-polyfill.js",
+        //     backend: i,
+        //     modelName: "mobilenet",
+        //     iteration: 3
+        //   };
+        //   console.log(i)
+        //   run_mobilenet(configuration);
+        let configuration = {
+            framework: this.task.framework,
+            modelName: this.task.model.toLowerCase(),
+            backend: this.task.backend[0],
+            iteration: this.task.iteration,
+            modelFile: this.task.modelFile,
+            labelFile: this.task.labelFile,
+            testImage: this.task.test_images.url[0]
+          };
+        run_mobilenet(configuration);
       }
     },
     computed: {
@@ -105,13 +119,16 @@
         },
         task: {
           "id": 1,
-          "page": 'mobilenet',
+          "model": 'MobileNet',
+          "backend": ['WASM', 'WebGL2', 'WebML'],
+          "iteration": 3,
+          "framework": "webml-polyfill.js",
+          "modelFile": 'https://belem.oss-cn-shanghai.aliyuncs.com/ai/model/mobilenet/zip/mobilenet_v1_1.0_224.tflite',
+          "labelFile": 'https://belem.oss-cn-shanghai.aliyuncs.com/ai/model/mobilenet/zip/labels.txt',
           "name": 'Image Classification (MobileNet)',
           "description": 'An efficient Convolutional Neural Networks for Mobile Vision Applications. Loading MobileNet model trained by ImageNet in TensorFlow Lite format, constructs and inferences it by WebML API.',
-          "nn": 'MobileNet',
-          "nn_version": 'v1.0_224',
+          "model_version": 'v1.0_224',
           "accuracy": '70.9%',
-          "backend": 'WASM, WebGL2, WebML',
           "model_size": '16.9Mb',
           "paper_url": 'https://arxiv.org/pdf/1704.04861.pdf',
           "model_new_url": 'http://download.tensorflow.org/models/mobilenet_v1_2018_02_22/mobilenet_v1_1.0_224.tgz',
@@ -137,8 +154,15 @@
 </script>
 
 <style scoped>
-  img {
+  img,
+  .is448 {
     width: 448px;
     height: 448px;
+  }
+  
+  .image {
+    width: 448px;
+    height: 448px;
+    display: none;
   }
 </style>

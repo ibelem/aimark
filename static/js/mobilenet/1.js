@@ -1,15 +1,5 @@
 'use strict';
-const MODEL_DIC = {
-  mobilenet: {
-    inputTensorSize: 224 * 224 * 3,
-    outputTensorSize: 1001,
-    modelFile: 'https://belem.oss-cn-shanghai.aliyuncs.com/ai/model/mobilenet/zip/mobilenet_v1_1.0_224.tflite',
-    labelFile: 'https://belem.oss-cn-shanghai.aliyuncs.com/ai/model/mobilenet/zip/labels.txt'
-  }
-}
-let imageElement = null;
-let inputElement = null;
-let pickBtnEelement = null;
+
 class Logger {
   constructor() {
     this.indent = 0;
@@ -102,9 +92,9 @@ class WebMLJSBenchmark extends Benchmark {
     this.labels = null;
   }
   async loadModelAndLabels() {
-    let arrayBuffer = await this.loadUrl(MODEL_DIC[this.configuration.modelName].modelFile, true);
+    let arrayBuffer = await this.loadUrl(this.configuration.modelFile, true);
     let bytes = new Uint8Array(arrayBuffer);
-    let text = await this.loadUrl(MODEL_DIC[this.configuration.modelName].labelFile);
+    let text = await this.loadUrl(this.configuration.labelFile);
     return {
       bytes: bytes,
       text: text
@@ -134,18 +124,17 @@ class WebMLJSBenchmark extends Benchmark {
     const height = 224;
     const channels = 3;
     const imageChannels = 4; // RGBA
-    this.inputTensor = new Float32Array(MODEL_DIC[this.configuration.modelName].inputTensorSize);
-    this.outputTensor = new Float32Array(MODEL_DIC[this.configuration.modelName].outputTensorSize);
+    this.inputTensor = new Float32Array(224 * 224 * 3);
+    this.outputTensor = new Float32Array(1001);
     let canvasElement = document.querySelector('canvas');
     let canvasContext = canvasElement.getContext('2d');
     let imageElement = document.querySelector('img');
-    imageElement.src = '../img/mobilenet/pineapple.jpg';
+    imageElement.src = this.configuration.testImage;
     canvasContext.drawImage(imageElement, 0, 0, width, height);
     let pixels = canvasContext.getImageData(0, 0, width, height).data;
     if (this.configuration.modelName === 'mobilenet') {
       const meanMN = 127.5;
       const stdMN = 127.5;
-      // NHWC layout
       for (let y = 0; y < height; ++y) {
         for (let x = 0; x < width; ++x) {
           for (let c = 0; c < channels; ++c) {
@@ -203,13 +192,13 @@ const BenchmarkClass = {
   'webml-polyfill.js': WebMLJSBenchmark,
   'Web ML API': WebMLJSBenchmark
 };
-async function run_mobilenet() {
+
+async function run_mobilenet(configuration) {
   let logger = new Logger(document.querySelector('#log'));
   logger.group('Benchmark');
   try {
-    let configuration = {framework: "webml-polyfill.js", backend: "WASM", modelName: "mobilenet", iteration: 0};
-    configuration.modelName = 'mobilenet';
-    configuration.iteration = 4;
+    // let configuration = {framework: "webml-polyfill.js", backend: "WASM", modelName: "mobilenet", iteration: 4};
+
     logger.group('Environment Information');
     logger.log(`${'UserAgent'.padStart(12)}: ${(navigator.userAgent) || '(N/A)'}`);
     logger.log(`${'Platform'.padStart(12)}: ${(navigator.platform || '(N/A)')}`);
@@ -229,7 +218,7 @@ async function run_mobilenet() {
     let summary = await benchmark.runAsync(configuration);
     logger.groupEnd();
     logger.group('Result');
-    logger.log(`Elapsed Time: <em style="color:green;font-weight:bolder;">${summary.mean.toFixed(2)}+-${summary.std.toFixed(2)}</em> [ms]`);
+    logger.log(`Elapsed Time: ${summary.mean.toFixed(2)}+-${summary.std.toFixed(2)} [ms]`);
     logger.groupEnd();
   } catch (err) {
     logger.error(err);

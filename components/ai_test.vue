@@ -35,7 +35,7 @@
           <footer class="card-footer">
             <a class="card-footer-item" :href="task.paper_url">Paper</a>
             <a class="card-footer-item" :href="task.model_url">Model</a>
-            <nuxt-link class='card-footer-item' :to="{ name: 'test-id', params: { id: task.id } }">More</nuxt-link>
+            <nuxt-link class='card-footer-item' :to="'../test/'+ task.page">More</nuxt-link>
           </footer>
           <footer class="card-footer">
             <!-- <nuxt-link class='card-footer-item button is-primary-gradient' :to="{ name: 'test-id', params: { id: task.id } }">Run Test</nuxt-link> -->
