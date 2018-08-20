@@ -1,7 +1,8 @@
 <template>
   <footer class="footer">
+    <ai_connection/>
     <div class="content has-text-centered">
-      <Environment/>
+      <ai_environment/>
       <br>
       <p>
         &copy;2018 <strong>AIMark</strong> - <a href='https://github.com/intel/webml-polyfill'>WebML Polyfill Project</a> / <nuxt-link to="/">WebML Team</nuxt-link>
@@ -11,11 +12,12 @@
 </template>
 
 <script>
-  import Environment from "~/components/ai_environment.vue";
+  import ai_environment from "~/components/ai_environment.vue";
+  import ai_connection from "~/components/ai_connection.vue"
   
   export default {
     components: {
-      Environment,
+      ai_environment, ai_connection
     }
   };
 </script>

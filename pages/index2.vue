@@ -60,7 +60,7 @@ export default {
     }
   },
   async asyncData() {
-    const proxy = { host: 'child-prc.intel.com', port: 913 }
+    const proxy = { host: 'child-prc', port: 913 }
     const { data } = await axios.get('https://jsonplaceholder.typicode.com/users', {proxy})
     return { users: data, name: "belem" }
   }

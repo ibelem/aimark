@@ -20,6 +20,24 @@ class Logger {
     this.indent--;
   }
 }
+
+
+var finallog = '';
+
+class LoggerHTML {
+  constructor() {
+  }
+  add(message) {
+    finallog = finallog + message + '<br>';
+  }
+  fill() {
+    // let ele = document.querySelector('#log');
+    // ele.innerHTML = finallog;
+    // ele.scrollTop =ele.scrollHeight; 
+  }
+}
+
+let lh = new LoggerHTML();
 class Benchmark {
   constructor() {
     this.summary = null;
@@ -92,9 +110,9 @@ class WebMLJSBenchmark extends Benchmark {
     this.labels = null;
   }
   async loadModelAndLabels() {
-    let arrayBuffer = await this.loadUrl(this.configuration.modelFile, true);
+    let arrayBuffer = await this.loadUrl(this.configuration.model, true);
     let bytes = new Uint8Array(arrayBuffer);
-    let text = await this.loadUrl(this.configuration.labelFile);
+    let text = await this.loadUrl(this.configuration.label);
     return {
       bytes: bytes,
       text: text
@@ -129,7 +147,7 @@ class WebMLJSBenchmark extends Benchmark {
     let canvasElement = document.querySelector('canvas');
     let canvasContext = canvasElement.getContext('2d');
     let imageElement = document.querySelector('img');
-    imageElement.src = this.configuration.testImage;
+    imageElement.src = this.configuration.test;
     canvasContext.drawImage(imageElement, 0, 0, width, height);
     let pixels = canvasContext.getImageData(0, 0, width, height).data;
     if (this.configuration.modelName === 'mobilenet') {
@@ -176,11 +194,13 @@ class WebMLJSBenchmark extends Benchmark {
       let prob = sorted[i][0];
       let index = sorted[i][1];
       console.log(`label: ${this.labels[index]}, probability: ${(prob * 100).toFixed(2)}%`);
+      lh.add(`&nbsp;&nbsp;&nbsp;&nbsp; <i class="mdi mdi-check mdi-6px"></i> label: ${this.labels[index]}, probability: ${(prob * 100).toFixed(2)}%`);
     }
   }
   async executeSingleAsync() {
     let result = await this.model.compute(this.inputTensor, this.outputTensor);
     console.log(`compute result: ${result}`);
+    lh.add(`&nbsp;&nbsp;&nbsp;&nbsp; <i class="mdi mdi-check mdi-6px"></i> compute result: ${result}`)
     this.printPredictResult();
   }
   async finalizeAsync() {
@@ -194,8 +214,9 @@ const BenchmarkClass = {
 };
 
 async function run_mobilenet(configuration) {
-  let logger = new Logger(document.querySelector('#log'));
+  let logger = new Logger();
   logger.group('Benchmark');
+
   try {
     // let configuration = {framework: "webml-polyfill.js", backend: "WASM", modelName: "mobilenet", iteration: 4};
 
@@ -203,26 +224,45 @@ async function run_mobilenet(configuration) {
     logger.log(`${'UserAgent'.padStart(12)}: ${(navigator.userAgent) || '(N/A)'}`);
     logger.log(`${'Platform'.padStart(12)}: ${(navigator.platform || '(N/A)')}`);
     logger.groupEnd();
+
     logger.group('Configuration');
+    lh.add('<i class="mdi mdi-coffee-outline mdi-12px"></i> Configuration');
     Object.keys(configuration).forEach(key => {
       if (key === 'backend' && configuration[key] === 'native') {
         logger.log(`${key.padStart(12)}: ${getNativeAPI()}`);
+        lh.add(`${key.padStart(12)}: ${getNativeAPI()}`);
       } else {
         logger.log(`${key.padStart(12)}: ${configuration[key]}`);
+        lh.add(`&nbsp;&nbsp; <i class="mdi mdi-bookmark-plus-outline mdi-12px"></i> ${key.padStart(12)}: ${configuration[key]}`);
       }
     });
     logger.groupEnd();
+    lh.add(`<div class='sp'></div>`);
     logger.group('Run');
+    lh.add(`<i class="mdi mdi-coffee-outline mdi-12px"></i> Run`);
+
     let benchmark = new BenchmarkClass['webml-polyfill.js']();
-    benchmark.onExecuteSingle = (i => logger.log(`Iteration: ${i + 1} / ${configuration.iteration}`));
+    benchmark.onExecuteSingle = (i => { 
+      logger.log(`Iteration: ${i + 1} / ${configuration.iteration}`);
+      lh.add(`&nbsp;&nbsp; <i class="mdi mdi-checkbox-blank-circle-outline mdi-12px"></i> Iteration: ${i + 1} / ${configuration.iteration}`)
+    });
     let summary = await benchmark.runAsync(configuration);
     logger.groupEnd();
+    lh.add(`<div class='sp'></div>`);
     logger.group('Result');
-    logger.log(`Elapsed Time: ${summary.mean.toFixed(2)}+-${summary.std.toFixed(2)} [ms]`);
+    lh.add(`<i class="mdi mdi-coffee-outline mdi-12px"></i> Result`);
+
+    logger.log(`[${configuration.modelName} + ${configuration.backend}] Elapsed Time: ${summary.mean.toFixed(2)}+-${summary.std.toFixed(2)} [ms]`);
+    lh.add(`&nbsp;&nbsp; <i class="mdi mdi-checkbox-marked-circle-outline mdi-12px"></i> [${configuration.modelName} + ${configuration.backend}] Elapsed Time: ${summary.mean.toFixed(2)}+-${summary.std.toFixed(2)} [ms]`);
     logger.groupEnd();
+    lh.add(`<hr></hr>`);
   } catch (err) {
     logger.error(err);
+    lh.add(`[${configuration.modelName} + ${configuration.backend}] ` + err);
+    lh.add(`<hr></hr>`);
   }
   logger.groupEnd();
+  lh.fill();
 }
- 
+
+export { finallog, run_mobilenet };

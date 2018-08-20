@@ -18,7 +18,7 @@ import axios from 'axios-https-proxy-fix';
 
 export default {
   asyncData({ req, params }) {
-    const proxy = { host: 'child-prc.intel.com', port: 913 }
+    const proxy = { host: 'child-prc.', port: 913 }
     // We can return a Promise instead of calling the callback
     return axios.get('https://jsonplaceholder.typicode.com/posts', {proxy})
       .then((res) => {
