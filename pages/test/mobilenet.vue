@@ -1,38 +1,53 @@
 <template>
   <div class="container">
     <ai_nav/>
+    <div class="section">
+      <h2 class="has-text-primary">
+        {{ task.name }}
+      </h2>
+      <div class='mb'>{{ task.description }}</div>
   
-    <h2 class="subtitle has-text-primary">
-      {{ task.name }}
-    </h2>
-    <div>{{ task.description }}</div>
-  
-    <div class="columns section">
-      <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd">
-        <div class="card is448">
-          <canvas class="image"></canvas>
-          <!-- <div v-for="u in task.test_images.url" :key="u.id"> -->
-          <!-- <img id='image' v-if="u" :src="u" alt="Test Image"> -->
-          <img id='image' :src="task.test.url[0]" alt="Test Image">
-          <!-- </div> -->
-        </div>
-      </div>
-      <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd">
-        <div class="card-content">
-          <div class="media-content">
-            <p class="subtitle">Image Resolution: {{ task.test.resolution }}</p>
+      <div class="mt ic" v-if="getBackend">
+        <div class=""><span v-if="task.model_version">Model Version: {{ task.model_version }} / </span>Backend: {{ getBackend }} / Test Image: {{ getTestImage.split('/').pop() }}</div>
+        <div class="columns mt">
+          <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
+            <div class="">Loading Model File: {{ progress_loading_text }} </div>
+            <progress class="progress is-info mt" :value="progress_loading.value" :max="progress_loading.max">{{ progress_loading_text }}</progress>
+          </div>
+          <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
+            <div class="">Run Model with Tests: {{ progress_text }} </div>
+            <progress class="progress is-info mt" :value="progress.value" :max="progress.max">{{ progress_text }}</progress>
           </div>
         </div>
-        <div v-html='log' class="card" id='log'>
+      </div>
+  
+      <div class="columns mt">
+        <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
+          <div class="card is ic">
+            <canvas class="image"></canvas>
+            <!-- <div v-for="u in task.test_images.url" :key="u.id"> -->
+            <!-- <img id='image' v-if="u" :src="u" alt="Test Image"> -->
+            <img id='image' :src="task.test.url[0]" alt="Test Image">
+            <!-- </div> -->
+          </div>
+        </div>
+        <div v-show="getBackend" class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd">
+          <div v-html='log' class="card" id='log'>
+          </div>
+          <div class='ir'>
+            <button class="btn button ir is-small" @click="copylog" data-clipboard-target="#log">
+                                    Copy Log
+                                  </button>
+          </div>
         </div>
       </div>
+      <div class='ic mb'>{{ test_result }}</div>
+      <div class='ic mb mt'>
+        <button class="button is-primary" @click="run">
+                                    Run Testing
+                                  </button>
+      </div>
     </div>
-  
-    <progress class="progress is-info" :value="progress.value" :max="progress.max">{{ progress_text }}</progress>
-    <button class="button is-primary" @click="run">
-                  Run Testing
-                </button>
-  
     <ai_footer/>
   </div>
 </template>
@@ -40,14 +55,21 @@
 <script>
   import ai_nav from "~/components/ai_nav.vue";
   import ai_footer from "~/components/ai_footer.vue";
-  import axios from 'axios-https-proxy-fix'; 
-  import { finallog, run_mobilenet } from '~/static/js/mobilenet/1.js'
-
+  import ClipboardJS from 'clipboard';
+  import axios from 'axios-https-proxy-fix';
+  import {
+    finallog,
+    modelprogress,
+    testresult,
+    runMobilenet
+  } from '~/static/js/mobilenet/1.js'
+  
   
   export default {
     components: {
       ai_nav,
-      ai_footer
+      ai_footer,
+      ClipboardJS
     },
     name: "mobilenet",
     head: {
@@ -81,71 +103,107 @@
         href: ''
       }]
     },
-    mounted () {
-      setInterval(this.getLogNow, 100);
+    mounted() {
+      setInterval(this.getLog, 100);
+      setInterval(this.getModelProgress, 100);
+      this.scrollToBottom();
+      this.progress.max = this.task.backend.length * this.task.test.url.length;
+      this.progress_loading.max = 1;
+    },
+    updated: function() {
       this.scrollToBottom();
     },
-    updated:function(){
-      this.scrollToBottom();
-    },
-    destoryed () {
-      clearInterval(this.getLogNow)
+    destoryed() {
+      clearInterval(this.getModelProgress);
+      clearInterval(this.getLog);
     },
     methods: {
-      scrollToBottom: function () {
+      scrollToBottom: function() {
         this.$nextTick(() => {
-	        var container = this.$el.querySelector("#log");
-            container.scrollTop = container.scrollHeight;
+          var container = this.$el.querySelector("#log");
+          container.scrollTop = container.scrollHeight;
         })
       },
+      copylog: function() {
+        const btnCopy = new ClipboardJS('.btn');
+        this.$toast.open({
+          duration: 3000,
+          message: `Log has been copied to clipboard`,
+          position: 'is-bottom'
+        });
+      },
       run: async function() {
-        // for (let i of this.task.backend) {
-        //   let configuration = {
-        //     framework: "webml-polyfill.js",
-        //     backend: i,
-        //     modelName: "mobilenet",
-        //     iteration: 3
-        //   };
-        //   console.log(i)
-        //   run_mobilenet(configuration);
-
-
-        for(let item of this.task.backend) {
-          for(let test of this.task.test.url) {
+        let i = 0;
+        for (let item of this.task.backend) {
+          for (let test of this.task.test.url) {
             let configuration = {
               framework: this.task.framework,
-              modelName: this.task.modelname.toLowerCase(),
+              modelName: this.task.model_name,
+              modelVersion: this.task.model_version,
               backend: item,
               iteration: this.task.iteration,
               model: this.task.model,
               label: this.task.label,
-              test: test
+              test: test,
             };
-            await run_mobilenet(configuration);
+            this.getBackend = configuration.backend;
+            this.getTestImage = configuration.test;
+            await runMobilenet(configuration);
+            this.progress.value = ++i;
           }
         }
 
-        
+        this.test_result = testresult;
+  
+        // await Promise.all(
+        //   this.task.backend.map(async (item) => {
+        //     await Promise.all(
+        //     this.task.test.url.map(async (test) => {
+        //       let configuration = {
+        //         framework: this.task.framework,
+        //         modelName: this.task.modelname.toLowerCase(),
+        //         backend: item,
+        //         iteration: this.task.iteration,
+        //         model: this.task.model,
+        //         label: this.task.label,
+        //         test: test
+        //       };
+        //       await run_mobilenet(configuration);
+        //     }));
+        // }));
       },
-      getLogNow: function() {
+      getLog: function() {
         this.log = finallog;
-      } 
+      },
+      getModelProgress: function() {
+        this.progress_loading.value = modelprogress;
+      }
     },
     computed: {
       progress_text: function() {
-        return this.progress.value + '%';
+        return ((this.progress.value / this.progress.max) * 100).toFixed(2) + '%';
+      },
+      progress_loading_text: function() {
+        return ((this.progress_loading.value / this.progress_loading.max) * 100).toFixed(2) + '%';
       }
     },
     data() {
       return {
         progress: {
-          value: '90',
-          max: '100',
+          value: 0,
+          max: 9,
         },
+        progress_loading: {
+          value: 0,
+          max: 1,
+        },
+        test_result: '',
         log: null,
+        getBackend: '',
+        getTestImage: '',
         task: {
           "id": 1,
-          "modelname": 'MobileNet',
+          "model_name": 'MobileNet',
           "backend": ['WASM', 'WebGL2', 'WebML'],
           "iteration": 3,
           "framework": "webml-polyfill.js",
@@ -159,7 +217,7 @@
           "paper_url": 'https://arxiv.org/pdf/1704.04861.pdf',
           "model_new_url": 'http://download.tensorflow.org/models/mobilenet_v1_2018_02_22/mobilenet_v1_1.0_224.tgz',
           'test': {
-            'resolution': '448 x 448 px',
+            'resolution': '336 x 336 px',
             'url': ['../img/mobilenet/bee_eater.jpg', '../img/mobilenet/pineapple.jpg', '../img/mobilenet/pinwheel.jpg']
           },
           "platform": [
@@ -178,52 +236,87 @@
 </script>
 
 <style scoped>
+  .mt {
+    margin-top: 1rem;
+  }
+  
+  .mb {
+    margin-bottom: 1rem;
+  }
+  
+  .ic {
+    text-align: center;
+    margin: 0 auto;
+  }
+  
+  .ir {
+    text-align: right;
+  }
+  
+  .progress {
+    height: 2px;
+    background-color: red;
+  }
+  
   img,
-  .is448 {
-    width: 448px;
-    height: 448px;
+  .is {
+    width: 336px;
+    height: 336px;
   }
   
   .image {
-    width: 448px;
-    height: 448px;
+    width: 336px;
+    height: 336px;
     display: none;
   }
+  
   #log {
-    max-height: 360px;
+    height: 336px;
+    max-height: 336px;
     overflow-y: scroll;
     overflow-x: hidden;
     padding: 1rem;
   }
-  .sp {
-    height: 0px;
-  }
-
-  hr {
-    border-top: 1px dashed #8c8b8b !important;
-    height: 2px !important;
-    margin: 0px !important;
-  }
-
-  ::-webkit-scrollbar {
-      width: 5px;
-      height: 5px;
+  
+   ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
   }
   
-  ::-webkit-scrollbar-track-piece {
-      background-color: rgba(0, 0, 0, 0.2);
-      -webkit-border-radius: 6px;
+   ::-webkit-scrollbar-track-piece {
+    background-color: rgba(0, 0, 0, 0.2);
+    -webkit-border-radius: 6px;
   }
   
-  ::-webkit-scrollbar-thumb:vertical {
-      height: 5px;
-      background-color: rgba(125, 125, 125, 0.7);
-      -webkit-border-radius: 6px;
+   ::-webkit-scrollbar-thumb:vertical {
+    height: 5px;
+    background-color: rgba(125, 125, 125, 0.7);
+    -webkit-border-radius: 6px;
   }
   
-  ::-webkit-scrollbar-thumb:horizontal {
-      width: 5px;
-      background-color: rgba(125, 125, 125, 0.7);
-      -webkit-border-radius: 6px;
+   ::-webkit-scrollbar-thumb:horizontal {
+    width: 5px;
+    background-color: rgba(125, 125, 125, 0.7);
+    -webkit-border-radius: 6px;
+  }
+  
+  @media (max-width: 768px) {
+    img,
+    .is {
+      width: 224px;
+      height: 224px;
+    }
+    .image {
+      width: 224px;
+      height: 224px;
+      display: none;
+    }
+    #log {
+      height: 112px;
+      max-height: 112px;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      padding: 1rem;
+    }
   }
 </style>

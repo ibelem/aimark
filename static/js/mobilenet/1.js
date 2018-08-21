@@ -22,7 +22,8 @@ class Logger {
 }
 
 
-var finallog = '';
+let finallog = '';
+let modelprogress = 0;
 
 class LoggerHTML {
   constructor() {
@@ -125,6 +126,13 @@ class WebMLJSBenchmark extends Benchmark {
       if (binary) {
         request.responseType = 'arraybuffer';
       }
+      request.addEventListener("progress", function (evt) {
+        if (evt.lengthComputable) {
+            var percentComplete = evt.loaded / evt.total;
+            modelprogress = percentComplete;
+            // $("#progressing").html((percentComplete * 100) + "%");
+        }
+      }, false);
       request.onload = function (ev) {
         if (request.readyState === 4) {
           if (request.status === 200) {
@@ -150,7 +158,7 @@ class WebMLJSBenchmark extends Benchmark {
     imageElement.src = this.configuration.test;
     canvasContext.drawImage(imageElement, 0, 0, width, height);
     let pixels = canvasContext.getImageData(0, 0, width, height).data;
-    if (this.configuration.modelName === 'mobilenet') {
+    if (this.configuration.modelName.toLowerCase() === 'mobilenet') {
       const meanMN = 127.5;
       const stdMN = 127.5;
       for (let y = 0; y < height; ++y) {
@@ -167,7 +175,7 @@ class WebMLJSBenchmark extends Benchmark {
     this.setInputOutput();
     let result = await this.loadModelAndLabels();
     let targetModel;
-    if (this.configuration.modelName === 'mobilenet') {
+    if (this.configuration.modelName.toLowerCase() === 'mobilenet') {
       this.labels = result.text.split('\n');
       let flatBuffer = new flatbuffers.ByteBuffer(result.bytes);
       targetModel = tflite.Model.getRootAsModel(flatBuffer);
@@ -213,7 +221,9 @@ const BenchmarkClass = {
   'Web ML API': WebMLJSBenchmark
 };
 
-async function run_mobilenet(configuration) {
+let testresult = [];
+
+async function runMobilenet(configuration) {
   let logger = new Logger();
   logger.group('Benchmark');
 
@@ -237,7 +247,7 @@ async function run_mobilenet(configuration) {
       }
     });
     logger.groupEnd();
-    lh.add(`<div class='sp'></div>`);
+    lh.add(`<div></div>`);
     logger.group('Run');
     lh.add(`<i class="mdi mdi-coffee-outline mdi-12px"></i> Run`);
 
@@ -248,21 +258,42 @@ async function run_mobilenet(configuration) {
     });
     let summary = await benchmark.runAsync(configuration);
     logger.groupEnd();
-    lh.add(`<div class='sp'></div>`);
+    lh.add(`<div></div>`);
     logger.group('Result');
     lh.add(`<i class="mdi mdi-coffee-outline mdi-12px"></i> Result`);
 
     logger.log(`[${configuration.modelName} + ${configuration.backend}] Elapsed Time: ${summary.mean.toFixed(2)}+-${summary.std.toFixed(2)} [ms]`);
     lh.add(`&nbsp;&nbsp; <i class="mdi mdi-checkbox-marked-circle-outline mdi-12px"></i> [${configuration.modelName} + ${configuration.backend}] Elapsed Time: ${summary.mean.toFixed(2)}+-${summary.std.toFixed(2)} [ms]`);
+    
+    let d = {};
+    d['model'] = configuration.modelName;
+    d['model_version'] = configuration.modelVersion;
+    d['backend'] = configuration.backend;
+    d['test_case'] = configuration.test.split('/').pop();
+    d['test_result'] = summary.mean.toFixed(2);
+    d['test_unit'] = 'ms';
+    testresult.push(d);
+
     logger.groupEnd();
-    lh.add(`<hr></hr>`);
+    lh.add(`<div></div>`);
+    console.log(testresult)
   } catch (err) {
     logger.error(err);
-    lh.add(`[${configuration.modelName} + ${configuration.backend}] ` + err);
-    lh.add(`<hr></hr>`);
+    lh.add(`&nbsp;&nbsp; <i class="mdi mdi-close-circle-outline mdi-12px"></i> [${configuration.modelName} + ${configuration.backend}] ` + err);
+    
+    let d = {};
+    d['model'] = configuration.modelName;
+    d['model_version'] = configuration.modelVersion;
+    d['backend'] = configuration.backend;
+    d['test_case'] = configuration.test.split('/').pop();
+    d['test_result'] = 'N/A';
+    d['test_unit'] = 'ms';
+    testresult.push(d);
+
+    lh.add(`<div></div>`);
   }
   logger.groupEnd();
   lh.fill();
 }
 
-export { finallog, run_mobilenet };
+export { finallog, modelprogress, runMobilenet, testresult};

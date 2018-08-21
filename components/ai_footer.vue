@@ -5,7 +5,7 @@
       <ai_environment/>
       <br>
       <p>
-        &copy;2018 <strong>AIMark</strong> - <a href='https://github.com/intel/webml-polyfill'>WebML Polyfill Project</a> / <nuxt-link to="/">WebML Team</nuxt-link>
+        &copy;2018 <strong>AIMark</strong> <a href='https://github.com/intel/webml-polyfill'>WebML Polyfill Project</a> / <nuxt-link to="/">WebML Team</nuxt-link>
       </p>
     </div>
   </footer>
@@ -23,4 +23,7 @@
 </script>
 
 <style scoped>
+  strong {
+    margin-right: 0.5rem;
+  }
 </style>
