@@ -222,6 +222,11 @@ const BenchmarkClass = {
 };
 
 let testresult = [];
+let bardata = [];
+
+let bar1 = [];
+let bar2 = [];
+let bar3 = [];
 
 async function runMobilenet(configuration) {
   let logger = new Logger();
@@ -277,6 +282,19 @@ async function runMobilenet(configuration) {
     logger.groupEnd();
     lh.add(`<div></div>`);
     console.log(testresult)
+
+    switch(d['backend'].toLowerCase()){
+      case 'wasm':
+        bar1.push(d['test_result']);
+        break;
+      case 'webgl2':
+        bar2.push(d['test_result']);
+        break;
+      case 'webml':
+        bar3.push(d['test_result']);
+        break;
+    }
+
   } catch (err) {
     logger.error(err);
     lh.add(`&nbsp;&nbsp; <i class="mdi mdi-close-circle-outline mdi-12px"></i> [${configuration.modelName} + ${configuration.backend}] ` + err);
@@ -291,9 +309,44 @@ async function runMobilenet(configuration) {
     testresult.push(d);
 
     lh.add(`<div></div>`);
+
+    switch(d['backend'].toLowerCase()){
+      case 'wasm':
+        bar1.push(0);
+        break;
+      case 'webgl2':
+        bar2.push(0);
+        break;
+      case 'webml':
+        bar3.push(0);
+        break;
+    }
+
   }
   logger.groupEnd();
   lh.fill();
 }
 
-export { finallog, modelprogress, runMobilenet, testresult};
+bardata.push(bar1)
+bardata.push(bar2)
+bardata.push(bar3)
+
+export { finallog, modelprogress, runMobilenet, testresult, bardata };
+
+
+// labels: ['bee_eater.jpg', 'pineapple.jpg', 'pinwheel.jpg'],
+// datasets: [{
+//   label: 'WASM',
+//   backgroundColor: '#7bd9a5',
+//   data: [40, 39, 10]
+// },
+// {
+//   label: 'WebGL',
+//   backgroundColor: '#22c3aa',
+//   data: [10, 9, 80]
+// },
+// {
+//   label: 'WebML',
+//   backgroundColor: '#4ea397',
+//   data: [10, 9, 80]
+// }]

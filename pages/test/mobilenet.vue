@@ -2,7 +2,7 @@
   <div class="container">
     <ai_nav/>
     <div class="section">
-      <h2 class="has-text-primary">
+      <h2 class="has-text-primary is-size-5-desktop is-size-6-mobile is-size-5-tablet">
         {{ task.name }}
       </h2>
       <div class='mb'>{{ task.description }}</div>
@@ -36,16 +36,22 @@
           </div>
           <div class='ir'>
             <button class="btn button ir is-small" @click="copylog" data-clipboard-target="#log">
-                                    Copy Log
-                                  </button>
+                                      Copy Log
+                                    </button>showBar
           </div>
         </div>
       </div>
-      <div class='ic mb'>{{ test_result }}</div>
+      <div class='ic mb is-small' v-if='test_result'>{{ test_result }}<br>Will send the data to web server via HTTP.</div>
+      <div class='ic mb mt'>
+        <div class="bar-chart mb mt">
+          <h2 v-if='showBar' class="is-size-5-desktop is-size-6-mobile is-size-5-tablet">{{ task.name }} Benchmark</h2>
+          <bar-chart v-if="showBar" :data="barData" :options="options"></bar-chart>
+        </div>
+      </div>
       <div class='ic mb mt'>
         <button class="button is-primary" @click="run">
-                                    Run Testing
-                                  </button>
+                                      Run Testing
+                                    </button>
       </div>
     </div>
     <ai_footer/>
@@ -61,6 +67,7 @@
     finallog,
     modelprogress,
     testresult,
+    bardata,
     runMobilenet
   } from '~/static/js/mobilenet/1.js'
   
@@ -152,8 +159,13 @@
             this.progress.value = ++i;
           }
         }
-
+  
         this.test_result = testresult;
+        this.showBar = true;
+
+        this.barData.datasets[0].data = bardata[0]
+        this.barData.datasets[1].data = bardata[1]
+        this.barData.datasets[2].data = bardata[2]
   
         // await Promise.all(
         //   this.task.backend.map(async (item) => {
@@ -189,6 +201,29 @@
     },
     data() {
       return {
+        showBar: false,
+        barData: {
+          labels: ['bee_eater.jpg', 'pineapple.jpg', 'pinwheel.jpg'],
+          datasets: [{
+            label: 'WASM',
+            backgroundColor: '#7bd9a5',
+            data: [0, 0, 0]
+          },
+          {
+            label: 'WebGL2',
+            backgroundColor: '#22c3aa',
+            data: [0, 0, 0]
+          },
+          {
+            label: 'WebML',
+            backgroundColor: '#4ea397',
+            data: [0, 0, 0]
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false
+        },
         progress: {
           value: 0,
           max: 9,
