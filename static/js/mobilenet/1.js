@@ -24,6 +24,7 @@ class Logger {
 
 let finallog = '';
 let modelprogress = 0;
+let probability = null;
 
 class LoggerHTML {
   constructor() {
@@ -203,6 +204,9 @@ class WebMLJSBenchmark extends Benchmark {
       let index = sorted[i][1];
       console.log(`label: ${this.labels[index]}, probability: ${(prob * 100).toFixed(2)}%`);
       lh.add(`&nbsp;&nbsp;&nbsp;&nbsp; <i class="mdi mdi-check mdi-6px"></i> label: ${this.labels[index]}, probability: ${(prob * 100).toFixed(2)}%`);
+      if(i == 0) {
+        probability = `${this.labels[index]}, ${(prob * 100).toFixed(2)}%`;
+      }
     }
   }
   async executeSingleAsync() {
@@ -276,6 +280,7 @@ async function runMobilenet(configuration) {
     d['backend'] = configuration.backend;
     d['test_case'] = configuration.test.split('/').pop();
     d['test_result'] = summary.mean.toFixed(2);
+    d['probability'] = probability;
     d['test_unit'] = 'ms';
     testresult.push(d);
 
@@ -305,6 +310,7 @@ async function runMobilenet(configuration) {
     d['backend'] = configuration.backend;
     d['test_case'] = configuration.test.split('/').pop();
     d['test_result'] = 'N/A';
+    d['probability'] = 'N/A';
     d['test_unit'] = 'ms';
     testresult.push(d);
 

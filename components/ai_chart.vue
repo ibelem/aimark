@@ -1,7 +1,5 @@
 <template>
-  <div class="bar-chart">
-    <bar-chart v-if="showBar" :data="barData" :options="options" />
-  </div>
+  <ve-histogram v-if='showBar' :data="chartData" :settings="chartSettings"></ve-histogram>
 </template>
 
 <script>
@@ -9,32 +7,24 @@
     mounted() {
       this.showBar = true
     },
-    data() {
+    data () {
+      this.chartSettings = {
+        yAxisType: ['KMB', 'percent'],
+        yAxisName: ['ms', ''],
+        showLine: ['Probability']
+      }
       return {
         showBar: false,
-        barData: {
-          labels: ['bee_eater.jpg', 'pineapple.jpg', 'pinwheel.jpg'],
-          datasets: [{
-            label: 'WASM',
-            backgroundColor: '#7bd9a5',
-            data: [40, 39, 10]
-          },
-          {
-            label: 'WebGL',
-            backgroundColor: '#22c3aa',
-            data: [10, 9, 80]
-          },
-          {
-            label: 'WebML',
-            backgroundColor: '#4ea397',
-            data: [10, 9, 80]
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false
+        chartData: {
+          columns: ['Image', 'WASM', 'WebGL2', 'WebML'],
+          rows: [
+            { 'Image': 'bee', 'WASM': 1393, 'WebGL2': 1093, 'WebML': 93 },
+            { 'Image': 'net', 'WASM': 3530, 'WebGL2': 3230, 'WebML': 103  },
+            { 'Image': 'chess', 'WASM': 2923, 'WebGL2': 2623, 'WebML': 193 }
+          ]
         }
       }
     }
   }
+</script>
 </script>

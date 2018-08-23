@@ -36,56 +36,58 @@
           </div>
           <div class='ir'>
             <button class="btn button ir is-small" @click="copylog" data-clipboard-target="#log">
-                                                  Copy Log
-                                                </button>
+                                          Copy Log
+                                        </button>
           </div>
         </div>
       </div>
-  
-  <div>{{ test_result }}</div>
+    
       <h2 v-if='showBar' class="is-size-5-desktop is-size-6-mobile is-size-5-tablet ic mt">{{ task.name }} Benchmark</h2>
       <div class='columns mb' v-if='showBar'>
   
         <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
           <div class="mb mt">
   
-            <b-table :data="test_result" :bordered="false" :striped="true" :narrowed="false" :hoverable="true" :loading="false" :focusable="true" :mobile-cards="true">
+            <b-table :data="test_result" :bordered="false" :striped="true" 
+            :narrowed="false" :hoverable="true" :loading="false" 
+            :focusable="true" :mobile-cards="true">
   
               <template slot-scope="props">
-                          <b-table-column field="backend" label="Backend">
-                              {{ props.row.backend }}
-                          </b-table-column>
-          
-                          <b-table-column field="test_image" label="Test Image">
-                              {{ props.row.test_case }}
-                          </b-table-column>
-        
-                          <b-table-column field="best_probability" label="Best Probability">
-                              {{ props.row.probability }}
-                          </b-table-column>
-        
-                          <b-table-column field="test_result" label="Test Result">
-                              {{ props.row.test_result }} ms
-                          </b-table-column>
-          
-                          <!-- <b-table-column field="date" label="Date" centered>
-                              <span class="tag is-success">
-                                  xxx
-                              </span>
-                          </b-table-column> -->
-</template>
+                  <b-table-column field="backend" label="Backend">
+                      {{ props.row.backend }}
+                  </b-table-column>
+  
+                  <b-table-column field="test_image" label="Test Image">
+                      {{ props.row.test_case }}
+                  </b-table-column>
 
-<template slot="empty">
-  <section class="section">
-    <div class="content has-text-grey has-text-centered">
-      <p>
-        <b-icon icon="emoticon-sad" size="is-large">
-        </b-icon>
-      </p>
-      <p>Nothing here.</p>
-    </div>
-  </section>
-</template>
+                  <b-table-column field="best_probability" label="Best Probability">
+                      {{ props.row.probability }}
+                  </b-table-column>
+
+                  <b-table-column field="test_result" label="Test Result">
+                      {{ props.row.test_result }} ms
+                  </b-table-column>
+  
+                  <!-- <b-table-column field="date" label="Date" centered>
+                      <span class="tag is-success">
+                          xxx
+                      </span>
+                  </b-table-column> -->
+
+              </template>
+
+              <template slot="empty">
+                <section class="section">
+                  <div class="content has-text-grey has-text-centered">
+                    <p>
+                      <b-icon icon="emoticon-sad" size="is-large">
+                      </b-icon>
+                    </p>
+                    <p>Nothing here.</p>
+                  </div>
+                </section>
+              </template>
             </b-table>
  
  
@@ -93,7 +95,7 @@
         </div>
         <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
           <div class="bar-chart mb mt">
-            <ve-histogram v-if='showBar' :data="barData" :settings="chartSettings" class='cmh'></ve-histogram>
+            <bar-chart v-if="showBar" :data="barData" :options="options" class='cmh'></bar-chart>
           </div>
         </div>
   
@@ -175,16 +177,6 @@
       clearInterval(this.getLog);
     },
     methods: {
-      uniqueList: function(array) {
-        var r = [];
-        for (var i = 0, l = array.length; i < l; i++) {
-          for (var j = i + 1; j < l; j++)
-            //关键在这里
-            if (JSON.stringify(array[i]) == JSON.stringify(array[j])) j = ++i;
-          r.push(array[i]);
-        }
-        return r;
-      },
       scrollToBottom: function() {
         this.$nextTick(() => {
           var container = this.$el.querySelector("#log");
@@ -222,50 +214,10 @@
   
         this.test_result = testresult;
         this.showBar = true;
-
-        this.barData.rows = [];
-        let t = {};
-        t['Test'] = 0;
-        t['WASM'] = 0;
-        t['WebGL2'] = 0;
-        t['WebML'] = 0;
-        
-        this.task.test.url.map((url) => {
-          for (let item of testresult) {
-
-            // { "backend": "WASM", "test_case": "bee_eater.jpg", "test_result": "430.70", "probability": "bee eater, 100.00%", "test_unit": "ms" }, 
-            // { "backend": "WebGL2", "test_case": "bee_eater.jpg", "test_result": "118.80", "probability": "bee eater, 100.00%", "test_unit": "ms" },
-            // { "backend": "WebML", "test_case": "bee_eater.jpg", "test_result": "N/A", "probability": "N/A", "test_unit": "ms" }, 
-            if (item.test_case == url.split('/').pop()) {
-              if (item.backend.toLowerCase() == 'wasm') {
-                t['WASM'] = item.test_result;
-              } else if (item.backend.toLowerCase() == 'webgl2') {
-                t['WebGL2'] = item.test_result;
-              } else if (item.backend.toLowerCase() == 'webml') {
-                t['WebML'] = item.test_result;
-              }  
-              console.log('**************' + item.test_case)
-              t['Test'] == item.test_case;
-            }
-          }
-
-          console.log(t)
-          
-          this.barData.rows.push(t);
-          t = {};
-        })
   
-        // this.barData.rows = this.uniqueList(this.barData.rows)
-        console.log(this.barData.rows)
-  
-  
-        // {
-        //       'Test Image': 'bee_eater.jpg',
-        //       'WASM': 0,
-        //       'WebGL2': 0,
-        //       'WebML': 0
-        //     }
-  
+        this.barData.datasets[0].data = bardata[0]
+        this.barData.datasets[1].data = bardata[1]
+        this.barData.datasets[2].data = bardata[2]
   
         // await Promise.all(
         //   this.task.backend.map(async (item) => {
@@ -302,32 +254,28 @@
     data() {
       return {
         showBar: false,
-        chartSettings: {
-          yAxisType: ['KMB', 'percent'],
-          yAxisName: ['ms', ''],
-          showLine: ['Probability']
-        },
         barData: {
-          columns: ['Test', 'WASM', 'WebGL2', 'WebML'],
-          rows: [{
-              'Test': 'bee_eater.jpg',
-              'WASM': 0,
-              'WebGL2': 0,
-              'WebML': 0
+          labels: ['bee_eater.jpg', 'pineapple.jpg', 'pinwheel.jpg'],
+          datasets: [{
+              label: 'WASM Polyfill',
+              backgroundColor: '#7bd9a5',
+              data: [0, 0, 0]
             },
             {
-              'Test': 'pineapple.jpg',
-              'WASM': 0,
-              'WebGL2': 0,
-              'WebML': 0
+              label: 'WebGL2 Polyfill',
+              backgroundColor: '#22c3aa',
+              data: [0, 0, 0]
             },
             {
-              'Test': 'pinwheel.jpg',
-              'WASM': 0,
-              'WebGL2': 0,
-              'WebML': 0
+              label: 'WebML',
+              backgroundColor: '#ff3866',
+              data: [0, 0, 0]
             }
           ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false
         },
         progress: {
           value: 0,
@@ -417,9 +365,8 @@
     overflow-x: hidden;
     padding: 1rem;
   }
-  
-  .cmh,
-  .cmh canvas {
+
+  .cmh, .cmh canvas {
     max-height: 200px !important;
   }
   

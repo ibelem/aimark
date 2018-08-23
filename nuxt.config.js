@@ -58,7 +58,8 @@ module.exports = {
 
   plugins: [
     { src: '~/plugins/buefy.js', ssr: true },
-    { src: '~/plugins/vue-chartjs.js', ssr: false }
+    { src: '~/plugins/vue-chartjs.js', ssr: false },
+    { src: '~/plugins/elm-chart.js', ssr: false },
   ],
   // babel: {
   //   "plugins": [["import", {
