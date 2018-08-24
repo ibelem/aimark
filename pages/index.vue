@@ -89,11 +89,11 @@
   }
 
   .hero.is-primary, .button.is-primary {
-    background-color: rgba(98, 58, 25, 0.6);
+    background-color: rgba(222, 12, 101, 0.8);
   }
 
   .button.is-primary:hover {
-    background-color: rgba(98, 58, 25, 1.0);
+    background-color: rgba(222, 12, 101, 1.0);
   }
   
   .entrance {
@@ -106,12 +106,12 @@
     font-size: 1.0rem;
     display: inline-block;
     font-variant-caps: all-petite-caps;
-    border-bottom: rgba(98, 58, 25, 0.8) 2px solid;
+    border-bottom: rgba(222, 12, 101, 0.8) 2px solid;
     margin-bottom: 1rem;
   }
 
   .entrance:hover {
-    background-color: rgba(98, 58, 25, 0.2);
+    background-color: rgba(222, 12, 101, 0.2);
   }
   
   .title {

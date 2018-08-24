@@ -4,7 +4,7 @@
       <nuxt-link class="navbar-item" to="/">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 224 56" width="168" height="42">
           <defs><clipPath id="_clipPath_3kp6XmP9DdK05Pm9I8veyngzPjTE0jr3"><rect width="224" height="56"/></clipPath></defs>
-          <g clip-path="url(#_clipPath_3kp6XmP9DdK05Pm9I8veyngzPjTE0jr3)"><rect x="172.75" y="5.5" width="40" height="21" transform="matrix(1,0,0,1,0,0)" fill="rgb(98,58,25)" fill-opacity="0.9"/>
+          <g clip-path="url(#_clipPath_3kp6XmP9DdK05Pm9I8veyngzPjTE0jr3)"><rect x="172.75" y="5.5" width="40" height="21" transform="matrix(1,0,0,1,0,0)" fill="rgba(222, 12, 101, 1.0)" fill-opacity="0.9"/>
             <g transform="matrix(0.25,0,0,0.25,4,-3)"><text id="l1" transform="matrix(1,0,0,1,0,180)" style="font-size:200px;fill:#FFFFFF;stroke:none;">a</text></g>
             <g transform="matrix(0.25,0,0,0.25,27.00,-3)"><text id="l2" transform="matrix(1,0,0,1,0,180)" style="font-size:200px;fill:#FFFFFF;stroke:none;">i</text></g>
             <g transform="matrix(0.25,0,0,0.25,35.00,-3)"><text id="l3" transform="matrix(1,0,0,1,0,180)" style="font-size:200px;fill:#FFFFFF;stroke:none;">m</text></g>

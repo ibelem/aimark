@@ -131,7 +131,6 @@ class WebMLJSBenchmark extends Benchmark {
         if (evt.lengthComputable) {
             var percentComplete = evt.loaded / evt.total;
             modelprogress = percentComplete;
-            // $("#progressing").html((percentComplete * 100) + "%");
         }
       }, false);
       request.onload = function (ev) {
@@ -152,11 +151,15 @@ class WebMLJSBenchmark extends Benchmark {
     const channels = 3;
     const imageChannels = 4; // RGBA
     this.inputTensor = new Float32Array(224 * 224 * 3);
-    this.outputTensor = new Float32Array(1001);
+    let outputTensorSize = 1001
+    if (this.configuration.modelName.toLowerCase() === 'squeezenet') {
+      outputTensorSize = 1000
+    }
+    this.outputTensor = new Float32Array(outputTensorSize);
     let canvasElement = document.querySelector('canvas');
     let canvasContext = canvasElement.getContext('2d');
-    let imageElement = document.querySelector('img');
-    imageElement.src = this.configuration.test;
+    let imageElement = document.querySelector('#testimage');
+    imageElement.src = this.configuration.image;
     canvasContext.drawImage(imageElement, 0, 0, width, height);
     let pixels = canvasContext.getImageData(0, 0, width, height).data;
     if (this.configuration.modelName.toLowerCase() === 'mobilenet') {
@@ -169,8 +172,21 @@ class WebMLJSBenchmark extends Benchmark {
             this.inputTensor[y * width * channels + x * channels + c] = (value - meanMN) / stdMN;
           }
         }
+      } 
+    } else if (this.configuration.modelName.toLowerCase() === 'squeezenet') {
+      // The RGB mean values are from
+      // https://github.com/caffe2/AICamera/blob/master/app/src/main/cpp/native-lib.cpp#L108
+      const meanSN = [122.67891434, 116.66876762, 104.00698793];
+      // NHWC layout
+      for (let y = 0; y < height; ++y) {
+        for (let x = 0; x < width; ++x) {
+          for (let c = 0; c < channels; ++c) {
+            let value = pixels[y * width * imageChannels + x * imageChannels + c];
+            this.inputTensor[y * width * channels + x * channels + c] = value - meanSN[c];
+          }
+        }
       }
-    } 
+    }
   }
   async setupAsync() {
     this.setInputOutput();
@@ -185,10 +201,23 @@ class WebMLJSBenchmark extends Benchmark {
       } else {
         this.model = new MobileNet(targetModel);
       }
-    } 
+    } else if (this.configuration.modelName.toLowerCase() === 'squeezenet') {
+      this.labels = JSON.parse(result.text);
+      let err = onnx.ModelProto.verify(result.bytes);
+      if (err) {
+        throw new Error(`Invalid model ${err}`);
+      }
+      targetModel = onnx.ModelProto.decode(result.bytes);
+      if (this.configuration.backend !== 'native') {
+        this.model = new SqueezeNet(targetModel, this.configuration.backend);
+      } else {
+        this.model = new SqueezeNet(targetModel);
+      }
+    }
     await this.model.createCompiledModel();
   }
   printPredictResult() {
+    probability = null;
     let probs = Array.from(this.outputTensor);
     let indexes = probs.map((prob, index) => [prob, index]);
     let sorted = indexes.sort((a, b) => {
@@ -202,21 +231,25 @@ class WebMLJSBenchmark extends Benchmark {
     for (let i = 0; i < 3; ++i) {
       let prob = sorted[i][0];
       let index = sorted[i][1];
-      console.log(`label: ${this.labels[index]}, probability: ${(prob * 100).toFixed(2)}%`);
       lh.add(`&nbsp;&nbsp;&nbsp;&nbsp; <i class="mdi mdi-check mdi-6px"></i> label: ${this.labels[index]}, probability: ${(prob * 100).toFixed(2)}%`);
+      console.log(index + ' >> ' + this.labels[index])
       if(i == 0) {
         probability = `${this.labels[index]}, ${(prob * 100).toFixed(2)}%`;
+        console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>' + index + ' >> ' + this.labels[index])
       }
     }
   }
   async executeSingleAsync() {
     let result = await this.model.compute(this.inputTensor, this.outputTensor);
-    console.log(`compute result: ${result}`);
     lh.add(`&nbsp;&nbsp;&nbsp;&nbsp; <i class="mdi mdi-check mdi-6px"></i> compute result: ${result}`)
     this.printPredictResult();
   }
   async finalizeAsync() {
     this.model = null;
+    this.inputTensor = null;
+    this.outputTensor = null;
+    this.model = null;
+    this.labels = null;
   }
 }
 
@@ -260,7 +293,7 @@ async function runMobilenet(configuration) {
     logger.group('Run');
     lh.add(`<i class="mdi mdi-coffee-outline mdi-12px"></i> Run`);
 
-    let benchmark = new BenchmarkClass['webml-polyfill.js']();
+    let benchmark = new BenchmarkClass[configuration.framework]();
     benchmark.onExecuteSingle = (i => { 
       logger.log(`Iteration: ${i + 1} / ${configuration.iteration}`);
       lh.add(`&nbsp;&nbsp; <i class="mdi mdi-checkbox-blank-circle-outline mdi-12px"></i> Iteration: ${i + 1} / ${configuration.iteration}`)
@@ -278,7 +311,7 @@ async function runMobilenet(configuration) {
     d['model'] = configuration.modelName;
     d['model_version'] = configuration.modelVersion;
     d['backend'] = configuration.backend;
-    d['test_case'] = configuration.test.split('/').pop();
+    d['test_case'] = configuration.image.split('/').pop();
     d['test_result'] = summary.mean.toFixed(2);
     d['probability'] = probability;
     d['test_unit'] = 'ms';
@@ -286,7 +319,6 @@ async function runMobilenet(configuration) {
 
     logger.groupEnd();
     lh.add(`<div></div>`);
-    console.log(testresult)
 
     switch(d['backend'].toLowerCase()){
       case 'wasm':
@@ -308,7 +340,7 @@ async function runMobilenet(configuration) {
     d['model'] = configuration.modelName;
     d['model_version'] = configuration.modelVersion;
     d['backend'] = configuration.backend;
-    d['test_case'] = configuration.test.split('/').pop();
+    d['test_case'] = configuration.image.split('/').pop();
     d['test_result'] = 'N/A';
     d['probability'] = 'N/A';
     d['test_unit'] = 'ms';
@@ -338,21 +370,3 @@ bardata.push(bar2)
 bardata.push(bar3)
 
 export { finallog, modelprogress, runMobilenet, testresult, bardata };
-
-
-// labels: ['bee_eater.jpg', 'pineapple.jpg', 'pinwheel.jpg'],
-// datasets: [{
-//   label: 'WASM',
-//   backgroundColor: '#7bd9a5',
-//   data: [40, 39, 10]
-// },
-// {
-//   label: 'WebGL',
-//   backgroundColor: '#22c3aa',
-//   data: [10, 9, 80]
-// },
-// {
-//   label: 'WebML',
-//   backgroundColor: '#4ea397',
-//   data: [10, 9, 80]
-// }]

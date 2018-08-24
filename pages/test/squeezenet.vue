@@ -150,7 +150,19 @@
           defer: true
         },
         {
-          src: '../js/mobilenet/MobileNet.js',
+          src: '../js/third_party/protobuf.min.js',
+          defer: true
+        },
+        {
+          src: '../js/squeezenet/onnx.js',
+          defer: true
+        },
+        {
+          src: '../js/squeezenet/OnnxModelUtils.js',
+          defer: true
+        },
+        {
+          src: '../js/squeezenet/SqueezeNet.js',
           defer: true
         }
       ],
@@ -315,22 +327,25 @@
         getBackend: '',
         getTestImage: '',
         task: {
-          "id": 1,
-          "model_name": 'MobileNet',
-          "backend": ['WASM', 'WebGL2', 'WebML'],
+          "id": 2,
+          "model_name": 'SqueezeNet',
+          "backend": ['WASM'],
+          // "backend": ['WASM', 'WebGL2', 'WebML'],
           "iteration": 3,
           "framework": "webml-polyfill.js",
-          "model": 'http://aimark.nos-eastchina1.126.net/model/mobilenet/zip/mobilenet_v1_1.0_224.tflite',
-          "label": 'http://aimark.nos-eastchina1.126.net/model/mobilenet/labels.txt',
-          "name": 'Image Classification (MobileNet)',
-          "description": 'An efficient Convolutional Neural Networks for Mobile Vision Applications. Loading MobileNet model trained by ImageNet in TensorFlow Lite format, constructs and inferences it by WebML API.',
-          "model_version": 'v1.0_224',
-          "accuracy": '70.9%',
-          "model_size": '16.9Mb',
-          "paper_url": 'https://arxiv.org/pdf/1704.04861.pdf',
+          "model": 'http://aimark.nos-eastchina1.126.net/model/squeezenet/model.onnx',
+          "label": 'http://aimark.nos-eastchina1.126.net/model/squeezenet/labels.json',
+          "name": 'Image Classification (SqueezeNet)',
+          "description": 'A light-weight CNN providing Alexnet level accuracy with 50X fewer parameters. Loading SqueezeNet model trained by ImageNet in ONNX format, constructs and inferences it by WebML API.',
+          "model_version": 'v1.1',
+          "accuracy": '56.34%',
+          "model_size": '5.0Mb',
+          "paper_url": 'https://arxiv.org/abs/1602.07360',
+          "model_url": 'https://s3.amazonaws.com/download.onnx/models/squeezenet.tar.gz',
           'test': {
             'resolution': '224 x 224 px',
-            'image': ['../img/mobilenet/bee_eater.jpg', '../img/mobilenet/pineapple.jpg', '../img/mobilenet/pinwheel.jpg']
+            'image': ['../img/squeezenet/jeep.jpg', '../img/squeezenet/plane.jpg']
+            // 'image': ['../img/squeezenet/jeep.jpg', '../img/squeezenet/honeycomb.jpg', '../img/squeezenet/plane.jpg']
           },
           "platform": [
             'android',

@@ -18,7 +18,7 @@
               <ul>
                 <li>Neural Network: {{ task.nn }} {{ task.nn_version }}</li>
                 <li>Model Size: {{ task.model_size }}</li>
-                <li>Image Resolution: 480 x 480</li>
+                <li>Image Resolution: 224 x 224</li>
                 <li>Accuracy: {{ task.accuracy }}</li>
                 <li>Backend: {{ task.backend }}</li>
               </ul>
@@ -71,7 +71,7 @@
             'model_url': 'https://belem.oss-cn-shanghai.aliyuncs.com/ai/model/mobilenet/zip/mobilenet_v1_1.0_224.tflite',
             'model_labelurl': 'https://belem.oss-cn-shanghai.aliyuncs.com/ai/model/mobilenet/zip/labels.txt',
             'test_images': {
-              'resolution': '448 x 448 px',
+              'resolution': '224 x 224 px',
               'url': ['https://belem.oss-cn-shanghai.aliyuncs.com/ai/model/mobilenet/bee_eater.jpg', 'https://belem.oss-cn-shanghai.aliyuncs.com/ai/model/mobilenet/pineapple.jpg', 'https://belem.oss-cn-shanghai.aliyuncs.com/ai/model/mobilenet/pinwheel.jpg']
             },
             "platform": [
@@ -150,11 +150,11 @@
   
   .is-primary-gradient {
     color: rgba(255, 255, 255, 1.0);
-    background: linear-gradient(30deg, rgba(165, 112, 63, 0.9), rgba(98, 58, 25, 0.9));
+    background: linear-gradient(30deg, rgba(222, 12, 101, 0.7), rgba(222, 12, 101, 0.9));
     padding: 1.6rem 0 1.6rem 0;
   }
   
   .is-primary-gradient:hover {
-    background: linear-gradient(30deg, rgba(165, 112, 63, 1.0), rgba(98, 58, 25, 1.0));
+    background: linear-gradient(30deg, rgba(222, 12, 101, 0.8), rgba(222, 12, 101, 1.0));
   }
 </style>
