@@ -27,6 +27,7 @@
   
     <div class="container">
       <div class="notification">
+      <!--
         This container is <strong>centered</strong> on desktop.
         <section>
           <b-field>
@@ -46,6 +47,7 @@
             </b-datepicker>
           </b-field>
         </section>
+        -->
       </div>
       <ai_footer/>
     </div>
@@ -111,7 +113,7 @@
   }
 
   .entrance:hover {
-    background-color: rgba(222, 12, 101, 0.2);
+    background-color: rgba(222, 12, 101, 0.1);
   }
   
   .title {

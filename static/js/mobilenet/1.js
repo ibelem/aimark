@@ -108,8 +108,6 @@ class WebMLJSBenchmark extends Benchmark {
     super(...arguments);
     this.inputTensor = null;
     this.outputTensor = null;
-    this.model = null;
-    this.labels = null;
   }
   async loadModelAndLabels() {
     let arrayBuffer = await this.loadUrl(this.configuration.model, true);
@@ -145,13 +143,16 @@ class WebMLJSBenchmark extends Benchmark {
       request.send();
     });
   }
-  setInputOutput() {
+  async setInputOutput() {
     const width = 224;
     const height = 224;
     const channels = 3;
     const imageChannels = 4; // RGBA
     this.inputTensor = new Float32Array(224 * 224 * 3);
     let outputTensorSize = 1001
+    if (this.configuration.modelName.toLowerCase() === 'mobilenet') {
+      outputTensorSize = 1001
+    }
     if (this.configuration.modelName.toLowerCase() === 'squeezenet') {
       outputTensorSize = 1000
     }
@@ -189,7 +190,6 @@ class WebMLJSBenchmark extends Benchmark {
     }
   }
   async setupAsync() {
-    this.setInputOutput();
     let result = await this.loadModelAndLabels();
     let targetModel;
     if (this.configuration.modelName.toLowerCase() === 'mobilenet') {
@@ -215,8 +215,9 @@ class WebMLJSBenchmark extends Benchmark {
       }
     }
     await this.model.createCompiledModel();
+    await this.setInputOutput();
   }
-  printPredictResult() {
+  async printPredictResult() {
     probability = null;
     let probs = Array.from(this.outputTensor);
     let indexes = probs.map((prob, index) => [prob, index]);
@@ -232,24 +233,17 @@ class WebMLJSBenchmark extends Benchmark {
       let prob = sorted[i][0];
       let index = sorted[i][1];
       lh.add(`&nbsp;&nbsp;&nbsp;&nbsp; <i class="mdi mdi-check mdi-6px"></i> label: ${this.labels[index]}, probability: ${(prob * 100).toFixed(2)}%`);
-      console.log(index + ' >> ' + this.labels[index])
       if(i == 0) {
         probability = `${this.labels[index]}, ${(prob * 100).toFixed(2)}%`;
-        console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>' + index + ' >> ' + this.labels[index])
       }
     }
   }
   async executeSingleAsync() {
     let result = await this.model.compute(this.inputTensor, this.outputTensor);
     lh.add(`&nbsp;&nbsp;&nbsp;&nbsp; <i class="mdi mdi-check mdi-6px"></i> compute result: ${result}`)
-    this.printPredictResult();
+    await this.printPredictResult();
   }
   async finalizeAsync() {
-    this.model = null;
-    this.inputTensor = null;
-    this.outputTensor = null;
-    this.model = null;
-    this.labels = null;
   }
 }
 

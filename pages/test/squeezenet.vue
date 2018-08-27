@@ -8,7 +8,7 @@
       <div class='mb'>{{ task.description }}</div>
   
       <div class="mt ic" v-if="getBackend">
-        <div class=""><span v-if="task.model_version">Model Version: {{ task.model_version }} / </span>Backend: {{ getBackend }} / Test Image: {{ getTestImage.split('/').pop() }}</div>
+        <div v-if="task.model_version">Model Version: {{ task.model_version }}</div>
         <div class="columns mt">
           <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
             <div class="">Loading Model File: {{ progress_loading_text }} </div>
@@ -99,7 +99,7 @@
       </div>
       <div class='ic mb mt'>
         <button class="button is-primary" @click="run">
-                                        Run Testing
+                                        Run {{ task.name }}
                                       </button>
       </div>
     </div>
@@ -243,8 +243,8 @@
         this.barData.rows = [];
         let t = {};
         t['Test Image'] = 0;
-        t['WASM'] = 0;
-        t['WebGL2'] = 0;
+        t['WASM Polyfill'] = 0;
+        t['WebGL2 Polyfill'] = 0;
         t['WebML'] = 0;
         
         this.task.test.image.map((image) => {
@@ -252,9 +252,9 @@
             if (item.test_case == image.split('/').pop()) {
               t['Test Image'] = item.test_case;
               if (item.backend.toLowerCase() == 'wasm') {
-                t['WASM'] = item.test_result;
+                t['WASM Polyfill'] = item.test_result;
               } else if (item.backend.toLowerCase() == 'webgl2') {
-                t['WebGL2'] = item.test_result;
+                t['WebGL2 Polyfill'] = item.test_result;
               } else if (item.backend.toLowerCase() == 'webml') {
                 t['WebML'] = item.test_result;
               }  
@@ -305,11 +305,11 @@
           showLine: ['Probability']
         },
         barData: {
-          columns: ['Test Image', 'WASM', 'WebGL2', 'WebML'],
+          columns: ['Test Image', 'WASM Polyfill', 'WebGL2 Polyfill', 'WebML'],
           rows: [{
               'Test Image': 'bee_eater.jpg',
-              'WASM': 0,
-              'WebGL2': 0,
+              'WASM Polyfill': 0,
+              'WebGL2 Polyfill': 0,
               'WebML': 0
             }
           ]
@@ -329,11 +329,10 @@
         task: {
           "id": 2,
           "model_name": 'SqueezeNet',
-          "backend": ['WASM'],
-          // "backend": ['WASM', 'WebGL2', 'WebML'],
-          "iteration": 3,
+          "backend": ['WASM', 'WebGL2', 'WebML'],
+          "iteration": 4,
           "framework": "webml-polyfill.js",
-          "model": 'http://aimark.nos-eastchina1.126.net/model/squeezenet/model.onnx',
+          "model": '../model/squeezenet/model.onnx',
           "label": 'http://aimark.nos-eastchina1.126.net/model/squeezenet/labels.json',
           "name": 'Image Classification (SqueezeNet)',
           "description": 'A light-weight CNN providing Alexnet level accuracy with 50X fewer parameters. Loading SqueezeNet model trained by ImageNet in ONNX format, constructs and inferences it by WebML API.',
@@ -344,8 +343,7 @@
           "model_url": 'https://s3.amazonaws.com/download.onnx/models/squeezenet.tar.gz',
           'test': {
             'resolution': '224 x 224 px',
-            'image': ['../img/squeezenet/jeep.jpg', '../img/squeezenet/plane.jpg']
-            // 'image': ['../img/squeezenet/jeep.jpg', '../img/squeezenet/honeycomb.jpg', '../img/squeezenet/plane.jpg']
+            'image': ['../img/squeezenet/jeep.jpg', '../img/squeezenet/wallaby.jpg', '../img/squeezenet/panda.jpg']
           },
           "platform": [
             'android',

@@ -8,7 +8,7 @@
       <div class='mb'>{{ task.description }}</div>
   
       <div class="mt ic" v-if="getBackend">
-        <div class=""><span v-if="task.model_version">Model Version: {{ task.model_version }} / </span>Backend: {{ getBackend }} / Test Image: {{ getTestImage.split('/').pop() }}</div>
+        <div v-if="task.model_version">Model Version: {{ task.model_version }}</div>
         <div class="columns mt">
           <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
             <div class="">Loading Model File: {{ progress_loading_text }} </div>
@@ -27,7 +27,7 @@
             <canvas class="image"></canvas>
             <!-- <div v-for="u in task.test_images.image" :key="u.id"> -->
             <!-- <img id='image' v-if="u" :src="u" alt="Test Image"> -->
-            <img id='testimage' :src="getTestImage" alt="Test Image">
+            <img id='testimage' v-show='getTestImage' :src="getTestImage" alt="Test Image">
             <!-- </div> -->
           </div>
         </div>
@@ -35,56 +35,51 @@
           <div v-html='log' class="card" id='log'>
           </div>
           <div class='ir'>
-            <button class="btn button ir is-small" @click="copylog" data-clipboard-target="#log">
-                                                  Copy Log
-                                                </button>
+            <button class="btn button ir is-small" @click="copylog" data-clipboard-target="#log">Copy Log</button>
           </div>
         </div>
       </div>
  
       <h2 v-if='showBar' class="is-size-5-desktop is-size-6-mobile is-size-5-tablet ic mt">{{ task.name }} Benchmark</h2>
       <div class='columns mb' v-if='showBar'>
-  
         <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
           <div class="mb mt">
-  
             <b-table :data="test_result" :bordered="false" :striped="true" :narrowed="false" :hoverable="true" :loading="false" :focusable="true" :mobile-cards="true">
-  
               <template slot-scope="props">
-                          <b-table-column field="backend" label="Backend">
-                              {{ props.row.backend }}
-                          </b-table-column>
-          
-                          <b-table-column field="test_image" label="Test Image">
-                              {{ props.row.test_case }}
-                          </b-table-column>
-        
-                          <b-table-column field="best_probability" label="Best Probability">
-                              {{ props.row.probability }}
-                          </b-table-column>
-        
-                          <b-table-column field="test_result" label="Inference Time">
-                              {{ props.row.test_result }} ms
-                          </b-table-column>
-          
-                          <!-- <b-table-column field="date" label="Date" centered>
-                              <span class="tag is-success">
-                                  xxx
-                              </span>
-                          </b-table-column> -->
-</template>
+                <b-table-column field="backend" label="Backend">
+                    {{ props.row.backend }}
+                </b-table-column>
 
-<template slot="empty">
-  <section class="section">
-    <div class="content has-text-grey has-text-centered">
-      <p>
-        <b-icon icon="emoticon-sad" size="is-large">
-        </b-icon>
-      </p>
-      <p>Nothing here.</p>
-    </div>
-  </section>
-</template>
+                <b-table-column field="test_image" label="Test Image">
+                    {{ props.row.test_case }}
+                </b-table-column>
+
+                <b-table-column field="best_probability" label="Best Probability">
+                    {{ props.row.probability }}
+                </b-table-column>
+
+                <b-table-column field="test_result" label="Inference Time">
+                    {{ props.row.test_result }} ms
+                </b-table-column>
+
+                <!-- <b-table-column field="date" label="Date" centered>
+                    <span class="tag is-success">
+                        xxx
+                    </span>
+                </b-table-column> -->
+              </template>
+
+              <template slot="empty">
+                <section class="section">
+                  <div class="content has-text-grey has-text-centered">
+                    <p>
+                      <b-icon icon="emoticon-sad" size="is-large">
+                      </b-icon>
+                    </p>
+                    <p>Nothing here.</p>
+                  </div>
+                </section>
+              </template>
             </b-table>
  
  
@@ -98,9 +93,7 @@
   
       </div>
       <div class='ic mb mt'>
-        <button class="button is-primary" @click="run">
-                                        Run Testing
-                                      </button>
+        <button class="button is-primary" @click="run">Run {{ task.name }}</button>
       </div>
     </div>
     <ai_footer/>
@@ -159,15 +152,13 @@
         href: ''
       }]
     },
-    created() {
-      this.getTestImage = this.task.test.image[0]
-    },
     mounted() {
       setInterval(this.getLog, 100);
       setInterval(this.getModelProgress, 100);
       this.scrollToBottom();
       this.progress.max = this.task.backend.length * this.task.test.image.length;
       this.progress_loading.max = 1;
+      this.getTestImage = this.task.test.image[0];
     },
     updated: function() {
       this.scrollToBottom();
@@ -231,18 +222,19 @@
         this.barData.rows = [];
         let t = {};
         t['Test Image'] = 0;
-        t['WASM'] = 0;
-        t['WebGL2'] = 0;
+        t['WASM Polyfill'] = 0;
+        t['WebGL2 Polyfill'] = 0;
         t['WebML'] = 0;
         
+        let _this = this;
         this.task.test.image.map((image) => {
           for (let item of testresult) {
             if (item.test_case == image.split('/').pop()) {
               t['Test Image'] = item.test_case;
               if (item.backend.toLowerCase() == 'wasm') {
-                t['WASM'] = item.test_result;
+                t['WASM Polyfill'] = item.test_result;
               } else if (item.backend.toLowerCase() == 'webgl2') {
-                t['WebGL2'] = item.test_result;
+                t['WebGL2 Polyfill'] = item.test_result;
               } else if (item.backend.toLowerCase() == 'webml') {
                 t['WebML'] = item.test_result;
               }  
@@ -293,11 +285,11 @@
           showLine: ['Probability']
         },
         barData: {
-          columns: ['Test Image', 'WASM', 'WebGL2', 'WebML'],
+          columns: ['Test Image', 'WASM Polyfill', 'WebGL2 Polyfill', 'WebML'],
           rows: [{
               'Test Image': 'bee_eater.jpg',
-              'WASM': 0,
-              'WebGL2': 0,
+              'WASM Polyfill': 0,
+              'WebGL2 Polyfill': 0,
               'WebML': 0
             }
           ]
@@ -318,9 +310,9 @@
           "id": 1,
           "model_name": 'MobileNet',
           "backend": ['WASM', 'WebGL2', 'WebML'],
-          "iteration": 3,
+          "iteration": 4,
           "framework": "webml-polyfill.js",
-          "model": 'http://aimark.nos-eastchina1.126.net/model/mobilenet/zip/mobilenet_v1_1.0_224.tflite',
+          "model": '../model/mobilenet/zip/mobilenet_v1_1.0_224.tflite',
           "label": 'http://aimark.nos-eastchina1.126.net/model/mobilenet/labels.txt',
           "name": 'Image Classification (MobileNet)',
           "description": 'An efficient Convolutional Neural Networks for Mobile Vision Applications. Loading MobileNet model trained by ImageNet in TensorFlow Lite format, constructs and inferences it by WebML API.',
@@ -330,7 +322,7 @@
           "paper_url": 'https://arxiv.org/pdf/1704.04861.pdf',
           'test': {
             'resolution': '224 x 224 px',
-            'image': ['../img/mobilenet/bee_eater.jpg', '../img/mobilenet/pineapple.jpg', '../img/mobilenet/pinwheel.jpg']
+            'image': ['../img/mobilenet/bee_eater.jpg', '../img/mobilenet/traffic_light.jpg', '../img/mobilenet/pinwheel.jpg']
           },
           "platform": [
             'android',

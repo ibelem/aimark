@@ -2,6 +2,8 @@
   <footer class="footer">
     <ai_connection/>
     <div class="content has-text-centered">
+      <ai_webml_badge/>
+      <br><br>
       <ai_environment/>
       <br>
       <p>
@@ -13,11 +15,12 @@
 
 <script>
   import ai_environment from "~/components/ai_environment.vue";
-  import ai_connection from "~/components/ai_connection.vue"
+  import ai_connection from "~/components/ai_connection.vue";
+  import ai_webml_badge from "~/components/ai_webml_badge.vue";
   
   export default {
     components: {
-      ai_environment, ai_connection
+      ai_environment, ai_connection, ai_webml_badge
     }
   };
 </script>

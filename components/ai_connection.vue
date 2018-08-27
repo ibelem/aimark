@@ -17,8 +17,7 @@
             _this.$toast.open({
                 duration: 5000,
                 message:  _this.networkstatus,
-                position: 'is-bottom',
-                type: 'is-danger'
+                position: 'is-bottom'
             })
           }
         }
