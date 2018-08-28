@@ -2,7 +2,7 @@
   <footer class="footer">
     <ai_connection/>
     <div class="content has-text-centered">
-      <ai_webml_badge/>
+      <ai_webml_badge v-if="hackReset"/>
       <br><br>
       <ai_environment/>
       <br>
@@ -21,6 +21,17 @@
   export default {
     components: {
       ai_environment, ai_connection, ai_webml_badge
+    },
+    created: function() {
+      this.hackReset = false;
+      this.$nextTick(() => {
+        this.hackReset = true;
+      })
+    },
+    data() {
+      return {
+        hackReset: false
+      }
     }
   };
 </script>

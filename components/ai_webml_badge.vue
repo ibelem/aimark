@@ -1,13 +1,21 @@
 <template>
   <div>
-    <div class='webmlbadge is-small'>
+    <div class='webmlbadge is-small mr'>
       <div class='webml-title'>WebML</div>
       <div v-if='webmlstatus' class='webml-status webml-status-true'>
-        <span v-if='ispolyfill'>Polyfill </span>
         <span>Compatible</span>
       </div>
       <div v-else class='webml-status webml-status-false'>
         <span>Incompatible</span>
+      </div>
+    </div>
+    <div class='webmlbadge is-small'>
+      <div class='webml-title'>WebML Polyfill</div>
+      <div v-if='ispolyfill' class='webml-status webml-status-true'>
+        <span >Enabled</span>
+      </div>
+      <div v-else class='webml-status webml-status-false'>
+        <span>Disabled</span>
       </div>
     </div>
   </div>
@@ -17,16 +25,26 @@
   export default {
     name: "ai_webml_badge",
     mounted: function() {
-      let _this = this;
-      if (navigator.ml && navigator.ml.getNeuralNetworkContext()) {
-        _this.webmlstatus = true;
-        if (navigator.ml.isPolyfill) {
-          _this.ispolyfill = true;
+      setTimeout(this.updateWebMLStatus, 100);
+    },
+    methods: {
+      updateWebMLStatus: function(){
+        let _this = this;
+        if (navigator.ml && navigator.ml.getNeuralNetworkContext()) {
+          _this.webmlstatus = true;
+          if (navigator.ml.isPolyfill) {
+            _this.ispolyfill = true;
+          } else {
+            _this.ispolyfill = false;
+          }
+        } else {
+          _this.webmlstatus = false;
+          _this.ispolyfill = false;
         }
-      } else {
-        _this.webmlstatus = false;
-        _this.ispolyfill = false;
       }
+    },
+    destoryed() {
+      clearTimeout(this.updateWebMLStatus);
     },
     data() {
       return {
@@ -38,6 +56,7 @@
 </script>
 
 <style scoped>
+  .mr { margin: 0 0.5rem;}
   .webmlbadge {
     display: inline-block;
   }

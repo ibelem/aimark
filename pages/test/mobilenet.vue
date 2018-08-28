@@ -312,7 +312,7 @@
           "backend": ['WASM', 'WebGL2', 'WebML'],
           "iteration": 4,
           "framework": "webml-polyfill.js",
-          "model": '../model/mobilenet/zip/mobilenet_v1_1.0_224.tflite',
+          "model": 'http://aimark.nos-eastchina1.126.net/model/mobilenet/zip/mobilenet_v1_1.0_224.tflite',
           "label": 'http://aimark.nos-eastchina1.126.net/model/mobilenet/labels.txt',
           "name": 'Image Classification (MobileNet)',
           "description": 'An efficient Convolutional Neural Networks for Mobile Vision Applications. Loading MobileNet model trained by ImageNet in TensorFlow Lite format, constructs and inferences it by WebML API.',

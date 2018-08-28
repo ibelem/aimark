@@ -332,7 +332,7 @@
           "backend": ['WASM', 'WebGL2', 'WebML'],
           "iteration": 4,
           "framework": "webml-polyfill.js",
-          "model": '../model/squeezenet/model.onnx',
+          "model": 'http://aimark.nos-eastchina1.126.net/model/squeezenet/model.onnx',
           "label": 'http://aimark.nos-eastchina1.126.net/model/squeezenet/labels.json',
           "name": 'Image Classification (SqueezeNet)',
           "description": 'A light-weight CNN providing Alexnet level accuracy with 50X fewer parameters. Loading SqueezeNet model trained by ImageNet in ONNX format, constructs and inferences it by WebML API.',
