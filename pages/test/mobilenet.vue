@@ -93,7 +93,7 @@
   
       </div>
       <div class='ic mb mt'>
-        <button class="button is-primary" @click="run">Run {{ task.name }}</button>
+        <button class="button is-primary wd" @click="run">Run {{ task.name }}</button>
       </div>
     </div>
     <ai_footer/>
@@ -373,6 +373,10 @@
     height: 336px;
     display: none;
   }
+
+  .wd { 
+    width: 336px;
+   }
   
   #log {
     height: 336px;
@@ -420,12 +424,23 @@
       height: 224px;
       display: none;
     }
+
+    .wd { 
+      width: 224px;
+      font-size: 0.8rem;
+    }
+
     #log {
       height: 112px;
       max-height: 112px;
       overflow-y: scroll;
       overflow-x: hidden;
       padding: 1rem;
+    }
+
+    .cmh,
+    .cmh canvas {
+      max-height: 340px !important;
     }
   }
 </style>

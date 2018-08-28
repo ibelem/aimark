@@ -9,13 +9,10 @@
         <span>Incompatible</span>
       </div>
     </div>
-    <div class='webmlbadge is-small'>
-      <div class='webml-title'>WebML Polyfill</div>
-      <div v-if='ispolyfill' class='webml-status webml-status-true'>
+    <div v-if='ispolyfill' class='webmlbadge is-small mr'>
+      <div class='webml-title'>Polyfill</div>
+      <div class='webml-status webml-status-true'>
         <span >Enabled</span>
-      </div>
-      <div v-else class='webml-status webml-status-false'>
-        <span>Disabled</span>
       </div>
     </div>
   </div>
@@ -29,17 +26,14 @@
     },
     methods: {
       updateWebMLStatus: function(){
-        let _this = this;
         if (navigator.ml && navigator.ml.getNeuralNetworkContext()) {
-          _this.webmlstatus = true;
-          if (navigator.ml.isPolyfill) {
-            _this.ispolyfill = true;
+          if (!navigator.ml.isPolyfill) {
+            this.webmlstatus = true;
+            this.ispolyfill = false;
           } else {
-            _this.ispolyfill = false;
+            this.webmlstatus = false;
+            this.ispolyfill = true;
           }
-        } else {
-          _this.webmlstatus = false;
-          _this.ispolyfill = false;
         }
       }
     },
@@ -56,7 +50,7 @@
 </script>
 
 <style scoped>
-  .mr { margin: 0 0.5rem;}
+  .mr { margin: 0 0.40rem;}
   .webmlbadge {
     display: inline-block;
   }
@@ -89,5 +83,23 @@
     background: transparent;
     color: rgba(0, 0, 0, 0.8);
     border: 1px solid rgba(222, 12, 101, 0.9);
+  }
+
+  @media (max-width: 768px) {
+    .webmlbadge {
+      font-size: 0.8rem;
+    }
+    .webml-title, .webml-status {
+      padding: 0.25rem 0.5rem;
+    }
+    }
+
+  @media (max-width: 320px) {
+    .webmlbadge {
+      font-size: 0.70rem;
+    }
+    .webml-title, .webml-status {
+      padding: 0.25rem;
+    }
   }
 </style>

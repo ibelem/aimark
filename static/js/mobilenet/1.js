@@ -143,7 +143,7 @@ class WebMLJSBenchmark extends Benchmark {
       request.send();
     });
   }
-  async setInputOutput() {
+  async  setInputOutput() {
     const width = 224;
     const height = 224;
     const channels = 3;

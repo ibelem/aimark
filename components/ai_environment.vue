@@ -7,7 +7,7 @@
         <span v-if="devicememory.toString().length > 0">
         {{ devicememory }} /
         </span>
-        {{ gpuvender }} {{ gpu }}<br>
+        {{ gpu }}<br>
         {{ os }} {{ osversion }} {{ osplatform }} / 
         {{ browsername }} {{ browserversion }}
   </div>
