@@ -214,7 +214,10 @@ class WebMLJSBenchmark extends Benchmark {
         this.model = new SqueezeNet(targetModel);
       }
     }
+    let logger = new Logger();
+    logger.log('>>>>>>>>>>>>>>>>>>>>> C1');
     await this.model.createCompiledModel();
+    logger.log('>>>>>>>>>>>>>>>>>>>>> C2');
     await this.setInputOutput();
   }
   async printPredictResult() {

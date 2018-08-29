@@ -7,7 +7,7 @@
       <ai_environment/>
       <br>
       <p>
-        &copy;2018 <strong>AIMark</strong> <nuxt-link to="https://github.com/intel/webml-polyfill">WebML Team</nuxt-link>
+        &copy;2018 <strong>AIMark</strong> <!-- <nuxt-link to="">WebML Team</nuxt-link> -->
       </p>
     </div>
   </footer>
