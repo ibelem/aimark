@@ -39,12 +39,12 @@
             Test
           </nuxt-link>
           <div class="navbar-dropdown is-boxed">
-            <nuxt-link class="navbar-item" to="../test/MobileNet">
+            <a class="navbar-item" href="../test/MobileNet">
               MobileNet
-            </nuxt-link>
-            <nuxt-link class="navbar-item" to="../test/SqueezeNet">
+            </a>
+            <a class="navbar-item" href="../test/SqueezeNet">
               SqueezeNet
-            </nuxt-link>
+            </a>
             <a class="navbar-item" href="">
               TF.js
             </a>

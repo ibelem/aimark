@@ -1,3 +1,5 @@
+var resolve = require('path').resolve;
+
 module.exports = {
   /*
   ** Headers of the page
@@ -68,10 +70,14 @@ module.exports = {
   //   }]]
   // },
   // vendor: ['axios', 'lodash', 'iview'],
+  generate: {
+    dir: resolve(__dirname, './public')
+  },
   build: {
     /*
     ** Run ESLint on save
     */
+    // publicPath: '/dist/',
     postcss: {
       plugins: {
         'postcss-custom-properties': false

@@ -106,6 +106,8 @@ class Benchmark {
 class WebMLJSBenchmark extends Benchmark {
   constructor() {
     super(...arguments);
+    this.model = null;
+    this.labels = null;
     this.inputTensor = null;
     this.outputTensor = null;
   }
@@ -143,7 +145,7 @@ class WebMLJSBenchmark extends Benchmark {
       request.send();
     });
   }
-  async  setInputOutput() {
+  setInputOutput() {
     const width = 224;
     const height = 224;
     const channels = 3;
@@ -216,9 +218,16 @@ class WebMLJSBenchmark extends Benchmark {
     }
     let logger = new Logger();
     logger.log('>>>>>>>>>>>>>>>>>>>>> C1');
-    await this.model.createCompiledModel();
+    try
+    {
+      await this.model.createCompiledModel();
+    }
+    catch(err)
+    {
+      console.log('+++++++++++++++++++++' + err);
+    }
     logger.log('>>>>>>>>>>>>>>>>>>>>> C2');
-    await this.setInputOutput();
+    this.setInputOutput();
   }
   async printPredictResult() {
     probability = null;
@@ -247,6 +256,10 @@ class WebMLJSBenchmark extends Benchmark {
     await this.printPredictResult();
   }
   async finalizeAsync() {
+    this.model = null;
+    this.labels = null;
+    this.inputTensor = null;
+    this.outputTensor = null;
   }
 }
 
@@ -360,6 +373,10 @@ async function runMobilenet(configuration) {
   }
   logger.groupEnd();
   lh.fill();
+
+  if(testresult.length > 9) {
+    testresult = testresult.slice(9);
+  }
 }
 
 bardata.push(bar1)

@@ -152,6 +152,12 @@
         href: ''
       }]
     },
+    watch: {
+      "$route": function(){
+          console.log('HAHA');
+          $router.go(0);
+      }
+    },
     mounted() {
       setInterval(this.getLog, 100);
       setInterval(this.getModelProgress, 100);
@@ -195,7 +201,7 @@
         let i = 0;
         for (let item of this.task.backend) {
           for (let image of this.task.test.image) {
-            let framework = this.task.framework
+            let framework = this.task.framework;
             if(item == 'WebML') {
               framework = 'Web ML API'
             }
@@ -212,6 +218,7 @@
             this.getBackend = configuration.backend;
             this.getTestImage = configuration.image;
             await runMobilenet(configuration);
+            
             this.progress.value = ++i;
           }
         }

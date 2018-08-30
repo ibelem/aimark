@@ -10,7 +10,7 @@ import axios from 'axios-https-proxy-fix';
 
 export default {
   async asyncData({ params }) {
-    const proxy = { host: 'child-prc.', port: 913 }
+    const proxy = { host: 'child-prc', port: 913 }
     // We can use async/await ES6 feature
     let { data } = await axios.get(`https://jsonplaceholder.typicode.com/posts/${params.id}`, {proxy})
     return { post: data }

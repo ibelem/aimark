@@ -1,7 +1,7 @@
 <template>
   <div class="">
         <div v-if="devicevendor.toString().length > 0 || devicemodel.toString().length > 0 || devicetype.toString().length > 0">
-          Model: {{ devicevendor }} {{ devicemodel }} {{ devicetype }}
+        {{ devicevendor }} {{ devicemodel }} {{ devicetype }}
         </div>
         {{ cpuarchitecture }} {{ cpuhardwareconcurrency }} / 
         <span v-if="devicememory.toString().length > 0">
