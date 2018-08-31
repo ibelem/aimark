@@ -63,6 +63,7 @@ class Benchmark {
     for (let i = 0; i < this.configuration.iteration; i++) {
       this.onExecuteSingle(i);
       await new Promise(resolve => requestAnimationFrame(resolve));
+      await this.setInputOutput();
       let tStart = performance.now();
       await this.executeSingleAsync();
       let elapsedTime = performance.now() - tStart;
@@ -145,7 +146,7 @@ class WebMLJSBenchmark extends Benchmark {
       request.send();
     });
   }
-  setInputOutput() {
+  async setInputOutput() {
     const width = 224;
     const height = 224;
     const channels = 3;
@@ -217,17 +218,7 @@ class WebMLJSBenchmark extends Benchmark {
       }
     }
     let logger = new Logger();
-    logger.log('>>>>>>>>>>>>>>>>>>>>> C1');
-    try
-    {
-      await this.model.createCompiledModel();
-    }
-    catch(err)
-    {
-      console.log('+++++++++++++++++++++' + err);
-    }
-    logger.log('>>>>>>>>>>>>>>>>>>>>> C2');
-    this.setInputOutput();
+    await this.model.createCompiledModel();
   }
   async printPredictResult() {
     probability = null;

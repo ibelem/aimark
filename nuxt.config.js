@@ -9,6 +9,9 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { name: 'robots', content: 'all' },
+      { name: 'author', content: 'Belem' },
+      { name: 'keywords', content: 'ai, artificial inligence, machine learning, webml, Web ai, web machine learning, deep learning, tensorflow, tensorflow.js, tf.js, benchmark, web ai benchmark' },
       { hid: 'description', name: 'description', content: 'Web AI Benchmark' }
     ],
     link: [

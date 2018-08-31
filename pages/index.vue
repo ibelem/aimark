@@ -127,6 +127,11 @@
   .button {
     font-weight: 200;
   }
+  @media (max-width: 768px) {
+    .hero .container {
+      margin: 0 !important;
+    }
+  }
 </style>
 
 

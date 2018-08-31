@@ -152,12 +152,6 @@
         href: ''
       }]
     },
-    watch: {
-      "$route": function(){
-          console.log('HAHA');
-          $router.go(0);
-      }
-    },
     mounted() {
       setInterval(this.getLog, 100);
       setInterval(this.getModelProgress, 100);
