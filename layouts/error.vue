@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="hero">
+    <section>
       <div class="container">
         <ai_nav/>
         <div class="er">
@@ -35,7 +35,7 @@
 
 <style scoped>
   .er {
-    margin: 4rem auto;
+    margin: 4rem 1.5rem;
     text-align: center;
     font-size: 1.0rem;
     font-weight: 200;

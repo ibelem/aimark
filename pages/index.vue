@@ -1,7 +1,7 @@
 <template>
   <div>
     <section class="hero is-primary is-fullheight">
-      <div class="hero-head container">
+      <div class="hero-head container ex">
         <ai_nav_home/>
       </div>
   
@@ -128,7 +128,7 @@
     font-weight: 200;
   }
   @media (max-width: 768px) {
-    .hero .container {
+    .hero .ex {
       margin: 0 !important;
     }
   }

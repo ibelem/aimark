@@ -24,7 +24,7 @@
       <div class="columns mt">
         <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
           <div class="card is ic">
-            <canvas class="image"></canvas>
+            <canvas class="testimage"></canvas>
             <!-- <div v-for="u in task.test_images.image" :key="u.id"> -->
             <!-- <img id='image' v-if="u" :src="u" alt="Test Image"> -->
             <img id='testimage' v-show='getTestImage' :src="getTestImage" alt="Test Image">
@@ -341,107 +341,4 @@
 </script>
 
 <style scoped>
-  .mt {
-    margin-top: 1rem;
-  }
-  
-  .mb {
-    margin-bottom: 1rem;
-  }
-  
-  .ic {
-    text-align: center;
-    margin: 0 auto;
-  }
-  
-  .ir {
-    text-align: right;
-  }
-  
-  .progress {
-    height: 2px;
-    background-color: red;
-  }
-  
-  img,
-  .is {
-    width: 336px;
-    height: 336px;
-  }
-  
-  .image {
-    width: 336px;
-    height: 336px;
-    display: none;
-  }
-
-  .wd { 
-    width: 336px;
-   }
-  
-  #log {
-    height: 336px;
-    max-height: 336px;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    padding: 1rem;
-  }
-  
-  .cmh,
-  .cmh canvas {
-    max-height: 200px !important;
-  }
-  
-   ::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
-  }
-  
-   ::-webkit-scrollbar-track-piece {
-    background-color: rgba(0, 0, 0, 0.2);
-    -webkit-border-radius: 6px;
-  }
-  
-   ::-webkit-scrollbar-thumb:vertical {
-    height: 5px;
-    background-color: rgba(125, 125, 125, 0.7);
-    -webkit-border-radius: 6px;
-  }
-  
-   ::-webkit-scrollbar-thumb:horizontal {
-    width: 5px;
-    background-color: rgba(125, 125, 125, 0.7);
-    -webkit-border-radius: 6px;
-  }
-  
-  @media (max-width: 768px) {
-    img,
-    .is {
-      width: 224px;
-      height: 224px;
-    }
-    .image {
-      width: 224px;
-      height: 224px;
-      display: none;
-    }
-
-    .wd { 
-      width: 224px;
-      font-size: 0.8rem;
-    }
-
-    #log {
-      height: 112px;
-      max-height: 112px;
-      overflow-y: scroll;
-      overflow-x: hidden;
-      padding: 1rem;
-    }
-
-    .cmh,
-    .cmh canvas {
-      max-height: 340px !important;
-    }
-  }
 </style>
