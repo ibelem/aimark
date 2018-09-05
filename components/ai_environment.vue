@@ -3,11 +3,11 @@
         <div v-if="devicevendor.toString().length > 0 || devicemodel.toString().length > 0 || devicetype.toString().length > 0">
         {{ devicevendor }} {{ devicemodel }} {{ devicetype }}
         </div>
-        {{ cpuarchitecture }} {{ cpuhardwareconcurrency }} / 
-        <span v-if="devicememory.toString().length > 0">
-        {{ devicememory }} /
+        <span v-if="cpuarchitecture.length > 0">{{ cpuarchitecture.toUpperCase()  }} {{ cpuhardwareconcurrency }} Cores /</span>
+        <span v-if="devicememory.length > 0">
+        ~{{ devicememory }} GB /
         </span>
-        {{ gpu }}<br>
+        {{ getGPU() }}<br>
         {{ os }} {{ osversion }} {{ osplatform }} / 
         {{ browsername }} {{ browserversion }}
   </div>
@@ -52,6 +52,35 @@
         this.engineversion = result.browser.engineversion;
     },
     methods: {
+      trim() {
+        if(typeof(String.prototype.trim) === "undefined"){
+            String.prototype.trim = function(){
+                return String(this).replace(/^\s+|\s+$/g, '');
+            };
+        }
+      },
+      getGPU() {
+        let gpu = this.gpu;
+        const gpucharacters = [
+          '(Skylake GT2)',
+          'Intel(R)',
+          'vs_5_0 ps_5_0',
+          'NVIDIA GeForce',
+          'Mesa DRI',
+          'Graphics',
+          'Direct3D11',
+          'ANGLE',
+          'Microsoft',
+          'Google',
+          '(',
+          ')'
+        ]
+        for(let item of gpucharacters) {
+          gpu = gpu.replace(item, '');
+        }
+        gpu = gpu.trim();
+        return gpu;
+      }
     },
     computed: {
       // os_and_version: function() {

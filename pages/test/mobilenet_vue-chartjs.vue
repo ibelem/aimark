@@ -121,7 +121,7 @@
     testresult,
     bardata,
     runMobilenet
-  } from '~/static/js/mobilenet/1.js'
+  } from '~/static/js/testms.js'
   
   
   export default {

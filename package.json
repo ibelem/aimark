@@ -19,6 +19,7 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
+    "@tensorflow/tfjs": "^0.12.6",
     "ajv": "^6.5.2",
     "axios": "^0.18.0",
     "axios-https-proxy-fix": "^0.17.1",

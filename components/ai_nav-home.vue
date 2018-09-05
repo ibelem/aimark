@@ -29,7 +29,10 @@
       <div class="navbar-start">
       </div>
       <div class="navbar-end">
-        <nuxt-link class="navbar-item" to="../benchmark">
+        <nuxt-link class="navbar-item" to="../test">
+          Test
+        </nuxt-link>
+        <!-- <nuxt-link class="navbar-item" to="../benchmark">
           Benchmark
         </nuxt-link>
         <nuxt-link class="navbar-item" to="../ranking">
@@ -44,6 +47,7 @@
         <nuxt-link class="navbar-item" to="../about">
           About
         </nuxt-link>
+        -->
       </div>
     </div>
   </nav>

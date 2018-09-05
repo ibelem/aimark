@@ -4,7 +4,6 @@
       <div class="hero-head container ex">
         <ai_nav_home/>
       </div>
-  
       <div class="hero-body">
         <div class="container has-text-left">
           <div class="entrance">
@@ -17,8 +16,8 @@
             <h2 class="subtitle">
               The WebML Benchmark consists of multiple AI tasks performed by separate neural networks on your pc or smartphone.
             </h2>
-            <nuxt-link to="benchmark" class="button is-primary">
-                  Run Benchmark Now
+            <nuxt-link to="test" class="button is-primary">
+              Run Benchmark Now
             </nuxt-link>
           </div>
         </div>
@@ -27,27 +26,27 @@
   
     <div class="container">
       <div class="notification">
-      <!--
-        This container is <strong>centered</strong> on desktop.
-        <section>
-          <b-field>
-            <button class="button is-primary is-medium" @click="openLoading">
-                    Launch loading
-                </button>
-          </b-field>
-          <b-field>
-            <b-switch v-model="isFullPage">Display loader over full page</b-switch>
-          </b-field>
-          <b-notification :closable="false">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
-            <b-loading :is-full-page="isFullPage" :active.sync="isLoading" :can-cancel="true"></b-loading>
-          </b-notification>
-          <b-field label="Select a date">
-            <b-datepicker placeholder="Click to select..." icon="calendar-today">
-            </b-datepicker>
-          </b-field>
-        </section>
-        -->
+        <!--
+          This container is <strong>centered</strong> on desktop.
+          <section>
+            <b-field>
+              <button class="button is-primary is-medium" @click="openLoading">
+                      Launch loading
+                  </button>
+            </b-field>
+            <b-field>
+              <b-switch v-model="isFullPage">Display loader over full page</b-switch>
+            </b-field>
+            <b-notification :closable="false">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
+              <b-loading :is-full-page="isFullPage" :active.sync="isLoading" :can-cancel="true"></b-loading>
+            </b-notification>
+            <b-field label="Select a date">
+              <b-datepicker placeholder="Click to select..." icon="calendar-today">
+              </b-datepicker>
+            </b-field>
+          </section>
+          -->
       </div>
       <ai_footer/>
     </div>
@@ -89,11 +88,12 @@
     transition: opacity .35s ease-in-out;
     text-shadow: 1px 1px rgba(0, 0, 0, 0.3);
   }
-
-  .hero.is-primary, .button.is-primary {
+  
+  .hero.is-primary,
+  .button.is-primary {
     background-color: rgba(222, 12, 101, 0.8);
   }
-
+  
   .button.is-primary:hover {
     background-color: rgba(222, 12, 101, 1.0);
   }
@@ -103,7 +103,7 @@
     text-align: left;
     padding: 1.5rem;
   }
-
+  
   .featured {
     font-size: 1.0rem;
     display: inline-block;
@@ -111,7 +111,7 @@
     border-bottom: rgba(222, 12, 101, 0.8) 2px solid;
     margin-bottom: 1rem;
   }
-
+  
   .entrance:hover {
     background-color: rgba(222, 12, 101, 0.1);
   }
@@ -124,9 +124,15 @@
     font-weight: 300;
     font-size: 0.9rem;
   }
+  
   .button {
     font-weight: 200;
   }
+  
+  .hero-body {
+    margin-top: -4rem;
+  }
+  
   @media (max-width: 768px) {
     .hero .ex {
       margin: 0 !important;

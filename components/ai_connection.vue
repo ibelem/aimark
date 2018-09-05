@@ -7,13 +7,16 @@
     name: "ai_connection",
     beforeMount: function() {
       let _this = this;  
+
+      var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+
       function updateConnectionStatus() {
-        if(navigator.connection && navigator.connection.type) {
-          if(navigator.connection.type != 'ethernet' && navigator.connection.type != 'wifi') {
-            _this.networkstatus = 'Your connection type is '+ navigator.connection.type + '<br>It requires to download AI models from server, it\'s better to use Ethernet or WIFI rather than Cellular network.';
+        if(connection && connection.type) {
+          if(connection.type != 'ethernet' && connection.type != 'wifi') {
+            _this.networkstatus = 'Your connection type is '+ connection.type + '<br>It requires to download AI models from server, it\'s better to use Ethernet or WIFI rather than Cellular network.';
           }
           else {
-            _this.networkstatus = 'Your connection type is '+ navigator.connection.type + '.';
+            _this.networkstatus = 'Your connection type is '+ connection.type + '.';
             _this.$toast.open({
                 duration: 5000,
                 message:  _this.networkstatus,
@@ -22,9 +25,9 @@
           }
         }
       }
-      if(navigator.connection && navigator.connection.type) {
+      if(connection && connection.type) {
         updateConnectionStatus();
-        navigator.connection.addEventListener('typechange', updateConnectionStatus);
+        connection.addEventListener('typechange', updateConnectionStatus);
       }
     },
     data() {

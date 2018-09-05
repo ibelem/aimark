@@ -118,7 +118,7 @@
     testresult,
     bardata,
     runMobilenet
-  } from '~/static/js/mobilenet/1.js'
+  } from '~/static/js/testms.js'
   
   
   export default {
@@ -332,8 +332,8 @@
           "backend": ['WASM', 'WebGL2', 'WebML'],
           "iteration": 4,
           "framework": "webml-polyfill.js",
-          "model": 'http://aimark.nos-eastchina1.126.net/model/squeezenet/model.onnx',
-          "label": 'http://aimark.nos-eastchina1.126.net/model/squeezenet/labels.json',
+          "model": 'https://aimark.nos-eastchina1.126.net/model/squeezenet/model.onnx',
+          "label": 'https://aimark.nos-eastchina1.126.net/model/squeezenet/labels.json',
           "name": 'Image Classification (SqueezeNet)',
           "description": 'A light-weight CNN providing Alexnet level accuracy with 50X fewer parameters. Loading SqueezeNet model trained by ImageNet in ONNX format, constructs and inferences it by WebML API.',
           "model_version": 'v1.1',
