@@ -50,6 +50,7 @@ class Logger {
 
 let finallog = '';
 let modelprogress = 0;
+let progress = 0 ;
 let probability = null;
 let testresult = [];
 let bardata = [];
@@ -124,6 +125,7 @@ async function init_run() {
   lh.add(`<div></div>`);
   logger.group('Use WebML backend');
   lh.add('<i class="mdi mdi-coffee-outline mdi-12px"></i> Use WebML backend');
+  progress = 1;
   // As WebML POC API only accepts CPU data, so change the
   // backend to CPU.
   tfc.setBackend('cpu');
@@ -135,7 +137,8 @@ async function init_run() {
   lh.add(`<div></div>`);
   lh.add('<i class="mdi mdi-coffee-outline mdi-12px"></i> Result');
   lh.add(`&nbsp;&nbsp; <i class="mdi mdi-checkbox-marked-circle-outline mdi-12px"></i> WebGL vs WebML backend ${speedupText}`);
+  progress = 2;
 };
 // imageElement.src = imageURL;
 
-export { finallog, modelprogress, init_run, testresult, bardata };
+export { finallog, progress, init_run, testresult, bardata };

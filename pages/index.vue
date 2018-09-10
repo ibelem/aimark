@@ -11,13 +11,17 @@
               Featured
             </h2>
             <h1 class="title">
-              WebML Benchmark
+              AIMark
             </h1>
             <h2 class="subtitle">
-              The WebML Benchmark consists of multiple AI tasks performed by separate neural networks on your pc or smartphone.
+              The AIMark for web consists of multiple AI tasks performed by separate neural networks on your pc or smartphone browsers.
             </h2>
+            <!-- <h2 class="subtitle">
+              WebML is a Web API set for a dedicated API for Machine Learning inference in the browser.
+            </h2>
+            -->
             <nuxt-link to="test" class="button is-primary">
-              Run Benchmark Now
+              Run
             </nuxt-link>
           </div>
         </div>

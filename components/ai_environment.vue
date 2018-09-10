@@ -1,11 +1,11 @@
 <template>
-  <div class="">
+  <div>
         <div v-if="devicevendor.toString().length > 0 || devicemodel.toString().length > 0 || devicetype.toString().length > 0">
-        {{ devicevendor }} {{ devicemodel }} {{ devicetype }}
+        <span v-if="devicevendor">{{ devicevendor }} </span> <span v-if="devicemodel">{{ devicemodel }} </span> <span v-if="devicetype" class="cap">{{ devicetype }}</span>
         </div>
-        <span v-if="cpuarchitecture.length > 0">{{ cpuarchitecture.toUpperCase()  }} {{ cpuhardwareconcurrency }} Cores /</span>
-        <span v-if="devicememory.length > 0">
-        ~{{ devicememory }} GB /
+        <span v-if="cpuarchitecture">{{ cpuarchitecture.toUpperCase() }} {{ cpuhardwareconcurrency }} Cores /</span>
+        <span v-if="devicememory">
+        {{ devicememory }} GB /
         </span>
         {{ getGPU() }}<br>
         {{ os }} {{ osversion }} {{ osplatform }} / 
@@ -60,6 +60,7 @@
         }
       },
       getGPU() {
+        if(this.gpu) {
         let gpu = this.gpu;
         const gpucharacters = [
           '(Skylake GT2)',
@@ -72,14 +73,20 @@
           'ANGLE',
           'Microsoft',
           'Google',
+          '(TM)',
           '(',
           ')'
         ]
-        for(let item of gpucharacters) {
+        
+        gpucharacters.forEach((item)=>{
           gpu = gpu.replace(item, '');
-        }
+        })
+
         gpu = gpu.trim();
         return gpu;
+        } else {
+          return '';
+        }
       }
     },
     computed: {
@@ -110,5 +117,6 @@
 </script>
 
 <style scoped>
-  
+  .cap { text-transform: capitalize; }
+  .nocap { text-transform: none;  }
 </style>

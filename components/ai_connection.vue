@@ -28,6 +28,7 @@
       if(connection && connection.type) {
         updateConnectionStatus();
         connection.addEventListener('typechange', updateConnectionStatus);
+        // connection.addEventListener('change', updateConnectionStatus);
       }
     },
     data() {

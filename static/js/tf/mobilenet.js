@@ -32,6 +32,8 @@ const SCALAR_DIVISOR = 225 / 2;
 const TFJS_MODEL_URL = 'https://aimark.nos-eastchina1.126.net/model/tf/google/optimized_model.pb';
 const WEIGHTS_MANIFEST_URL = 'https://aimark.nos-eastchina1.126.net/model/tf/google/weights_manifest.json';
 
+let modelprogress = 0;
+
 export class MobileNet {
   constructor() {
     this.PREPROCESS_DIVISOR = tfc.scalar(SCALAR_DIVISOR);
@@ -39,6 +41,7 @@ export class MobileNet {
 
   async load() {
     this.model = await loadFrozenModel(TFJS_MODEL_URL, WEIGHTS_MANIFEST_URL);
+    modelprogress = 1;
   }
 
   dispose() {
@@ -95,3 +98,6 @@ export class MobileNet {
     });
   }
 }
+
+
+export { modelprogress };

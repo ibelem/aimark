@@ -16,11 +16,11 @@
             <div class="content lh">
               {{ task.description }}
               <ul>
-                <li>Neural Network: {{ task.nn }} {{ task.nn_version }}</li>
+                <li>Neural Network: {{ task.model_name }} {{ task.model_version }}</li>
                 <li>Model Size: {{ task.model_size }}</li>
                 <li>Image Resolution: 224 x 224</li>
                 <li>Accuracy: {{ task.accuracy }}</li>
-                <li>Backend: {{ task.backend }}</li>
+                <li>Backend: <span v-for="(b, index) in task.backend" :key="index">{{ b }} </span> </li>
               </ul>
               <div class='rl'>
                 <div class='il' v-for="p in task.platform" :key="p.id">
@@ -34,13 +34,12 @@
           </div>
           <footer class="card-footer">
             <a class="card-footer-item" :href="task.paper_url">Paper</a>
-            <a class="card-footer-item" :href="task.model_url">Model</a>
-            <a class='card-footer-item' :href="'../test/'+ task.page">More</a>
+            <a class="card-footer-item" :href="task.model">Model</a>
           </footer>
           <footer class="card-footer">
             <!-- <nuxt-link class='card-footer-item button is-primary-gradient' :to="{ name: 'test-id', params: { id: task.id } }">Run Test</nuxt-link> -->
             <!-- <nuxt-link class='card-footer-item button is-primary-gradient' :to="'../test/'+ task.page">Run Test</nuxt-link>-->
-            <a class='card-footer-item button is-primary-gradient' :href="'../test/'+ task.page">Run Test</a>
+            <a class='card-footer-item button is-primary-gradient' :href="'../test/'+ task.model_name">Run Test</a>
           </footer>
         </b-collapse>
       </div>
@@ -59,21 +58,22 @@
       return {
         tasks: [{
             "id": 1,
-            "page": 'mobilenet',
             "name": 'Image Classification (MobileNet)',
+            "model_name": 'MobileNet',
+            "url": 'MobileNet',
+            "backend": ['WASM', 'WebGL2', 'WebML'],
+            "iteration": 4,
+            "framework": "webml-polyfill.js",
+            "model": 'https://aimark.nos-eastchina1.126.net/model/mobilenet/zip/mobilenet_v1_1.0_224.tflite',
+            "label": 'https://aimark.nos-eastchina1.126.net/model/mobilenet/labels.txt',
             "description": 'An efficient Convolutional Neural Networks for Mobile Vision Applications. Loading MobileNet model trained by ImageNet in TensorFlow Lite format, constructs and inferences it by WebML API.',
-            "nn": 'MobileNet',
-            "nn_version": 'v1.0_224',
+            "model_version": 'v1.0_224',
             "accuracy": '70.9%',
-            "backend": 'WASM, WebGL2, WebML',
             "model_size": '16.9Mb',
             "paper_url": 'https://arxiv.org/pdf/1704.04861.pdf',
-            "model_new_url": 'http://download.tensorflow.org/models/mobilenet_v1_2018_02_22/mobilenet_v1_1.0_224.tgz',
-            'model_url': 'https://belem.oss-cn-shanghai.aliyuncs.com/ai/model/mobilenet/zip/mobilenet_v1_1.0_224.tflite',
-            'model_labelurl': 'https://belem.oss-cn-shanghai.aliyuncs.com/ai/model/mobilenet/zip/labels.txt',
-            'test_images': {
+            'test': {
               'resolution': '224 x 224 px',
-              'url': ['https://belem.oss-cn-shanghai.aliyuncs.com/ai/model/mobilenet/bee_eater.jpg', 'https://belem.oss-cn-shanghai.aliyuncs.com/ai/model/mobilenet/pineapple.jpg', 'https://belem.oss-cn-shanghai.aliyuncs.com/ai/model/mobilenet/pinwheel.jpg']
+              'image': ['../img/mobilenet/bee_eater.jpg', '../img/mobilenet/traffic_light.jpg', '../img/mobilenet/pinwheel.jpg']
             },
             "platform": [
               'android',
@@ -83,20 +83,27 @@
             "browser": [
               'chrome',
               'firefox'
-            ]
-          },
-          {
+            ]},
+
+            {
             "id": 2,
-            "page": 'squeezenet',
             "name": 'Image Classification (SqueezeNet)',
+            "model_name": 'SqueezeNet',
+            "url": 'SqueezeNet',
+            "backend": ['WASM', 'WebGL2', 'WebML'],
+            "iteration": 4,
+            "framework": "webml-polyfill.js",
+            "model": 'https://aimark.nos-eastchina1.126.net/model/squeezenet/model.onnx',
+            "label": 'https://aimark.nos-eastchina1.126.net/model/squeezenet/labels.json',
             "description": 'A light-weight CNN providing Alexnet level accuracy with 50X fewer parameters. Loading SqueezeNet model trained by ImageNet in ONNX format, constructs and inferences it by WebML API.',
-            "nn": 'SqueezeNet',
-            "nn_version": 'v1.1',
+            "model_version": 'v1.1',
             "accuracy": '56.34%',
-            "backend": 'WASM, WebGL2, WebML',
             "model_size": '5.0Mb',
             "paper_url": 'https://arxiv.org/abs/1602.07360',
-            "model_url": 'https://s3.amazonaws.com/download.onnx/models/squeezenet.tar.gz',
+            'test': {
+              'resolution': '224 x 224 px',
+              'image': ['../img/squeezenet/jeep.jpg', '../img/squeezenet/wallaby.jpg', '../img/squeezenet/panda.jpg']
+            },
             "platform": [
               'android',
               'windows',
@@ -110,7 +117,35 @@
               'firefox',
               'safari'
             ]
-          }
+          },
+          {
+            "id": 3,
+            "name": 'Image Classification（TensorFlow.js)',
+            "model_name": 'MobileNet',
+            "url": 'TensorFlow.js',
+            "backend": ['WebGL2', 'WebML'],
+            "iteration": 4,
+            "framework": "webml-polyfill.js",
+            "model": 'https://aimark.nos-eastchina1.126.net/model/tf/google/optimized_model.pb',
+            "label": 'https://aimark.nos-eastchina1.126.net/model/tf/google/weights_manifest.json',
+            "description": 'TensorFlow.js is a JavaScript library for training and deploying ML models in the browser. Loading a pretrained TensorFlow SavedModel into the browser and run inference through TensorFlow.js.',
+            "model_version": 'v1.0',
+            "accuracy": '70.9%',
+            "model_size": '16.9Mb',
+            "paper_url": 'https://arxiv.org/pdf/1704.04861.pdf',
+            'test': {
+              'resolution': '224 x 224 px',
+              'image': ['../img/mobilenet/bee_eater.jpg', '../img/mobilenet/traffic_light.jpg', '../img/mobilenet/pinwheel.jpg']
+            },
+            "platform": [
+              'android',
+              'windows',
+              'linux'
+            ],
+            "browser": [
+              'chrome',
+              'firefox'
+            ]},
         ]
       }
     }

@@ -7,7 +7,7 @@
       </h2>
       <div class='mb'>{{ task.description }}</div>
   
-      <div class="mt ic">
+      <div class="mt ic" v-if="showlog">
         <div v-if="task.model_version">Model Version: {{ task.model_version }}</div>
         <div class="columns mt">
           <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
@@ -31,7 +31,7 @@
             <!-- </div> -->
           </div>
         </div>
-        <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd">
+        <div v-show="showlog" class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd">
           <div v-html='log' class="card" id='log'>
           </div>
           <div class='ir'>
@@ -40,6 +40,59 @@
         </div>
       </div>
  
+       <h2 v-if='showBar' class="is-size-5-desktop is-size-6-mobile is-size-5-tablet ic mt">{{ task.name }} Benchmark</h2>
+      <div class='columns mb' v-if='showBar'>
+        <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
+          <div class="mb mt">
+            <b-table :data="test_result" :bordered="false" :striped="true" :narrowed="false" :hoverable="true" :loading="false" :focusable="true" :mobile-cards="true">
+              <template slot-scope="props">
+                <b-table-column field="backend" label="Backend">
+                    {{ props.row.backend }}
+                </b-table-column>
+
+                <b-table-column field="test_image" label="Test Image">
+                    {{ props.row.test_case }}
+                </b-table-column>
+
+                <b-table-column field="best_probability" label="Best Probability">
+                    {{ props.row.probability }}
+                </b-table-column>
+
+                <b-table-column field="test_result" label="Inference Time">
+                    {{ props.row.test_result }} ms
+                </b-table-column>
+
+                <!-- <b-table-column field="date" label="Date" centered>
+                    <span class="tag is-success">
+                        xxx
+                    </span>
+                </b-table-column> -->
+              </template>
+
+              <template slot="empty">
+                <section class="section">
+                  <div class="content has-text-grey has-text-centered">
+                    <p>
+                      <b-icon icon="emoticon-sad" size="is-large">
+                      </b-icon>
+                    </p>
+                    <p>Nothing here.</p>
+                  </div>
+                </section>
+              </template>
+            </b-table>
+ 
+ 
+          </div>
+        </div>
+        <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
+          <div class="bar-chart mb mt">
+            <ve-histogram v-if='showBar' :data="barData" :settings="chartSettings" class='cmh'></ve-histogram>
+          </div>
+        </div>
+  
+      </div>
+
       <div class='ic mb mt'>
         <button class="button is-primary wd" @click="run">Run {{ task.name }}</button>
       </div>
@@ -54,10 +107,10 @@
   import ClipboardJS from 'clipboard';
   import axios from 'axios-https-proxy-fix';
 
-  import {MobileNet} from '~/static/js/tf/mobilenet.js';
+  import {MobileNet, modelprogress} from '~/static/js/tf/mobilenet.js';
   import {
     finallog,
-    modelprogress,
+    progress,
     testresult,
     bardata,
     init_run
@@ -83,8 +136,9 @@
       }]
     },
     mounted() {
-      setInterval(this.getLog, 100);
+      setInterval(this.getLog, 50);
       setInterval(this.getModelProgress, 100);
+      setInterval(this.getProgress, 100);
       this.scrollToBottom();
       this.progress.max = this.task.backend.length * this.task.test.image.length;
       this.progress_loading.max = 1;
@@ -95,6 +149,7 @@
     },
     destoryed() {
       clearInterval(this.getModelProgress);
+      clearInterval(this.getProgress);
       clearInterval(this.getLog);
     },
     methods: {
@@ -114,8 +169,8 @@
       },
       run: async function() {
         let i = 0;
+        this.showlog = true;
         await init_run();
-        this.progress.value = ++i;
   
         this.test_result = testresult;
         this.showBar = true;
@@ -148,6 +203,9 @@
       getLog: function() {
         this.log = finallog;
       },
+      getProgress: function() {
+        this.progress.value = progress;
+      },
       getModelProgress: function() {
         this.progress_loading.value = modelprogress;
       }
@@ -162,6 +220,7 @@
     },
     data() {
       return {
+        showlog: false,
         showBar: false,
         chartSettings: {
           yAxisType: ['KMB', 'percent'],
@@ -169,10 +228,9 @@
           showLine: ['Probability']
         },
         barData: {
-          columns: ['Test Image', 'WASM Polyfill', 'WebGL2 Polyfill', 'WebML'],
+          columns: ['Test Image', 'WebGL2 Polyfill', 'WebML'],
           rows: [{
               'Test Image': 'traffic_light.jpg',
-              'WASM Polyfill': 0,
               'WebGL2 Polyfill': 0,
               'WebML': 0
             }
@@ -180,7 +238,7 @@
         },
         progress: {
           value: 0,
-          max: 9,
+          max: 1,
         },
         progress_loading: {
           value: 0,
@@ -195,13 +253,13 @@
           "backend": ['WebGL2', 'WebML'],
           "iteration": 4,
           "framework": "webml-polyfill.js",
-          "model": 'http://aimark.nos-eastchina1.126.net/model/mobilenet/zip/mobilenet_v1_1.0_224.tflite',
-          "label": 'http://aimark.nos-eastchina1.126.net/model/mobilenet/labels.txt',
-          "name": 'TensorFlow.js Converter: MobileNet',
+          "model": 'https://aimark.nos-eastchina1.126.net/model/tf/google/optimized_model.pb',
+          "label": 'https://aimark.nos-eastchina1.126.net/model/tf/google/weights_manifest.json',
+          "name": 'Image Classification (MobileNet with TensorFlow.js)',
           "description": 'This demo imports the MobileNet v1.0 model for inference in the browser. The model was pre-converted to TensorFlow.js format.',
           "model_version": 'v1.0',
           "accuracy": '70.9%',
-          "model_size": '16.9Mb',
+          "model_size": '17.1Mb',
           "paper_url": 'https://arxiv.org/pdf/1704.04861.pdf',
           'test': {
             'resolution': '224 x 224 px',
