@@ -8,8 +8,8 @@
       <br>
       <p>
          
-        &copy;2018 AIMark 人工智能基准测试 <br><!-- <nuxt-link to="">WebML Team</nuxt-link> -->
-        <a href="http://www.miitbeian.gov.cn/">沪ICP备17028566号-4</a>
+        &copy;2018 AIMark <!-- 人工智能基准测试 <br>--> <!-- <nuxt-link to="">WebML Team</nuxt-link> -->
+        <!--<a href="http://www.miitbeian.gov.cn/">沪ICP备17028566号-4</a>-->
       </p>
     </div>
   </footer>

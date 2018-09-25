@@ -29,8 +29,8 @@ const INPUT_NODE_NAME = 'input';
 const OUTPUT_NODE_NAME = 'MobilenetV1/Predictions/Reshape_1';
 const SCALAR_DIVISOR = 225 / 2;
 
-const TFJS_MODEL_URL = 'https://aimark.nos-eastchina1.126.net/model/tf/google/optimized_model.pb';
-const WEIGHTS_MANIFEST_URL = 'https://aimark.nos-eastchina1.126.net/model/tf/google/weights_manifest.json';
+// const TFJS_MODEL_URL = 'https://aimark.nos-eastchina1.126.net/model/tf/google/optimized_model.pb';
+// const WEIGHTS_MANIFEST_URL = 'https://aimark.nos-eastchina1.126.net/model/tf/google/weights_manifest.json';
 
 let modelprogress = 0;
 
@@ -39,7 +39,7 @@ export class MobileNet {
     this.PREPROCESS_DIVISOR = tfc.scalar(SCALAR_DIVISOR);
   }
 
-  async load() {
+  async load(TFJS_MODEL_URL, WEIGHTS_MANIFEST_URL) {
     this.model = await loadFrozenModel(TFJS_MODEL_URL, WEIGHTS_MANIFEST_URL);
     modelprogress = 1;
   }

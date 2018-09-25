@@ -69,17 +69,16 @@ class LoggerHTML {
 }
 
 let lh = new LoggerHTML();
-async function start_run() {
+async function start_run(configuration) {
   let imageElement = document.querySelector('#testimage');
 
   let logger = new Logger();
 
   logger.log('Loading MobileNet...');
-  
 
   const mobileNet = new MobileNet();
   logger.time('Loading of model');
-  await mobileNet.load();
+  await mobileNet.load(configuration.model, configuration.label);
   logger.timeEnd('Loading of model');
   const pixels = tfc.fromPixels(imageElement);
 
@@ -88,8 +87,16 @@ async function start_run() {
   const topK = mobileNet.getTopKClasses(result, 5);
   logger.timeEnd('First prediction');
 
+  lh.add(`&nbsp;&nbsp; <i class="mdi mdi-checkbox-blank-circle-outline mdi-12px"></i> Probability:`)
+  let probability = ''
+  let i = 0;
   topK.forEach(x => {
-    logger.log(`${x.value.toFixed(3)}: ${x.label}\n`)
+    logger.log(`${x.label}, ${x.value.toFixed(3)}\n`);
+    if(i==0) {
+      probability = `${x.label}, ${x.value.toFixed(3)}`;
+    }
+    i++;
+    lh.add(`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="mdi mdi-source-commit-local mdi-12px"></i> ${x.label}, ${x.value.toFixed(3)}`)
   });
 
   let elapsed = 0;
@@ -110,34 +117,59 @@ async function start_run() {
   const averageTime = elapsed/iterations;
   let averageText = `Average elapsed time: ${averageTime.toFixed(3)} ms\n`;
   logger.log(averageText);
-  lh.add(`&nbsp;&nbsp; <i class="mdi mdi-checkbox-marked-circle-outline mdi-12px"></i> Average elapsed time: ${averageTime.toFixed(3)} ms`);
+  lh.add(`&nbsp;&nbsp; <i class="mdi mdi-gauge-full mdi-12px"></i> Average elapsed time: ${averageTime.toFixed(3)} ms`);
   mobileNet.dispose();
+
+  addTestResult(configuration, averageTime, probability);
+
   return averageTime;
 }
 
-async function init_run() {
-  let logger = new Logger();
-  logger.group('Use WebGL backend');
-  lh.add('<i class="mdi mdi-coffee-outline mdi-12px"></i> Use WebGL backend');
-  tfc.setBackend('webgl');
-  const webglTime = await start_run();
-  logger.groupEnd();
-  lh.add(`<div></div>`);
-  logger.group('Use WebML backend');
-  lh.add('<i class="mdi mdi-coffee-outline mdi-12px"></i> Use WebML backend');
-  progress = 1;
-  // As WebML POC API only accepts CPU data, so change the
-  // backend to CPU.
-  tfc.setBackend('cpu');
-  const webmlTime = await start_run();
+function addTestResult(configuration, averageTime, probability){
+  let d = {};
+  d['model'] = configuration.modelName;
+  d['model_version'] = configuration.modelVersion;
+  d['backend'] = configuration.backend;
+  d['test_case'] = configuration.image.split('/').pop();
+  d['test_result'] = averageTime.toFixed(3);
+  d['probability'] = probability;
+  d['test_unit'] = 'ms';
+  testresult.push(d);
+}
 
-  const speedupText = `Speedup: ${(webglTime/webmlTime).toFixed(3)}`;
-  logger.log(`${speedupText}`);
-  logger.groupEnd();
-  lh.add(`<div></div>`);
-  lh.add('<i class="mdi mdi-coffee-outline mdi-12px"></i> Result');
-  lh.add(`&nbsp;&nbsp; <i class="mdi mdi-checkbox-marked-circle-outline mdi-12px"></i> WebGL vs WebML backend ${speedupText}`);
-  progress = 2;
+async function init_run(configuration) {
+  let logger = new Logger();
+  let webglTime; 
+  if(configuration.backend.toLowerCase() == 'webgl'){
+    logger.group('Use WebGL backend');
+    lh.add('<i class="mdi mdi-coffee-outline mdi-12px"></i> Use WebGL backend');
+    tfc.setBackend('webgl');
+    webglTime = await start_run(configuration);
+    logger.groupEnd();
+    lh.add(`<div></div>`);
+    progress = 1;
+  }
+
+  if(configuration.backend.toLowerCase() == 'cpu'){
+    // As WebML POC API only accepts CPU data, so change the
+    // backend to CPU.
+    logger.group('Use WebML backend');
+    lh.add('<i class="mdi mdi-coffee-outline mdi-12px"></i> Use WebML backend');
+    tfc.setBackend('cpu');
+    const webmlTime = await start_run(configuration);
+    // const speedupText = `Speedup: ${(webglTime/webmlTime).toFixed(3)}`;
+    // logger.log(`${speedupText}`);
+    logger.groupEnd();
+    lh.add(`<div></div>`);
+    // lh.add('<i class="mdi mdi-coffee-outline mdi-12px"></i> Result');
+    // lh.add(`&nbsp;&nbsp; <i class="mdi mdi-checkbox-marked-circle-outline mdi-12px"></i> WebGL vs WebML backend ${speedupText}`);
+    progress = 2;
+  }
+
+  if(testresult.length > 6) {
+    testresult = testresult.slice(6);
+  }
+
 };
 // imageElement.src = imageURL;
 

@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="columns">
-      <div v-for="task in tasks" :key="task.id" class="column is-mobile is-half-tablet is-half-desktop is-one-fourth-widescreen is-one-third-fullhd">
+      <div v-for="task in tasks" :key="task.id" class="column is-mobile is-half-tablet is-one-third-desktop is-one-fourth-widescreen is-one-fourth-fullhd">
         <b-collapse class="card">
           <div slot="trigger" slot-scope="props" class="card-header">
             <p class="card-header-title">
@@ -39,7 +39,7 @@
           <footer class="card-footer">
             <!-- <nuxt-link class='card-footer-item button is-primary-gradient' :to="{ name: 'test-id', params: { id: task.id } }">Run Test</nuxt-link> -->
             <!-- <nuxt-link class='card-footer-item button is-primary-gradient' :to="'../test/'+ task.page">Run Test</nuxt-link>-->
-            <a class='card-footer-item button is-primary-gradient' :href="'../test/'+ task.model_name">Run Test</a>
+            <a class='card-footer-item button is-primary-gradient' :href="'../test/'+ task.url">Run Test</a>
           </footer>
         </b-collapse>
       </div>
@@ -122,8 +122,8 @@
             "id": 3,
             "name": 'Image Classification（TensorFlow.js)',
             "model_name": 'MobileNet',
-            "url": 'TensorFlow.js',
-            "backend": ['WebGL2', 'WebML'],
+            "url": 'TensorFlow',
+            "backend": ['WebGL', 'WebML'],
             "iteration": 4,
             "framework": "webml-polyfill.js",
             "model": 'https://aimark.nos-eastchina1.126.net/model/tf/google/optimized_model.pb',
@@ -158,6 +158,10 @@
     font-size: 0.95rem;
     margin-bottom: 1.0rem;
   }
+
+  .card-header-title {
+    height: 3rem;
+  }
   
   .lh {
     max-height: 20rem;
@@ -187,7 +191,7 @@
   .is-primary-gradient {
     color: rgba(255, 255, 255, 1.0);
     background: linear-gradient(30deg, rgba(222, 12, 101, 0.7), rgba(222, 12, 101, 0.9));
-    padding: 1.6rem 0 1.6rem 0;
+    padding: 1.5rem 0 1.5rem 0;
   }
   
   .is-primary-gradient:hover {
