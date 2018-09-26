@@ -9,7 +9,7 @@ class MobileNet {
     if (typeof backend !== 'undefined') {
       this._backend = backend;
     } else {
-      if (nnNative) {
+      if (nnNative && getPreferParam() !== 'invalid') {
         this._backend = 'WebML';
       } else {
         this._backend = 'WASM';
@@ -37,7 +37,7 @@ class MobileNet {
 
     await this._model.finish();
     this._compilation = await this._model.createCompilation();
-    this._compilation.setPreference(this._nn.PREFER_FAST_SINGLE_ANSWER);
+    this._compilation.setPreference(getPrefer(this._backend));
     await this._compilation.finish();
     this._execution = await this._compilation.createExecution();
   }
@@ -115,7 +115,7 @@ class MobileNet {
     const FuseCodeMap = new Map([
       [tflite.ActivationFunctionType.NONE, this._nn.FUSED_NONE],
       [tflite.ActivationFunctionType.RELU, this._nn.FUSED_RELU],
-      [tflite.ActivationFunctionType.RELU1, this._nn.FUSED_RELU1],
+      [tflite.ActivationFunctionType.RELU_N1_TO_1, this._nn.FUSED_RELU1],
       [tflite.ActivationFunctionType.RELU6, this._nn.FUSED_RELU6],
     ]);
 
@@ -196,6 +196,17 @@ class MobileNet {
         case tflite.BuiltinOperator.RESHAPE: {
           let options = operator.builtinOptions(new tflite.ReshapeOptions());
           //targetShape is in tensor
+          opType = this._nn.RESHAPE;
+        } break;
+        case tflite.BuiltinOperator.SQUEEZE: {
+          let options = operator.builtinOptions(new tflite.ReshapeOptions());
+          //targetShape is in tensor
+          let tensorType = {type: this._nn.TENSOR_INT32, dimensions: [2]};
+          let tensorId = this._operandIndex++;
+          this._model.addOperand(tensorType);
+          this._tensorIds.push(tensorId);
+          this._model.setOperandValue(tensorId, new Int32Array([1,1001]));
+          inputs.push(tensorId);
           opType = this._nn.RESHAPE;
         } break;
         default: {

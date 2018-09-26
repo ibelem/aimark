@@ -25,6 +25,7 @@ class Logger {
 let finallog = '';
 let modelprogress = 0;
 let probability = null;
+let current_inference;
 
 class LoggerHTML {
   constructor() {
@@ -235,9 +236,10 @@ class WebMLJSBenchmark extends Benchmark {
     for (let i = 0; i < 3; ++i) {
       let prob = sorted[i][0];
       let index = sorted[i][1];
-      lh.add(`&nbsp;&nbsp;&nbsp;&nbsp; <i class="mdi mdi-check mdi-6px"></i> label: ${this.labels[index]}, probability: ${(prob * 100).toFixed(2)}%`);
+      lh.add(`&nbsp;&nbsp;&nbsp;&nbsp; <i class="mdi mdi-source-commit-local mdi-6px"></i> label: ${this.labels[index]}, probability: ${(prob * 100).toFixed(2)}%`);
       if(i == 0) {
         probability = `${this.labels[index]}, ${(prob * 100).toFixed(2)}%`;
+        current_inference = probability;
       }
     }
   }
@@ -374,4 +376,4 @@ bardata.push(bar1)
 bardata.push(bar2)
 bardata.push(bar3)
 
-export { finallog, modelprogress, runMobilenet, testresult, bardata };
+export { finallog, modelprogress, runMobilenet, testresult, bardata, current_inference };

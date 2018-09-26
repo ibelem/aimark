@@ -27,33 +27,14 @@
     </div>
   
     <div id="navMenuColorwhite" class="navbar-menu">
-        <div class="navbar-item has-dropdown is-hoverable">
-          <nuxt-link class="navbar-item" to="../test">
-            Test
-          </nuxt-link>
-          <div class="navbar-dropdown is-boxed">
-            <a class="navbar-item" href="../test/MobileNet">
-              MobileNet
-            </a>
-            <a class="navbar-item" href="../test/SqueezeNet">
-              SqueezeNet
-            </a>
-            <a class="navbar-item" href="../test/TensorFlow">
-              TensorFlow.js
-            </a>
-            <hr class="navbar-divider">
-            <a class="navbar-item" href="">
-              TODO WebDNN and more
-            </a>
-          </div>
-        </div>
       <div class="navbar-end">
-        <!-- <nuxt-link class="navbar-item" to="../benchmark">
+        <nuxt-link class="navbar-item" to="../benchmark">
           Benchmark
         </nuxt-link>
-        <nuxt-link class="navbar-item" to="../ranking">
+        <!--<nuxt-link class="navbar-item" to="../ranking">
           Ranking
         </nuxt-link>
+        -->
         <div class="navbar-item has-dropdown is-hoverable">
           <nuxt-link class="navbar-item" to="../test">
             Test
@@ -62,21 +43,26 @@
             <a class="navbar-item" href="../test/MobileNet">
               MobileNet
             </a>
+            <a class="navbar-item" href="../test/MobileNet2">
+              MobileNetV2
+            </a>
             <a class="navbar-item" href="../test/SqueezeNet">
               SqueezeNet
             </a>
             <a class="navbar-item" href="../test/TensorFlow">
               TensorFlow.js
             </a>
+            <hr class="navbar-divider">
             <a class="navbar-item" href="">
-              WebDNN
+              Todo PoseNet
             </a>
             <hr class="navbar-divider">
             <a class="navbar-item" href="">
-              TODO
+              Todo WebDNN/more
             </a>
           </div>
         </div>
+        <!--
         <nuxt-link class="navbar-item" to="../faq">
           FAQ
         </nuxt-link>
