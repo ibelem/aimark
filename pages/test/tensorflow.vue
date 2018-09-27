@@ -138,9 +138,8 @@
       }]
     },
     mounted() {
-      setInterval(this.getLog, 50);
+      setInterval(this.getLog, 100);
       setInterval(this.getModelProgress, 100);
-      setInterval(this.getProgress, 100);
       this.scrollToBottom();
       this.progress.max = this.task.backend.length * this.task.test.image.length;
       this.progress_loading.max = 1;
@@ -151,7 +150,6 @@
     },
     destoryed() {
       clearInterval(this.getModelProgress);
-      clearInterval(this.getProgress);
       clearInterval(this.getLog);
     },
     methods: {
@@ -172,8 +170,8 @@
       run: async function() {
         let i = 0;
         this.showlog = true;
-        for (let image of this.task.test.image) {
-          for (let item of this.task.backend) {
+        for (let item of this.task.backend) {
+          for (let image of this.task.test.image) {
             let configuration = {
               framework: this.task.framework,
               modelName: this.task.model_name,
@@ -186,6 +184,7 @@
             }
             this.getTestImage = configuration.image;
             await init_run(configuration);
+            this.progress.value = ++i;
           }
         }
         
@@ -234,9 +233,6 @@
       },
       getLog: function() {
         this.log = finallog;
-      },
-      getProgress: function() {
-        this.progress.value = progress;
       },
       getModelProgress: function() {
         this.progress_loading.value = modelprogress;

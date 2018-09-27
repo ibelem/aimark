@@ -120,7 +120,7 @@
     modelprogress,
     testresult,
     bardata,
-    runMobilenet
+    runTest
   } from '~/static/js/testms.js'
   
   
@@ -207,7 +207,7 @@
             };
             this.getBackend = configuration.backend;
             this.getTestImage = configuration.test;
-            await runMobilenet(configuration);
+            await runTest(configuration);
             this.progress.value = ++i;
           }
         }

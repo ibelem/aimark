@@ -132,6 +132,7 @@ function addTestResult(configuration, averageTime, probability){
   d['backend'] = configuration.backend;
   d['test_case'] = configuration.image.split('/').pop();
   d['test_result'] = averageTime.toFixed(3);
+  d['decode_result'] = 'N/A';
   d['probability'] = probability;
   d['test_unit'] = 'ms';
   testresult.push(d);

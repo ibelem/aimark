@@ -101,7 +101,7 @@
     current_inference,
     testresult,
     bardata,
-    runMobilenet
+    runTest
   } from '~/static/js/testms.js'
 
   export default {
@@ -196,7 +196,7 @@
             _this.running.backend = task.backend;
             _this.running.test_image = image;
             _this.current_inference = current_inference;
-            await runMobilenet(configuration);
+            await runTest(configuration);
             this.progress.value = ++i;
           }
         }

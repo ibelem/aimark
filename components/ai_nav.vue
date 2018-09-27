@@ -27,14 +27,15 @@
     </div>
   
     <div id="navMenuColorwhite" class="navbar-menu">
+      <div class="navbar-start">
+      </div>
       <div class="navbar-end">
         <nuxt-link class="navbar-item" to="../benchmark">
           Benchmark
         </nuxt-link>
-        <!--<nuxt-link class="navbar-item" to="../ranking">
+        <nuxt-link class="navbar-item" to="../ranking">
           Ranking
         </nuxt-link>
-        -->
         <div class="navbar-item has-dropdown is-hoverable">
           <nuxt-link class="navbar-item" to="../test">
             Test
@@ -52,9 +53,8 @@
             <a class="navbar-item" href="../test/TensorFlow">
               TensorFlow.js
             </a>
-            <hr class="navbar-divider">
-            <a class="navbar-item" href="">
-              Todo PoseNet
+            <a class="navbar-item" href="../test/PoseNet">
+              PoseNet
             </a>
             <hr class="navbar-divider">
             <a class="navbar-item" href="">
@@ -62,14 +62,12 @@
             </a>
           </div>
         </div>
-        <!--
         <nuxt-link class="navbar-item" to="../faq">
           FAQ
         </nuxt-link>
         <nuxt-link class="navbar-item" to="../about">
           About
         </nuxt-link>
-        -->
       </div>
     </div>
   </nav>

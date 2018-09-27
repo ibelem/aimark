@@ -22,16 +22,15 @@
       </div>
   
       <div class="columns mt">
-        <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
+        <div class="column ic">
           <div class="card is ic">
-            <canvas class="testimage"></canvas>
-            <!-- <div v-for="u in task.test_images.image" :key="u.id"> -->
-            <!-- <img id='image' v-if="u" :src="u" alt="Test Image"> -->
-            <img id='testimage' v-show='getTestImage' :src="getTestImage" alt="Test Image">
-            <!-- </div> -->
+              <canvas id="poseCanvas" width="513" height="513"></canvas>
+              <canvas id="poseCanvasPredict" width="513" height="513"></canvas>
+              <canvas id="canvas" width="513" height="513"></canvas>
+              <img id='image' v-show='getTestImage' :src="getTestImage" alt="Test Image"> 
           </div>
         </div>
-        <div v-show="getBackend" class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd">
+        <div v-show="getBackend" class="column">
           <div v-html='log' class="card" id='log'>
           </div>
           <div class='ir'>
@@ -54,8 +53,8 @@
                     {{ props.row.test_case }}
                 </b-table-column>
 
-                <b-table-column field="best_probability" label="Best Probability">
-                    {{ props.row.probability }}
+                <b-table-column field="decode_result" label="Decode Time">
+                    {{ props.row.decode_result }} ms
                 </b-table-column>
 
                 <b-table-column field="test_result" label="Inference Time">
@@ -109,6 +108,7 @@
     finallog,
     modelprogress,
     testresult,
+    posenetbase64,
     bardata,
     runTest
   } from '~/static/js/testms.js'
@@ -144,6 +144,26 @@
         },
         {
           src: '../js/mobilenet/MobileNet.js',
+          defer: true
+        },
+        {
+          src: '../js/posenet/decodePose.js',
+          defer: true
+        },
+                {
+          src: '../js/posenet/helperFunc.js',
+          defer: true
+        },
+                {
+          src: '../js/posenet/utils.js',
+          defer: true
+        },
+                {
+          src: '../js/posenet/PoseNet.js',
+          defer: true
+        },
+                {
+          src: '../js/posenet/DrawOutputs.js',
           defer: true
         }
       ],
@@ -215,6 +235,7 @@
             
             this.progress.value = ++i;
           }
+          this.getTestImage = posenetbase64;
         }
   
         this.test_result = testresult;
@@ -297,7 +318,7 @@
         },
         progress: {
           value: 0,
-          max: 9,
+          max: 3,
         },
         progress_loading: {
           value: 0,
@@ -309,21 +330,21 @@
         getTestImage: '',
         task: {
           "id": 1,
-          "model_name": 'MobileNet',
-          "backend": ['WASM', 'WebGL2', 'WebML'],
+          "model_name": 'PoseNet',
+          "backend": ['WASM', 'WebGL2'],
           "iteration": 4,
           "framework": "webml-polyfill.js",
-          "model": 'https://aimark.nos-eastchina1.126.net/model/mobilenet/mobilenet_v2_1.0_224.tflite',
-          "label": 'https://aimark.nos-eastchina1.126.net/model/mobilenet/labels.txt',
-          "name": 'Image Classification (MobileNetV2)',
-          "description": 'MobileNetV2 improves the state of the art performance of mobile models. Loading MobileNet model trained by ImageNet in TensorFlow Lite format, constructs and inferences it by WebML API.',
-          "model_version": 'v2.0_224',
-          "accuracy": '71.8%',
-          "model_size": '14.0Mb',
-          "paper_url": 'https://arxiv.org/abs/1801.04381',
+          "model": 'http://aimark.nos-eastchina1.126.net/model/posenet/',
+          "label": 'http://aimark.nos-eastchina1.126.net/model/posenet/',
+          "name": 'Pose Detection (PoseNet)',
+          "description": 'PoseNet is able to estimate your location and orientation from a single colour image. This task loads a pretrained PoseNet model, constructs and infers it by WebML API.',
+          "model_version": 'v1.101',
+          "accuracy": '%',
+          "model_size": '13.3Mb',
+          "paper_url": 'https://arxiv.org/abs/1505.07427',
           'test': {
-            'resolution': '224 x 224 px',
-            'image': ['../img/mobilenet/bee_eater.jpg', '../img/mobilenet/traffic_light.jpg', '../img/mobilenet/pinwheel.jpg']
+            'resolution': '513 x 513 px',
+            'image': ['../img/posenet/tennis_in_crowd.jpg']
           },
           "platform": [
             'android',
@@ -341,4 +362,59 @@
 </script>
 
 <style scoped>
+img,
+.is {
+  width: 513px !important;
+  height: 513px !important;
+}
+
+.image {
+  width: 513px !important;
+  height: 513px !important;
+  /* display: none !important; */
+}
+
+#poseCanvasPredict, #poseCanvas, #canvas {
+ display: none; 
+}
+
+.wd { 
+  width: 336px;
+ }
+
+#log {
+  height: 513px;
+  max-height: 513px;
+}
+
+.cmh,
+.cmh canvas {
+  max-height: 380px !important;
+}
+
+@media (max-width: 768px) {
+  img,
+  .is {
+    width: 513px !important;
+    height: 513px !important;
+  }
+  .image {
+    width: 513px !important;
+    height: 513px !important;
+    /* display: none !important; */
+  }
+
+  #log {
+    height: 112px;
+    max-height: 112px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding: 1rem;
+  }
+
+  .cmh,
+  .cmh canvas {
+    max-height: 320px !important;
+  }
+}
 </style>

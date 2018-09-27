@@ -19,7 +19,7 @@
               <ul>
                 <li>Neural Network: {{ task.model_name }} {{ task.model_version }}</li>
                 <li>Model Size: {{ task.model_size }}</li>
-                <li>Image Resolution: 224 x 224</li>
+                <li>Image Resolution: {{ task.test.resolution }}</li>
                 <li>Accuracy: {{ task.accuracy }}</li>
                 <li>Backend: <span v-for="(b, index) in task.backend" :key="index">{{ b }} </span> </li>
               </ul>
@@ -66,7 +66,7 @@
               <ul>
                 <li>Neural Network: {{ task.model_name }} {{ task.model_version }}</li>
                 <li>Model Size: {{ task.model_size }}</li>
-                <li>Image Resolution: 224 x 224</li>
+                <li>Image Resolution: {{ task.test.resolution }}</li>
                 <li>Accuracy: {{ task.accuracy }}</li>
                 <li>Backend: <span v-for="(b, index) in task.backend" :key="index">{{ b }} </span> </li>
               </ul>
@@ -228,24 +228,24 @@
               'firefox'
             ]},
                       {
-            "id": 4,
+            "id": 5,
             "category": 'Visual Localisation',
             "name": 'Pose Detection (PoseNet)',
             "model_name": 'PoseNet',
-            "url": 'TensorFlow',
-            "backend": ['WebGL', 'WebML'],
+            "url": 'PoseNet',
+            "backend": ['WASM', 'WebGL2', 'WebML'],
             "iteration": 4,
-            "framework": "webml-polyfill.js",
-            "model": 'https://aimark.nos-eastchina1.126.net/model/tf/google/optimized_model.pb',
-            "label": 'https://aimark.nos-eastchina1.126.net/model/tf/google/weights_manifest.json',
+            "model": 'http://aimark.nos-eastchina1.126.net/model/posenet/',
+            "label": 'http://aimark.nos-eastchina1.126.net/model/posenet/',
+            "name": 'Pose Detection (PoseNet)',
             "description": 'PoseNet is able to estimate your location and orientation from a single colour image. This task loads a pretrained PoseNet model, constructs and infers it by WebML API.',
-            "model_version": 'v1.0',
-            "accuracy": '70.9%',
-            "model_size": '16.9Mb',
-            "paper_url": 'https://arxiv.org/pdf/1704.04861.pdf',
+            "model_version": 'v1.101',
+            "accuracy": '%',
+            "model_size": '13.3Mb',
+            "paper_url": 'https://arxiv.org/abs/1505.07427',
             'test': {
-              'resolution': '224 x 224 px',
-              'image': ['../img/mobilenet/bee_eater.jpg', '../img/mobilenet/traffic_light.jpg', '../img/mobilenet/pinwheel.jpg']
+              'resolution': '513 x 513 px',
+              'image': ['../img/posenet/tennis_in_crowd.jpg']
             },
             "platform": [
               'android',
