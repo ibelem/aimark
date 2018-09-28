@@ -30,6 +30,7 @@
             <img id='testimage' v-show='getTestImage' :src="getTestImage" alt="Test Image">
             <!-- </div> -->
           </div>
+          <div>{{ current_inference }}</div>
         </div>
         <div v-show="getBackend" class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd">
           <div v-html='log' class="card" id='log'>
@@ -41,9 +42,9 @@
       </div>
  
       <h2 v-if='showBar' class="is-size-5-desktop is-size-6-mobile is-size-5-tablet ic mt">{{ task.name }} Benchmark</h2>
-      <div class='columns mb' v-if='showBar'>
+      <div class='columns' v-if='showBar'>
         <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
-          <div class="mb mt">
+          <div class="mt">
             <b-table :data="test_result" :bordered="false" :striped="true" :narrowed="false" :hoverable="true" :loading="false" :focusable="true" :mobile-cards="true">
               <template slot-scope="props">
                 <b-table-column field="backend" label="Backend">
@@ -86,13 +87,13 @@
           </div>
         </div>
         <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
-          <div class="bar-chart mb mt">
+          <div class="bar-chart mt">
             <ve-histogram v-if='showBar' :data="barData" :settings="chartSettings" class='cmh'></ve-histogram>
           </div>
         </div>
   
       </div>
-      <div class='ic mb mt'>
+      <div class='ic mb'>
         <button class="button is-primary wd" @click="run">Run {{ task.name }}</button>
       </div>
     </div>
@@ -109,6 +110,7 @@
     finallog,
     modelprogress,
     testresult,
+    current_inference,
     bardata,
     runTest
   } from '~/static/js/testms.js'
@@ -168,6 +170,9 @@
       clearInterval(this.getLog);
     },
     methods: {
+      timeout: function (ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      },
       uniqueList: function(array) {
         var r = [];
         for (var i = 0, l = array.length; i < l; i++) {
@@ -193,8 +198,10 @@
       },
       run: async function() {
         let i = 0;
+        let _this = this;
         for (let item of this.task.backend) {
           for (let image of this.task.test.image) {
+            this.current_inference = '';
             let framework = this.task.framework;
             if(item == 'WebML') {
               framework = 'Web ML API'
@@ -212,8 +219,10 @@
             this.getBackend = configuration.backend;
             this.getTestImage = configuration.image;
             await runTest(configuration);
-            
+            this.current_inference = current_inference;
+            await this.timeout(500);
             this.progress.value = ++i;
+
           }
         }
   
@@ -226,8 +235,7 @@
         t['WASM Polyfill'] = 0;
         t['WebGL2 Polyfill'] = 0;
         t['WebML'] = 0;
-        
-        let _this = this;
+      
         this.task.test.image.map((image) => {
           for (let item of testresult) {
             if (item.test_case == image.split('/').pop()) {
@@ -280,6 +288,7 @@
     data() {
       return {
         showBar: false,
+        current_inference: '',
         chartSettings: {
           yAxisType: ['KMB', 'percent'],
           yAxisName: ['ms', ''],
@@ -313,8 +322,10 @@
           "backend": ['WASM', 'WebGL2', 'WebML'],
           "iteration": 4,
           "framework": "webml-polyfill.js",
-          "model": 'https://aimark.nos-eastchina1.126.net/model/mobilenet/mobilenet_v1_1.0_224.tflite',
-          "label": 'https://aimark.nos-eastchina1.126.net/model/mobilenet/labels.txt',
+          "model": '../model/mobilenet/mobilenet_v1_1.0_224.tflite',
+          "label": '../model/mobilenet/labels.txt',
+          // "model": 'https://aimark.nos-eastchina1.126.net/model/mobilenet/mobilenet_v1_1.0_224.tflite',
+          // "label": 'https://aimark.nos-eastchina1.126.net/model/mobilenet/labels.txt',
           "name": 'Image Classification (MobileNet)',
           "description": 'An efficient Convolutional Neural Networks for Mobile Vision Applications. Loading MobileNet model trained by ImageNet in TensorFlow Lite format, constructs and inferences it by WebML API.',
           "model_version": 'v1.0_224',

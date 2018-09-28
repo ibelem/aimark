@@ -5,8 +5,8 @@
         <button class="button is-primary wd" @click="run">Run Benchmark</button>
     </div>
     <section class="section" v-if="showtask">
-      <h2 class="has-text-primary is-size-5-desktop is-size-6-mobile is-size-5-tablet">
-        {{ running.name }} <span v-if="running.model_version">{{ running.model_version }}</span>
+      <h2 class="has-text-primary is-size-5-desktop is-size-7-mobile is-size-5-tablet">
+        Task {{ running.id }}: {{ running.name }} <span v-if="running.model_version">{{ running.model_version }}</span>
       </h2>
  
       <div class="mt ic" v-if="running.backend">
@@ -100,9 +100,19 @@
     modelprogress,
     current_inference,
     testresult,
+    testresultforbenchmark,
     bardata,
     runTest
   } from '~/static/js/testms.js'
+
+  import {
+    tf_finallog,
+    tf_progress,
+    tf_current_inference,
+    tf_testresultforbenchmark,
+    tf_testresult,
+    tf_init_run
+  } from '~/static/js/tf/index.js';
 
   export default {
     components: {
@@ -163,19 +173,61 @@
       clearInterval(this.getModelProgress);
     },
     methods: {
+      timeout: function (ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      },
       getModelProgress: function() {
         this.progress_loading.value = modelprogress;
       },
       orc: async function(k) {
         this.showtask = false;
         let task = this.tasks[k];
-        let _this = this;
         
         this.showtask = true;
         let i = 0;
         for (let item of task.backend) {
           for (let image of task.test.image) {
-            _this.current_inference = '';
+            this.current_inference = '';
+            let framework = task.framework;
+            if(item == 'WebML') {
+              framework = 'Web ML API';
+            }
+            let configuration = {
+              id: task.id,
+              framework: framework,
+              modelName: task.model_name,
+              modelVersion: task.model_version,
+              backend: item,
+              iteration: task.iteration,
+              model: task.model,
+              label: task.label,
+              image: image,
+            };
+            this.running.id = task.id;
+            this.running.name = task.name;
+            this.running.model = task.model_name;
+            this.running.model_version =task.model_version;
+            this.running.backend = task.backend;
+            this.running.test_image = image;
+            await runTest(configuration);
+            this.current_inference = current_inference;
+            await this.timeout(2000);
+            this.progress.value = ++i;
+          }
+        }
+  
+        this.test_result = testresultforbenchmark;
+        this.showresult = true;
+      },
+      tf: async function(k) {
+        this.showtask = false;
+        let task = this.tasks[k];
+        
+        this.showtask = true;
+        let i = 0;
+        for (let item of task.backend) {
+          for (let image of task.test.image) {
+            this.current_inference = '';
             let framework = task.framework;
             if(item == 'WebML') {
               framework = 'Web ML API';
@@ -190,24 +242,27 @@
               label: task.label,
               image: image,
             };
-            _this.running.name = task.name;
-            _this.running.model = task.model_name;
-            _this.running.model_version =task.model_version;
-            _this.running.backend = task.backend;
-            _this.running.test_image = image;
-            _this.current_inference = current_inference;
-            await runTest(configuration);
+            this.running.name = task.name;
+            this.running.model = task.model_name;
+            this.running.model_version =task.model_version;
+            this.running.backend = task.backend;
+            this.running.test_image = image;
+            await tf_init_run(configuration);
+            this.current_inference = tf_current_inference;
+            await this.timeout(2000);
             this.progress.value = ++i;
           }
         }
   
-        this.test_result = testresult;
+        this.test_result = tf_testresultforbenchmark;
         this.showresult = true;
       },
       run: async function() {
+        // await this.tf(3)
         await this.orc(0)
         await this.orc(1)
         await this.orc(2)
+       
       }
     },
     computed: {
@@ -233,6 +288,7 @@
         showresult: false,
         current_inference: '',
         running: { 
+          'id': '',
           'name': '',
           'model': '',
           'model_version': '',
@@ -242,14 +298,14 @@
         tasks: [{
             "id": 1,
             "category": 'Object Recognition / Classification',
-            "name": 'Image (MobileNet)',
+            "name": 'Image Classification (MobileNet)',
             "model_name": 'MobileNet',
             "url": 'MobileNet',
             "backend": ['WASM', 'WebGL2', 'WebML'],
             "iteration": 4,
             "framework": "webml-polyfill.js",
-            "model": 'https://aimark.nos-eastchina1.126.net/model/mobilenet/zip/mobilenet_v1_1.0_224.tflite',
-            "label": 'https://aimark.nos-eastchina1.126.net/model/mobilenet/labels.txt',
+            "model": '../model/mobilenet/zip/mobilenet_v1_1.0_224.tflite',
+            "label": '../model/mobilenet/labels.txt',
             "description": 'An efficient Convolutional Neural Networks for Mobile Vision Applications. Loading MobileNet model trained by ImageNet in TensorFlow Lite format, constructs and inferences it by WebML API.',
             "model_version": 'v1.0',
             "accuracy": '70.9%',
@@ -271,14 +327,14 @@
             {
             "id": 2,
             "category": 'Object Recognition / Classification',
-            "name": 'Image (MobileNetV2)',
+            "name": 'Image Classification (MobileNetV2)',
             "model_name": 'MobileNet',
             "url": 'MobileNet2',
             "backend": ['WASM', 'WebGL2', 'WebML'],
             "iteration": 4,
             "framework": "webml-polyfill.js",
-            "model": 'https://aimark.nos-eastchina1.126.net/model/mobilenet/mobilenet_v2_1.0_224.tflite',
-            "label": 'https://aimark.nos-eastchina1.126.net/model/mobilenet/labels.txt',
+            "model": '../model/mobilenet/mobilenet_v2_1.0_224.tflite',
+            "label": '../model/mobilenet/labels.txt',
             "description": 'MobileNetV2 improves the state of the art performance of mobile models. Loading MobileNet model v2.0 trained by ImageNet in TensorFlow Lite format, constructs and inferences it by WebML API. ',
             "model_version": 'v2.0',
             "accuracy": '71.8%',
@@ -300,14 +356,14 @@
             {
             "id": 3,
             "category": 'Object Recognition / Classification',
-            "name": 'Image (SqueezeNet)',
+            "name": 'Image Classification (SqueezeNet)',
             "model_name": 'SqueezeNet',
             "url": 'SqueezeNet',
             "backend": ['WASM', 'WebGL2', 'WebML'],
             "iteration": 4,
             "framework": "webml-polyfill.js",
-            "model": 'https://aimark.nos-eastchina1.126.net/model/squeezenet/model.onnx',
-            "label": 'https://aimark.nos-eastchina1.126.net/model/squeezenet/labels.json',
+            "model": '../model/squeezenet/model.onnx',
+            "label": '../model/squeezenet/labels.json',
             "description": 'A light-weight CNN providing Alexnet level accuracy with 50X fewer parameters. Loading SqueezeNet model trained by ImageNet in ONNX format, constructs and inferences it by WebML API.',
             "model_version": 'v1.1',
             "accuracy": '56.34%',
@@ -334,14 +390,14 @@
           {
             "id": 4,
             "category": 'Object Recognition / Classification',
-            "name": 'Image（TensorFlow.js)',
+            "name": 'Image Classification（TensorFlow.js)',
             "model_name": 'MobileNet',
             "url": 'TensorFlow',
             "backend": ['WebGL', 'WebML'],
             "iteration": 4,
             "framework": "webml-polyfill.js",
-            "model": 'https://aimark.nos-eastchina1.126.net/model/tf/google/optimized_model.pb',
-            "label": 'https://aimark.nos-eastchina1.126.net/model/tf/google/weights_manifest.json',
+            "model": '../model/tf/google/optimized_model.pb',
+            "label": '../model/tf/google/weights_manifest.json',
             "description": 'TensorFlow.js is a JavaScript library for training and deploying ML models in the browser. Loading a pretrained TensorFlow SavedModel into the browser and run inference through TensorFlow.js.',
             "model_version": 'v1.0',
             "accuracy": '70.9%',
@@ -361,7 +417,7 @@
               'firefox'
             ]},
                       {
-            "id": 4,
+            "id": 5,
             "category": 'Visual Localisation',
             "name": 'Pose Detection (PoseNet)',
             "model_name": 'PoseNet',
@@ -369,8 +425,8 @@
             "backend": ['WebGL', 'WebML'],
             "iteration": 4,
             "framework": "webml-polyfill.js",
-            "model": 'https://aimark.nos-eastchina1.126.net/model/tf/google/optimized_model.pb',
-            "label": 'https://aimark.nos-eastchina1.126.net/model/tf/google/weights_manifest.json',
+            "model": '../model/tf/google/optimized_model.pb',
+            "label": '../model/tf/google/weights_manifest.json',
             "description": 'PoseNet is able to estimate your location and orientation from a single colour image. This task loads a pretrained PoseNet model, constructs and infers it by WebML API.',
             "model_version": 'v1.0',
             "accuracy": '70.9%',
@@ -404,5 +460,7 @@
     font-weight: ２00;
     font-size: 1rem;
   }
-  
+
+  .mb { margin-bottom: 1rem; }
+  .mt { margin-top: 1rem; }
 </style>

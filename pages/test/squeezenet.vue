@@ -30,6 +30,7 @@
             <img id='testimage' :src="getTestImage" alt="Test Image">
             <!-- </div> -->
           </div>
+          <div>{{ current_inference }}</div>
         </div>
         <div v-show="getBackend" class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd">
           <div v-html='log' class="card" id='log'>
@@ -43,10 +44,10 @@
       </div>
  
       <h2 v-if='showBar' class="is-size-5-desktop is-size-6-mobile is-size-5-tablet ic mt">{{ task.name }} Benchmark</h2>
-      <div class='columns mb' v-if='showBar'>
+      <div class='columns' v-if='showBar'>
   
         <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
-          <div class="mb mt">
+          <div class="mt">
   
             <b-table :data="test_result" :bordered="false" :striped="true" :narrowed="false" :hoverable="true" :loading="false" :focusable="true" :mobile-cards="true">
   
@@ -91,13 +92,13 @@
           </div>
         </div>
         <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
-          <div class="bar-chart mb mt">
+          <div class="bar-chart mt">
             <ve-histogram v-if='showBar' :data="barData" :settings="chartSettings" class='cmh'></ve-histogram>
           </div>
         </div>
   
       </div>
-      <div class='ic mb mt'>
+      <div class='ic mb'>
         <button class="button is-primary wd" @click="run">
                                         Run {{ task.name }}
                                       </button>
@@ -115,6 +116,7 @@
   import {
     finallog,
     modelprogress,
+    current_inference,
     testresult,
     bardata,
     runTest
@@ -189,6 +191,9 @@
       clearInterval(this.getLog);
     },
     methods: {
+      timeout: function (ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      },
       uniqueList: function(array) {
         var r = [];
         for (var i = 0, l = array.length; i < l; i++) {
@@ -216,6 +221,7 @@
         let i = 0;
         for (let item of this.task.backend) {
           for (let image of this.task.test.image) {
+            this.current_inference = '';
             let framework = this.task.framework
             if(item == 'WebML') {
               framework = 'Web ML API'
@@ -233,6 +239,8 @@
             this.getBackend = configuration.backend;
             this.getTestImage = configuration.image;
             await runTest(configuration);
+            this.current_inference = current_inference;
+            await this.timeout(500);
             this.progress.value = ++i;
           }
         }
@@ -299,6 +307,7 @@
     data() {
       return {
         showBar: false,
+        current_inference: '',
         chartSettings: {
           yAxisType: ['KMB', 'percent'],
           yAxisName: ['ms', ''],
@@ -332,8 +341,10 @@
           "backend": ['WASM', 'WebGL2', 'WebML'],
           "iteration": 4,
           "framework": "webml-polyfill.js",
-          "model": 'https://aimark.nos-eastchina1.126.net/model/squeezenet/model.onnx',
-          "label": 'https://aimark.nos-eastchina1.126.net/model/squeezenet/labels.json',
+          "model": '../model/squeezenet/model.onnx',
+          "label": '../model/squeezenet/labels.json',
+          // "model": 'https://aimark.nos-eastchina1.126.net/model/squeezenet/model.onnx',
+          // "label": 'https://aimark.nos-eastchina1.126.net/model/squeezenet/labels.json',
           "name": 'Image Classification (SqueezeNet)',
           "description": 'A light-weight CNN providing Alexnet level accuracy with 50X fewer parameters. Loading SqueezeNet model trained by ImageNet in ONNX format, constructs and inferences it by WebML API.',
           "model_version": 'v1.1',

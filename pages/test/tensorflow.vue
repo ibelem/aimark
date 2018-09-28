@@ -30,6 +30,7 @@
             <img id='testimage' v-show='getTestImage' :src="getTestImage" alt="Test Image">
             <!-- </div> -->
           </div>
+          <div>{{ tf_current_inference }}</div>
         </div>
         <div v-show="showlog" class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd">
           <div v-html='log' class="card" id='log'>
@@ -41,9 +42,9 @@
       </div>
   
       <h2 v-if='showBar' class="is-size-5-desktop is-size-6-mobile is-size-5-tablet ic mt">{{ task.name }} Benchmark</h2>
-      <div class='columns mb' v-if='showBar'>
+      <div class='columns' v-if='showBar'>
         <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
-          <div class="mb mt">
+          <div class="mt">
             <b-table :data="test_result" :bordered="false" :striped="true" :narrowed="false" :hoverable="true" :loading="false" :focusable="true" :mobile-cards="true">
               <template slot-scope="props">
                   <b-table-column field="backend" label="Backend">
@@ -86,14 +87,14 @@
           </div>
         </div>
         <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
-          <div class="bar-chart mb mt">
+          <div class="bar-chart mt">
             <ve-histogram v-if='showBar' :data="barData" :settings="chartSettings" class='cmh'></ve-histogram>
           </div>
         </div>
   
       </div>
 
-      <div class='ic mb mt'>
+      <div class='ic mb'>
         <button class="button is-primary wd" @click="run">Run {{ task.name }}</button>
       </div>
     </div>
@@ -112,11 +113,11 @@
     modelprogress
   } from '~/static/js/tf/mobilenet.js';
   import {
-    finallog,
-    progress,
-    testresult,
-    bardata,
-    init_run
+    tf_finallog,
+    tf_progress,
+    tf_current_inference,
+    tf_testresult,
+    tf_init_run
   } from '~/static/js/tf/index.js';
   
   
@@ -153,6 +154,9 @@
       clearInterval(this.getLog);
     },
     methods: {
+      timeout: function (ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      },
       scrollToBottom: function() {
         this.$nextTick(() => {
           var container = this.$el.querySelector("#log");
@@ -172,6 +176,7 @@
         this.showlog = true;
         for (let item of this.task.backend) {
           for (let image of this.task.test.image) {
+            this.tf_current_inference = '';
             let configuration = {
               framework: this.task.framework,
               modelName: this.task.model_name,
@@ -183,13 +188,15 @@
               image: image,
             }
             this.getTestImage = configuration.image;
-            await init_run(configuration);
+            await tf_init_run(configuration);
+            this.tf_current_inference = tf_current_inference;
+            await this.timeout(500);
             this.progress.value = ++i;
           }
         }
         
   
-        this.test_result = testresult;
+        this.test_result = tf_testresult;
         this.showBar = true;
   
         this.barData.rows = [];
@@ -200,7 +207,7 @@
   
         let _this = this;
         this.task.test.image.map((image) => {
-          for (let item of testresult) {
+          for (let item of tf_testresult) {
             if (item.test_case == image.split('/').pop()) {
               t['Test Image'] = item.test_case;
               if (item.backend.toLowerCase() == 'webgl') {
@@ -232,7 +239,7 @@
         // }));
       },
       getLog: function() {
-        this.log = finallog;
+        this.log = tf_finallog;
       },
       getModelProgress: function() {
         this.progress_loading.value = modelprogress;
@@ -250,6 +257,7 @@
       return {
         showlog: false,
         showBar: false,
+        tf_current_inference: '',
         chartSettings: {
           yAxisType: ['KMB', 'percent'],
           yAxisName: ['ms', ''],
@@ -280,8 +288,10 @@
           "backend": ['WebGL', 'CPU'],
           "iteration": 4,
           "framework": "webml-polyfill.js",
-          "model": 'https://aimark.nos-eastchina1.126.net/model/tf/google/optimized_model.pb',
-          "label": 'https://aimark.nos-eastchina1.126.net/model/tf/google/weights_manifest.json',
+          "model": '../model/tf/google/optimized_model.pb',
+          "label": '../model/tf/google/weights_manifest.json',
+          // "model": 'https://aimark.nos-eastchina1.126.net/model/tf/google/optimized_model.pb',
+          // "label": 'https://aimark.nos-eastchina1.126.net/model/tf/google/weights_manifest.json',
           "name": 'Image Classification (MobileNet + TensorFlow.js)',
           "description": 'This demo imports the MobileNet v1.0 model for inference in the browser. The model was pre-converted to TensorFlow.js format.',
           "model_version": 'v1.0',

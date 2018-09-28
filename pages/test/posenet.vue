@@ -23,11 +23,11 @@
   
       <div class="columns mt">
         <div class="column ic">
-          <div class="card is ic">
+          <div class="card is ic noborder">
               <canvas id="poseCanvas" width="513" height="513"></canvas>
               <canvas id="poseCanvasPredict" width="513" height="513"></canvas>
-              <canvas id="canvas" width="513" height="513"></canvas>
-              <img id='image' v-show='getTestImage' :src="getTestImage" alt="Test Image"> 
+              <canvas class="testimage"></canvas>
+              <img id='testimage' v-show='getTestImage' :src="getTestImage" alt="Test Image"> 
           </div>
         </div>
         <div v-show="getBackend" class="column">
@@ -40,9 +40,9 @@
       </div>
  
       <h2 v-if='showBar' class="is-size-5-desktop is-size-6-mobile is-size-5-tablet ic mt">{{ task.name }} Benchmark</h2>
-      <div class='columns mb' v-if='showBar'>
+      <div class='columns' v-if='showBar'>
         <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
-          <div class="mb mt">
+          <div class="mt">
             <b-table :data="test_result" :bordered="false" :striped="true" :narrowed="false" :hoverable="true" :loading="false" :focusable="true" :mobile-cards="true">
               <template slot-scope="props">
                 <b-table-column field="backend" label="Backend">
@@ -85,13 +85,13 @@
           </div>
         </div>
         <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
-          <div class="bar-chart mb mt">
+          <div class="bar-chart mt">
             <ve-histogram v-if='showBar' :data="barData" :settings="chartSettings" class='cmh'></ve-histogram>
           </div>
         </div>
   
       </div>
-      <div class='ic mb mt'>
+      <div class='ic mb '>
         <button class="button is-primary wd" @click="run">Run {{ task.name }}</button>
       </div>
     </div>
@@ -188,6 +188,9 @@
       clearInterval(this.getLog);
     },
     methods: {
+      timeout: function (ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      },
       uniqueList: function(array) {
         var r = [];
         for (var i = 0, l = array.length; i < l; i++) {
@@ -232,10 +235,11 @@
             this.getBackend = configuration.backend;
             this.getTestImage = configuration.image;
             await runTest(configuration);
-            
             this.progress.value = ++i;
+            this.getTestImage = posenetbase64;
+            await this.timeout(2000);
           }
-          this.getTestImage = posenetbase64;
+          
         }
   
         this.test_result = testresult;
@@ -318,7 +322,7 @@
         },
         progress: {
           value: 0,
-          max: 3,
+          max: 4,
         },
         progress_loading: {
           value: 0,
@@ -334,8 +338,10 @@
           "backend": ['WASM', 'WebGL2'],
           "iteration": 4,
           "framework": "webml-polyfill.js",
-          "model": 'http://aimark.nos-eastchina1.126.net/model/posenet/',
-          "label": 'http://aimark.nos-eastchina1.126.net/model/posenet/',
+          "model": '../model/posenet/',
+          "label": '../model/posenet/',
+          // "model": 'http://aimark.nos-eastchina1.126.net/model/posenet/',
+          // "label": 'http://aimark.nos-eastchina1.126.net/model/posenet/',
           "name": 'Pose Detection (PoseNet)',
           "description": 'PoseNet is able to estimate your location and orientation from a single colour image. This task loads a pretrained PoseNet model, constructs and infers it by WebML API.',
           "model_version": 'v1.101',
@@ -344,7 +350,7 @@
           "paper_url": 'https://arxiv.org/abs/1505.07427',
           'test': {
             'resolution': '513 x 513 px',
-            'image': ['../img/posenet/tennis_in_crowd.jpg']
+            'image': ['../img/posenet/ski.jpg', '../img/posenet/tennis_in_crowd.jpg']
           },
           "platform": [
             'android',
@@ -374,13 +380,14 @@ img,
   /* display: none !important; */
 }
 
-#poseCanvasPredict, #poseCanvas, #canvas {
- display: none; 
+.testimage {
+  width: 513px !important;
+  height: 513px !important;
 }
 
-.wd { 
-  width: 336px;
- }
+#poseCanvasPredict, #poseCanvas, .testimage {
+ display: none; 
+}
 
 #log {
   height: 513px;
@@ -395,13 +402,17 @@ img,
 @media (max-width: 768px) {
   img,
   .is {
-    width: 513px !important;
-    height: 513px !important;
+    width: auto !important;
+    height: auto !important;
   }
   .image {
-    width: 513px !important;
-    height: 513px !important;
+    width: auto !important;
+    height: auto !important;
     /* display: none !important; */
+  }
+
+  .noborder {
+    box-shadow: 0 0px 0px rgba(10, 10, 10, 0.1), 0 0px 0px rgba(10, 10, 10, 0.1) !important;
   }
 
   #log {

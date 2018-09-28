@@ -135,25 +135,26 @@ class Benchmark {
                                     this.outputStride);
       let decodeTime = performance.now() - dstart;
       console.log("Decode time:" + decodeTime);
+      lh.add(`&nbsp;&nbsp;&nbsp;&nbsp; <i class="mdi mdi-check mdi-6px"></i> Decode time: ${ decodeTime.toFixed(2) } ms`)
       decodeResults.push(decodeTime);
     }
     // draw canvas by last result
-  
-    console.log(poseCanvas + " " + imageElement.width  + " " +  imageElement.height)
-
     await this.loadImage(poseCanvas, imageElement.width, imageElement.height);
     let ctx = poseCanvas.getContext('2d');
     if (!singlePose) return;
-    console.log("@@@@@@@@@@" + poseCanvas.width)
     let scaleX = poseCanvas.width / this.scaleWidth;
     let scaleY = poseCanvas.height / this.scaleHeight;
 
-    console.log(scaleX + ' ' + scaleY)
-    console.log(singlePose)
+    lh.add(`<div></div>`);
+    lh.add(`<i class="mdi mdi-coffee-outline mdi-12px"></i> Draw`);
+    console.log("Drawing key points and skeletons");
+    lh.add(`&nbsp;&nbsp;&nbsp;&nbsp; <i class="mdi mdi-check mdi-6px"></i> Drawing key points and skeletons`)
+
+    console.log("***************************" + singlePose)
+    
     singlePose.forEach((pose) => {
-      console.log(pose.score + " ++++++++++ " + this.minScore)
       if (pose.score >= this.minScore) {
-        console.log("KKKKKKKKKKKKKKk " + pose.keypoints )
+        console.log(pose.keypoints + ' ' + this.minScore);
         drawKeypoints(pose.keypoints, this.minScore, ctx, scaleX, scaleY);
         drawSkeleton(pose.keypoints, this.minScore, ctx, scaleX, scaleY);
       }
@@ -265,9 +266,10 @@ class WebMLJSBenchmark extends Benchmark {
     });
   }
   async setInputOutput() {
-    imageElement = document.querySelector('#image');
-    canvasElement = document.querySelector('#canvas');
+    imageElement = document.querySelector('#testimage');
+    canvasElement = document.querySelector('canvas.testimage');
     poseCanvas = document.querySelector('#poseCanvas');
+    let canvasContext = canvasElement.getContext('2d');
 
     const channels = 3;
     const imageChannels = 4; // RGBA
@@ -317,12 +319,13 @@ class WebMLJSBenchmark extends Benchmark {
       
       width = this.scaleWidth;
       height = this.scaleHeight;
-    }
-    canvasElement.setAttribute("width", width);
-    canvasElement.setAttribute("height", height);
-    let canvasContext = canvasElement.getContext('2d');
 
+      canvasElement.setAttribute("width", width);
+      canvasElement.setAttribute("height", height);
+    }
+    
     canvasContext.drawImage(imageElement, 0, 0, width, height);
+    
     let pixels = canvasContext.getImageData(0, 0, width, height).data;
     if (this.configuration.modelName.toLowerCase() === 'mobilenet' || this.configuration.modelName.toLowerCase() === 'posenet') {
       const meanMN = 127.5;
@@ -407,7 +410,7 @@ class WebMLJSBenchmark extends Benchmark {
     for (let i = 0; i < 3; ++i) {
       let prob = sorted[i][0];
       let index = sorted[i][1];
-      lh.add(`&nbsp;&nbsp;&nbsp;&nbsp; <i class="mdi mdi-source-commit-local mdi-6px"></i> label: ${this.labels[index]}, probability: ${(prob * 100).toFixed(2)}%`);
+      lh.add(`&nbsp;&nbsp;&nbsp;&nbsp; <i class="mdi mdi-source-commit-local mdi-6px"></i> Label: ${this.labels[index]}, probability: ${(prob * 100).toFixed(2)}%`);
       if(i == 0) {
         probability = `${this.labels[index]}, ${(prob * 100).toFixed(2)}%`;
         current_inference = probability;
@@ -416,13 +419,13 @@ class WebMLJSBenchmark extends Benchmark {
   }
   async executeSingleAsync() {
     let result = await this.model.compute(this.inputTensor, this.outputTensor);
-    lh.add(`&nbsp;&nbsp;&nbsp;&nbsp; <i class="mdi mdi-check mdi-6px"></i> compute result: ${result}`)
+    lh.add(`&nbsp;&nbsp;&nbsp;&nbsp; <i class="mdi mdi-check mdi-6px"></i> Compute result: ${result}`)
     await this.printPredictResult();
   }
 
   async executeSingleAsyncPN() {
     let result = await this.model.computeSinglePose(this.inputTensor, this.heatmapTensor, this.offsetTensor);
-    lh.add(`&nbsp;&nbsp;&nbsp;&nbsp; <i class="mdi mdi-check mdi-6px"></i> compute result: ${result}`)
+    lh.add(`&nbsp;&nbsp;&nbsp;&nbsp; <i class="mdi mdi-check mdi-6px"></i> Compute result: ${result}`)
   }
 
 
@@ -431,6 +434,15 @@ class WebMLJSBenchmark extends Benchmark {
     this.labels = null;
     this.inputTensor = null;
     this.outputTensor = null;
+    this.modelVersion = null;
+    this.outputStride = null;
+    this.scaleFactor = null;
+    this.minScore = null;
+    this.scaleWidth = null;
+    this.scaleHeight = null;
+    this.scaleInputSize = null;
+    this.heatmapTensor = null;
+    this.offsetTensor  = null;
   }
 }
 
@@ -440,6 +452,7 @@ const BenchmarkClass = {
 };
 
 let testresult = [];
+let testresultforbenchmark;
 let bardata = [];
 
 let bar1 = [];
@@ -485,12 +498,12 @@ async function runTest(configuration) {
     logger.group('Result');
     lh.add(`<i class="mdi mdi-coffee-outline mdi-12px"></i> Result`);
 
-    logger.log(`[${configuration.modelName} + ${configuration.backend}] Elapsed Time: ${summary.computeResults.mean.toFixed(2)}+-${summary.computeResults.std.toFixed(2)} [ms]`);
-    lh.add(`&nbsp;&nbsp; <i class="mdi mdi-checkbox-marked-circle-outline mdi-12px"></i> [${configuration.modelName} + ${configuration.backend}] Elapsed Time: ${summary.computeResults.mean.toFixed(2)}+-${summary.computeResults.std.toFixed(2)} [ms]`);
+    logger.log(`[${configuration.modelName} + ${configuration.backend}] Elapsed time: ${summary.computeResults.mean.toFixed(2)}+-${summary.computeResults.std.toFixed(2)} [ms]`);
+    lh.add(`&nbsp;&nbsp; <i class="mdi mdi-checkbox-marked-circle-outline mdi-12px"></i> [${configuration.modelName} + ${configuration.backend}] Elapsed time: ${summary.computeResults.mean.toFixed(2)}+-${summary.computeResults.std.toFixed(2)} [ms]`);
 
     if (summary.decodeResults !== null) {
-      logger.log(`[${configuration.modelName} + ${configuration.backend}] Decode Time: ${summary.decodeResults.mean.toFixed(2)}+-${summary.decodeResults.std.toFixed(2)} [ms]`);
-      lh.add(`&nbsp;&nbsp; <i class="mdi mdi-checkbox-marked-circle-outline mdi-12px"></i> [${configuration.modelName} + ${configuration.backend}] Decode Time: ${summary.decodeResults.mean.toFixed(2)}+-${summary.decodeResults.std.toFixed(2)} [ms]`);
+      logger.log(`[${configuration.modelName} + ${configuration.backend}] Decode time: ${summary.decodeResults.mean.toFixed(2)}+-${summary.decodeResults.std.toFixed(2)} [ms]`);
+      lh.add(`&nbsp;&nbsp; <i class="mdi mdi-checkbox-marked-circle-outline mdi-12px"></i> [${configuration.modelName} + ${configuration.backend}] Decode time: ${summary.decodeResults.mean.toFixed(2)}+-${summary.decodeResults.std.toFixed(2)} [ms]`);
     }
     
     let d = {};
@@ -538,6 +551,8 @@ async function runTest(configuration) {
     d['test_unit'] = 'ms';
     testresult.push(d);
 
+    current_inference = 'N/A';
+
     lh.add(`<div></div>`);
 
     switch(d['backend'].toLowerCase()){
@@ -555,7 +570,7 @@ async function runTest(configuration) {
   }
   logger.groupEnd();
   lh.fill();
-
+  testresultforbenchmark = testresult
   if(testresult.length > 9) {
     testresult = testresult.slice(9);
   }
@@ -565,4 +580,4 @@ bardata.push(bar1)
 bardata.push(bar2)
 bardata.push(bar3)
 
-export { finallog, modelprogress, runTest, testresult, bardata, current_inference, posenetbase64 };
+export { finallog, modelprogress, runTest, testresult, testresultforbenchmark, bardata, current_inference, posenetbase64 };

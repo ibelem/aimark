@@ -48,22 +48,23 @@ class Logger {
   }
 }
 
-let finallog = '';
-let modelprogress = 0;
-let progress = 0 ;
+let tf_finallog = '';
+let modeltf_progress = 0;
+let tf_progress = 0 ;
 let probability = null;
-let testresult = [];
-let bardata = [];
+let tf_current_inference;
+let tf_testresult = [];
+let tf_testresultforbenchmark;
 
 class LoggerHTML {
   constructor() {
   }
   add(message) {
-    finallog = finallog + message + '<br>';
+    tf_finallog = tf_finallog + message + '<br>';
   }
   fill() {
     // let ele = document.querySelector('#log');
-    // ele.innerHTML = finallog;
+    // ele.innerHTML = tf_finallog;
     // ele.scrollTop =ele.scrollHeight; 
   }
 }
@@ -94,6 +95,7 @@ async function start_run(configuration) {
     logger.log(`${x.label}, ${x.value.toFixed(3)}\n`);
     if(i==0) {
       probability = `${x.label}, ${x.value.toFixed(3)}`;
+      tf_current_inference = probability;
     }
     i++;
     lh.add(`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="mdi mdi-source-commit-local mdi-12px"></i> ${x.label}, ${x.value.toFixed(3)}`)
@@ -120,12 +122,12 @@ async function start_run(configuration) {
   lh.add(`&nbsp;&nbsp; <i class="mdi mdi-gauge-full mdi-12px"></i> Average elapsed time: ${averageTime.toFixed(3)} ms`);
   mobileNet.dispose();
 
-  addTestResult(configuration, averageTime, probability);
+  addtf_testresult(configuration, averageTime, probability);
 
   return averageTime;
 }
 
-function addTestResult(configuration, averageTime, probability){
+function addtf_testresult(configuration, averageTime, probability){
   let d = {};
   d['model'] = configuration.modelName;
   d['model_version'] = configuration.modelVersion;
@@ -135,10 +137,10 @@ function addTestResult(configuration, averageTime, probability){
   d['decode_result'] = 'N/A';
   d['probability'] = probability;
   d['test_unit'] = 'ms';
-  testresult.push(d);
+  tf_testresult.push(d);
 }
 
-async function init_run(configuration) {
+async function tf_init_run(configuration) {
   let logger = new Logger();
   let webglTime; 
   if(configuration.backend.toLowerCase() == 'webgl'){
@@ -148,7 +150,7 @@ async function init_run(configuration) {
     webglTime = await start_run(configuration);
     logger.groupEnd();
     lh.add(`<div></div>`);
-    progress = 1;
+    tf_progress = 1;
   }
 
   if(configuration.backend.toLowerCase() == 'cpu'){
@@ -164,14 +166,16 @@ async function init_run(configuration) {
     lh.add(`<div></div>`);
     // lh.add('<i class="mdi mdi-coffee-outline mdi-12px"></i> Result');
     // lh.add(`&nbsp;&nbsp; <i class="mdi mdi-checkbox-marked-circle-outline mdi-12px"></i> WebGL vs WebML backend ${speedupText}`);
-    progress = 2;
+    tf_progress = 2;
   }
 
-  if(testresult.length > 6) {
-    testresult = testresult.slice(6);
+  tf_testresultforbenchmark = tf_testresult
+
+  if(tf_testresult.length > 6) {
+    tf_testresult = tf_testresult.slice(6);
   }
 
 };
 // imageElement.src = imageURL;
 
-export { finallog, progress, init_run, testresult, bardata };
+export { tf_finallog, tf_progress, tf_init_run, tf_testresult, tf_current_inference, tf_testresultforbenchmark };
