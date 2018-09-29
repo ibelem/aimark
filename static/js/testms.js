@@ -460,6 +460,7 @@ let bar2 = [];
 let bar3 = [];
 
 async function runTest(configuration) {
+
   let logger = new Logger();
   logger.group('Benchmark');
 
@@ -507,6 +508,8 @@ async function runTest(configuration) {
     }
     
     let d = {};
+    d['id'] = configuration.id;
+    d['name'] = configuration.name;
     d['model'] = configuration.modelName;
     d['model_version'] = configuration.modelVersion;
     d['backend'] = configuration.backend;
@@ -541,6 +544,8 @@ async function runTest(configuration) {
     lh.add(`&nbsp;&nbsp; <i class="mdi mdi-close-circle-outline mdi-12px"></i> [${configuration.modelName} + ${configuration.backend}] ` + err);
     
     let d = {};
+    d['id'] = configuration.id;
+    d['name'] = configuration.name;
     d['model'] = configuration.modelName;
     d['model_version'] = configuration.modelVersion;
     d['backend'] = configuration.backend;
@@ -570,7 +575,7 @@ async function runTest(configuration) {
   }
   logger.groupEnd();
   lh.fill();
-  testresultforbenchmark = testresult
+  testresultforbenchmark = testresult;
   if(testresult.length > 9) {
     testresult = testresult.slice(9);
   }

@@ -1,6 +1,7 @@
 <template>
   <section>
-    <h4 class='subtitle'>Tasks: Object Recognition / Classification</h4>
+  
+    <h2 class="has-text-primary is-size-5-desktop is-size-6-mobile is-size-5-tablet mb">Tasks: Object Recognition / Classification</h2>
     <div class="columns">
       <div v-for="task in tasks" v-if="task.category=='Object Recognition / Classification'" :key="task.id" class="column is-mobile is-one-third-tablet is-one-third-desktop is-one-quarter-widescreen is-one-quarter-fullhd">
         <b-collapse class="card">
@@ -47,7 +48,7 @@
         </b-collapse>
       </div>
     </div>
-        <h4 class='subtitle'>Tasks: Visual Localisation</h4>
+    <h2 class="has-text-primary is-size-5-desktop is-size-6-mobile is-size-5-tablet mb">Tasks: Visual Localisation</h2>
     <div class="columns">
       <div v-for="task in tasks" v-if="task.category=='Visual Localisation'" :key="task.id" class="column is-mobile is-one-third-tablet is-one-third-desktop is-one-quarter-widescreen is-one-quarter-fullhd">
         <b-collapse class="card">
@@ -119,7 +120,7 @@
             "label": 'https://aimark.nos-eastchina1.126.net/model/mobilenet/labels.txt',
             "description": 'An efficient Convolutional Neural Networks for Mobile Vision Applications. Loading MobileNet model trained by ImageNet in TensorFlow Lite format, constructs and inferences it by WebML API.',
             "model_version": 'v1.0',
-            "accuracy": '70.9%',
+            "accuracy": '89.9%',
             "model_size": '16.9Mb',
             "paper_url": 'https://arxiv.org/pdf/1704.04861.pdf',
             'test': {
@@ -148,7 +149,7 @@
             "label": 'https://aimark.nos-eastchina1.126.net/model/mobilenet/labels.txt',
             "description": 'MobileNetV2 improves the state of the art performance of mobile models. Loading MobileNet model v2.0 trained by ImageNet in TensorFlow Lite format, constructs and inferences it by WebML API. ',
             "model_version": 'v2.0',
-            "accuracy": '71.8%',
+            "accuracy": '91.0%',
             "model_size": '14.0Mb',
             "paper_url": 'https://arxiv.org/abs/1801.04381',
             'test': {
@@ -177,7 +178,7 @@
             "label": 'https://aimark.nos-eastchina1.126.net/model/squeezenet/labels.json',
             "description": 'A light-weight CNN providing Alexnet level accuracy with 50X fewer parameters. Loading SqueezeNet model trained by ImageNet in ONNX format, constructs and inferences it by WebML API.',
             "model_version": 'v1.1',
-            "accuracy": '56.34%',
+            "accuracy": '79.12%',
             "model_size": '5.0Mb',
             "paper_url": 'https://arxiv.org/abs/1602.07360',
             'test': {
@@ -201,7 +202,7 @@
           {
             "id": 4,
             "category": 'Object Recognition / Classification',
-            "name": 'Image（TensorFlow.js)',
+            "name": 'Image (TensorFlow.js)',
             "model_name": 'MobileNet',
             "url": 'TensorFlow',
             "backend": ['WebGL', 'WebML'],
@@ -211,7 +212,7 @@
             "label": 'https://aimark.nos-eastchina1.126.net/model/tf/google/weights_manifest.json',
             "description": 'TensorFlow.js is a JavaScript library for training and deploying ML models in the browser. Loading a pretrained TensorFlow SavedModel into the browser and run inference through TensorFlow.js.',
             "model_version": 'v1.0',
-            "accuracy": '70.9%',
+            "accuracy": '89.9%',
             "model_size": '16.9Mb',
             "paper_url": 'https://arxiv.org/pdf/1704.04861.pdf',
             'test': {

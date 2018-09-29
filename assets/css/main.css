@@ -27,6 +27,11 @@
   background-color: red;
 }
 
+.inference_label {
+  height: 1rem;
+  margin: 0.5rem auto;
+}
+
 img,
 .is {
   width: 224px;

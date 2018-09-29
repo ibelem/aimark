@@ -1,23 +1,32 @@
 <template>
   <div class="container">
     <ai_nav/>
-    <div class='ic mb mt'>
-        <button class="button is-primary wd" @click="run">Run Benchmark</button>
-    </div>
+    <section class="section hero" v-if="showtask == false">
+      <h2 class="subtitle">
+      Run AIMark for Web to test several key AI tasks on your PC or smartphone browsers and check its performance!
+      </h2>
+      <div class='ic mb mt'>
+          <button class="button is-primary wd" @click="run">Run Benchmark</button>
+      </div>
+    </section>
     <section class="section" v-if="showtask">
       <h2 class="has-text-primary is-size-5-desktop is-size-7-mobile is-size-5-tablet">
         Task {{ running.id }}: {{ running.name }} <span v-if="running.model_version">{{ running.model_version }}</span>
       </h2>
- 
+      <div class='mb'>{{ running.description }}</div>
       <div class="mt ic" v-if="running.backend">
         <div class="columns mt">
-          <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
-            <div class="">Loading Model File: {{ progress_loading_text }} </div>
+          <div class="column is-mobile is-one-third-tablet is-one-third-desktop is-one-third-widescreen is-one-third-fullhd ic">
+            <div class="">Loading task {{ running.id }} model file: {{ progress_loading_text }} </div>
             <progress class="progress is-info mt" :value="progress_loading.value" :max="progress_loading.max">{{ progress_loading_text }}</progress>
           </div>
-          <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
-            <div class="">Run Model with Tests: {{ progress_text }} </div>
+          <div class="column is-mobile is-one-third-tablet is-one-third-desktop is-one-third-widescreen is-one-third-fullhd ic">
+            <div class="">Task {{ running.id }}: {{ progress_text }} </div>
             <progress class="progress is-info mt" :value="progress.value" :max="progress.max">{{ progress_text }}</progress>
+          </div>
+          <div class="column is-mobile is-one-third-tablet is-one-third-desktop is-one-third-widescreen is-one-third-fullhd ic">
+            <div class="">Total: {{ progress_total_text }} </div>
+            <progress class="progress is-info mt" :value="progress_total.value" :max="progress_total.max">{{ progress_total_text }}</progress>
           </div>
         </div>
       </div>
@@ -25,23 +34,37 @@
       <div class="columns mt">
         <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
           <div class="card is ic">
+            <canvas id="poseCanvas" width="513" height="513"></canvas>
+            <canvas id="poseCanvasPredict" width="513" height="513"></canvas>
             <canvas class="testimage"></canvas>
             <!-- <div v-for="u in task.test_images.image" :key="u.id"> -->
             <!-- <img id='image' v-if="u" :src="u" alt="Test Image"> -->
-            <img id='testimage' v-show='running.test_image' :src="running.test_image" alt="Test Image">
+            {{ running.test_image }}ccc
+            <img id='testimage' :src="running.test_image" alt="Test Image" v-bind:class="{ pnshow: pn_show }">
+            <img :src="running.test_image" alt="Test Image" v-bind:class="{ pnshow: pn_show }">
             <!-- </div> -->
           </div>
-          <div>{{ current_inference }}</div>
+          <div class='inference_label has-text-primary is-size-6-desktop is-size-6-mobile is-size-6-tablet'>{{ current_inference }}</div>
         </div>
       </div> 
-        <div class='columns mb' v-if='showresult'>
-        <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
+        <div v-if='showresult'>
+        <h2 class="is-size-5-desktop is-size-6-mobile is-size-5-tablet ic mt mb">Benchmark Result</h2>
+        Test Environment: <ai_environment />
+        <div class='columns mb'>
+        <div class="column is-mobile is-12 ic">
           <div class="mb mt">
             <b-table :data="test_result" :bordered="false" :striped="true" :narrowed="false" :hoverable="true" :loading="false" :focusable="true" :mobile-cards="true">
               <template slot-scope="props">
-                <b-table-column field="model" label="Model">
+                <b-table-column field="id" label="Task">
+                    {{ props.row.id }}
+                </b-table-column>
+                <b-table-column field="name" label="Name">
+                    {{ props.row.name }}
+                </b-table-column>
+                <!-- <b-table-column field="model" label="Model">
                     {{ props.row.model }}
                 </b-table-column>
+                -->
                 <b-table-column field="model_version" label="Version">
                     {{ props.row.model_version }}
                 </b-table-column>
@@ -84,7 +107,8 @@
  
  
           </div>
-        </div>  
+        </div> 
+        </div> 
       </div>
     </section>
     <ai_footer/>
@@ -95,6 +119,7 @@
   import ai_nav from "~/components/ai_nav.vue";
   import ai_footer from "~/components/ai_footer.vue";
   import ai_test from "~/components/ai_test.vue";
+  import ai_environment from "~/components/ai_environment_line.vue";
   import {
     finallog,
     modelprogress,
@@ -102,6 +127,7 @@
     testresult,
     testresultforbenchmark,
     bardata,
+    posenetbase64,
     runTest
   } from '~/static/js/testms.js'
 
@@ -116,7 +142,7 @@
 
   export default {
     components: {
-      ai_nav, ai_footer, ai_test
+      ai_nav, ai_footer, ai_environment
     },
     head: {
       script: [{
@@ -180,11 +206,10 @@
         this.progress_loading.value = modelprogress;
       },
       orc: async function(k) {
-        this.showtask = false;
         let task = this.tasks[k];
-        
         this.showtask = true;
         let i = 0;
+        this.progress.value = 0;
         for (let item of task.backend) {
           for (let image of task.test.image) {
             this.current_inference = '';
@@ -194,6 +219,7 @@
             }
             let configuration = {
               id: task.id,
+              name: task.name,
               framework: framework,
               modelName: task.model_name,
               modelVersion: task.model_version,
@@ -205,34 +231,39 @@
             };
             this.running.id = task.id;
             this.running.name = task.name;
+            this.running.description = task.description;
             this.running.model = task.model_name;
             this.running.model_version =task.model_version;
             this.running.backend = task.backend;
             this.running.test_image = image;
             await runTest(configuration);
             this.current_inference = current_inference;
-            await this.timeout(2000);
+            await this.timeout(500);
             this.progress.value = ++i;
           }
         }
   
         this.test_result = testresultforbenchmark;
+        console.log(this.test_result)
         this.showresult = true;
       },
-      tf: async function(k) {
-        this.showtask = false;
+      pn: async function(k) {
         let task = this.tasks[k];
-        
         this.showtask = true;
         let i = 0;
+        this.progress.value = 0;
+
         for (let item of task.backend) {
           for (let image of task.test.image) {
+            this.pn_show = true;
             this.current_inference = '';
             let framework = task.framework;
             if(item == 'WebML') {
               framework = 'Web ML API';
             }
             let configuration = {
+              id: task.id,
+              name: task.name,
               framework: framework,
               modelName: task.model_name,
               modelVersion: task.model_version,
@@ -242,27 +273,76 @@
               label: task.label,
               image: image,
             };
+            this.running.id = task.id;
             this.running.name = task.name;
+            this.running.description = task.description;
+            this.running.model = task.model_name;
+            this.running.model_version =task.model_version;
+            this.running.backend = task.backend;
+            this.running.test_image = image;
+
+            console.log(this.running.test_image)
+            await runTest(configuration);
+            this.current_inference = current_inference;
+            this.running.test_image = posenetbase64;
+            await this.timeout(2000);
+          }
+        }
+  
+        this.test_result = testresultforbenchmark;
+        console.log(this.test_result)
+        this.showresult = true;
+      },
+      tf: async function(k) {
+        this.showtask = true;
+        let task = this.tasks[k];
+        let i = 0;
+        this.progress.value = 0;
+        for (let item of task.backend) {
+          for (let image of task.test.image) {
+            this.current_inference = '';
+            let framework = task.framework;
+            if(item == 'WebML') {
+              framework = 'Web ML API';
+            }
+            let configuration = {
+              framework: framework,
+              id: task.id,
+              name: task.name,
+              modelName: task.model_name,
+              modelVersion: task.model_version,
+              backend: item,
+              iteration: task.iteration,
+              model: task.model,
+              label: task.label,
+              image: image,
+            };
+            this.running.id = task.id;
+            this.running.name = task.name;
+            this.running.description = task.description;
             this.running.model = task.model_name;
             this.running.model_version =task.model_version;
             this.running.backend = task.backend;
             this.running.test_image = image;
             await tf_init_run(configuration);
             this.current_inference = tf_current_inference;
-            await this.timeout(2000);
+            await this.timeout(500);
             this.progress.value = ++i;
           }
         }
-  
         this.test_result = tf_testresultforbenchmark;
         this.showresult = true;
       },
       run: async function() {
+        // await this.orc(0)
+        // this.progress_total.value = 1;
+        // await this.orc(1)
+        // this.progress_total.value = 2;
+        // await this.orc(2)
+        // this.progress_total.value = 3;
         // await this.tf(3)
-        await this.orc(0)
-        await this.orc(1)
-        await this.orc(2)
-       
+        // this.progress_total.value = 4;
+        await this.pn(4)
       }
     },
     computed: {
@@ -271,7 +351,10 @@
       },
       progress_loading_text: function() {
         return ((this.progress_loading.value / this.progress_loading.max) * 100).toFixed(2) + '%';
-      }
+      },
+      progress_total_text: function() {
+        return this.progress_total.value + ' of ' + this.progress_total.max + ', ' + ((this.progress_total.value / this.progress_total.max) * 100).toFixed(2) + '%';
+      },
     },
     data() {
       return {
@@ -283,13 +366,19 @@
           value: 0,
           max: 1,
         },
+        progress_total: {
+          value: 0,
+          max: 4,
+        },
         test_result: [],
         showtask: false,
         showresult: false,
+        pn_show: false,
         current_inference: '',
         running: { 
           'id': '',
           'name': '',
+          'description': '',
           'model': '',
           'model_version': '',
           'backend': '',
@@ -308,7 +397,7 @@
             "label": '../model/mobilenet/labels.txt',
             "description": 'An efficient Convolutional Neural Networks for Mobile Vision Applications. Loading MobileNet model trained by ImageNet in TensorFlow Lite format, constructs and inferences it by WebML API.',
             "model_version": 'v1.0',
-            "accuracy": '70.9%',
+            "accuracy": '89.9%',
             "model_size": '16.9Mb',
             "paper_url": 'https://arxiv.org/pdf/1704.04861.pdf',
             'test': {
@@ -337,7 +426,7 @@
             "label": '../model/mobilenet/labels.txt',
             "description": 'MobileNetV2 improves the state of the art performance of mobile models. Loading MobileNet model v2.0 trained by ImageNet in TensorFlow Lite format, constructs and inferences it by WebML API. ',
             "model_version": 'v2.0',
-            "accuracy": '71.8%',
+            "accuracy": '91.0%',
             "model_size": '14.0Mb',
             "paper_url": 'https://arxiv.org/abs/1801.04381',
             'test': {
@@ -366,7 +455,7 @@
             "label": '../model/squeezenet/labels.json',
             "description": 'A light-weight CNN providing Alexnet level accuracy with 50X fewer parameters. Loading SqueezeNet model trained by ImageNet in ONNX format, constructs and inferences it by WebML API.',
             "model_version": 'v1.1',
-            "accuracy": '56.34%',
+            "accuracy": '79.12%',
             "model_size": '5.0Mb',
             "paper_url": 'https://arxiv.org/abs/1602.07360',
             'test': {
@@ -390,22 +479,22 @@
           {
             "id": 4,
             "category": 'Object Recognition / Classification',
-            "name": 'Image Classification（TensorFlow.js)',
+            "name": 'Image Classification (TensorFlow.js)',
             "model_name": 'MobileNet',
             "url": 'TensorFlow',
-            "backend": ['WebGL', 'WebML'],
+            "backend": ['WebGL', 'CPU', 'WebML'],
             "iteration": 4,
             "framework": "webml-polyfill.js",
             "model": '../model/tf/google/optimized_model.pb',
             "label": '../model/tf/google/weights_manifest.json',
             "description": 'TensorFlow.js is a JavaScript library for training and deploying ML models in the browser. Loading a pretrained TensorFlow SavedModel into the browser and run inference through TensorFlow.js.',
             "model_version": 'v1.0',
-            "accuracy": '70.9%',
+            "accuracy": '89.9%',
             "model_size": '16.9Mb',
             "paper_url": 'https://arxiv.org/pdf/1704.04861.pdf',
             'test': {
               'resolution': '224 x 224 px',
-              'image': ['../img/mobilenet/bee_eater.jpg', '../img/mobilenet/traffic_light.jpg', '../img/mobilenet/pinwheel.jpg']
+              'image': ['../img/tensorflow/cat.jpg']
             },
             "platform": [
               'android',
@@ -421,20 +510,20 @@
             "category": 'Visual Localisation',
             "name": 'Pose Detection (PoseNet)',
             "model_name": 'PoseNet',
-            "url": 'TensorFlow',
-            "backend": ['WebGL', 'WebML'],
+            "url": 'PoseNet',
+            "backend": ['WASM', 'WebGL2', 'WebML'],
             "iteration": 4,
             "framework": "webml-polyfill.js",
             "model": '../model/tf/google/optimized_model.pb',
             "label": '../model/tf/google/weights_manifest.json',
             "description": 'PoseNet is able to estimate your location and orientation from a single colour image. This task loads a pretrained PoseNet model, constructs and infers it by WebML API.',
-            "model_version": 'v1.0',
-            "accuracy": '70.9%',
-            "model_size": '16.9Mb',
-            "paper_url": 'https://arxiv.org/pdf/1704.04861.pdf',
+            "model_version": 'v1.101',
+            "accuracy": '%',
+            "model_size": '13.3Mb',
+            "paper_url": 'https://arxiv.org/abs/1505.07427',
             'test': {
-              'resolution': '224 x 224 px',
-              'image': ['../img/mobilenet/bee_eater.jpg', '../img/mobilenet/traffic_light.jpg', '../img/mobilenet/pinwheel.jpg']
+              'resolution': '513 x 513 px',
+              'image': ['../img/posenet/ski.jpg']
             },
             "platform": [
               'android',
@@ -461,6 +550,23 @@
     font-size: 1rem;
   }
 
+  .hero {
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
   .mb { margin-bottom: 1rem; }
   .mt { margin-top: 1rem; }
+
+  #poseCanvasPredict, #poseCanvas, .testimage {
+    display: none; 
+  }
+
+  .pnshow {
+    display: block !important;
+  }
+
 </style>

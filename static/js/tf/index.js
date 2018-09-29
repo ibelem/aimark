@@ -48,6 +48,7 @@ class Logger {
   }
 }
 
+let imageElement = null;
 let tf_finallog = '';
 let modeltf_progress = 0;
 let tf_progress = 0 ;
@@ -71,10 +72,8 @@ class LoggerHTML {
 
 let lh = new LoggerHTML();
 async function start_run(configuration) {
-  let imageElement = document.querySelector('#testimage');
-
+  imageElement = document.querySelector('#testimage');
   let logger = new Logger();
-
   logger.log('Loading MobileNet...');
 
   const mobileNet = new MobileNet();
@@ -129,6 +128,8 @@ async function start_run(configuration) {
 
 function addtf_testresult(configuration, averageTime, probability){
   let d = {};
+  d['id'] = configuration.id;
+  d['name'] = configuration.name;
   d['model'] = configuration.modelName;
   d['model_version'] = configuration.modelVersion;
   d['backend'] = configuration.backend;
@@ -156,8 +157,8 @@ async function tf_init_run(configuration) {
   if(configuration.backend.toLowerCase() == 'cpu'){
     // As WebML POC API only accepts CPU data, so change the
     // backend to CPU.
-    logger.group('Use WebML backend');
-    lh.add('<i class="mdi mdi-coffee-outline mdi-12px"></i> Use WebML backend');
+    logger.group('Use CPU backend');
+    lh.add('<i class="mdi mdi-coffee-outline mdi-12px"></i> Use CPU backend');
     tfc.setBackend('cpu');
     const webmlTime = await start_run(configuration);
     // const speedupText = `Speedup: ${(webglTime/webmlTime).toFixed(3)}`;

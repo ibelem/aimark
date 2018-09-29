@@ -239,7 +239,6 @@
             this.getTestImage = posenetbase64;
             await this.timeout(2000);
           }
-          
         }
   
         this.test_result = testresult;
@@ -335,7 +334,7 @@
         task: {
           "id": 1,
           "model_name": 'PoseNet',
-          "backend": ['WASM', 'WebGL2'],
+          "backend": ['WASM', 'WebGL2', 'WebML'],
           "iteration": 4,
           "framework": "webml-polyfill.js",
           "model": '../model/posenet/',

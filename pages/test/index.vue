@@ -2,9 +2,9 @@
   <div class="container">
     <ai_nav/>
     <section class="section">
-      <h2 class="subtitle">
-        The WebML Benchmark consists of multiple AI tasks performed by separate neural networks on your desktop or smartphone.
-      </h2>
+      <h1 class="subtitle">
+        The AIMmark for Web consists of multiple AI tasks performed by separate neural networks on your desktop or smartphone browsers.
+      </h1>
       <ai_test/>
     </section>
     <ai_footer/>
@@ -36,7 +36,6 @@
   }
   
   .subtitle {
-    font-weight: ２00;
     font-size: 1rem;
   }
   
