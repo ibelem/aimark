@@ -349,7 +349,8 @@
           "paper_url": 'https://arxiv.org/abs/1505.07427',
           'test': {
             'resolution': '513 x 513 px',
-            'image': ['../img/posenet/ski.jpg', '../img/posenet/tennis_in_crowd.jpg']
+            // 'image': ['../img/posenet/tennis_in_crowd.jpg', '../img/posenet/ski.jpg']
+            'image': ['../img/posenet/ski.jpg']
           },
           "platform": [
             'android',

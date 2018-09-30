@@ -148,13 +148,10 @@ class Benchmark {
     lh.add(`<div></div>`);
     lh.add(`<i class="mdi mdi-coffee-outline mdi-12px"></i> Draw`);
     console.log("Drawing key points and skeletons");
-    lh.add(`&nbsp;&nbsp;&nbsp;&nbsp; <i class="mdi mdi-check mdi-6px"></i> Drawing key points and skeletons`)
-
-    console.log("***************************" + singlePose)
+    lh.add(`&nbsp;&nbsp;&nbsp;&nbsp; <i class="mdi mdi-check mdi-6px"></i> Drawing key points and skeletons`)  
     
     singlePose.forEach((pose) => {
       if (pose.score >= this.minScore) {
-        console.log(pose.keypoints + ' ' + this.minScore);
         drawKeypoints(pose.keypoints, this.minScore, ctx, scaleX, scaleY);
         drawSkeleton(pose.keypoints, this.minScore, ctx, scaleX, scaleY);
       }
@@ -269,7 +266,7 @@ class WebMLJSBenchmark extends Benchmark {
     imageElement = document.querySelector('#testimage');
     canvasElement = document.querySelector('canvas.testimage');
     poseCanvas = document.querySelector('#poseCanvas');
-    let canvasContext = canvasElement.getContext('2d');
+    let canvasContext;
 
     const channels = 3;
     const imageChannels = 4; // RGBA
@@ -297,7 +294,6 @@ class WebMLJSBenchmark extends Benchmark {
       this.outputStride = Number(pnConfigDic.outputStride);
       this.scaleFactor = Number(pnConfigDic.scaleFactor);
       this.minScore = Number(pnConfigDic.minScore);
-
       this.scaleWidth = getValidResolution(this.scaleFactor, width, this.outputStride);
       this.scaleHeight = getValidResolution(this.scaleFactor, height, this.outputStride);
       this.inputTensor = new Float32Array(this.scaleWidth * this.scaleHeight * 3);
@@ -314,19 +310,22 @@ class WebMLJSBenchmark extends Benchmark {
       this.offsetTensor = new Float32Array(OFFSET_TENSOR_SIZE);
 
       // prepare canvas for predict
-      let poseCanvasPredict = document.querySelector('#poseCanvasPredict');
-      drawContent = await this.loadImage(poseCanvasPredict, width, height);
+      // let poseCanvasPredict = document.querySelector('#poseCanvasPredict');
+      // drawContent = await this.loadImage(poseCanvasPredict, width, height);
       
       width = this.scaleWidth;
       height = this.scaleHeight;
 
       canvasElement.setAttribute("width", width);
       canvasElement.setAttribute("height", height);
+
     }
     
+    canvasContext = canvasElement.getContext('2d');
     canvasContext.drawImage(imageElement, 0, 0, width, height);
-    
+    console.log(canvasContext.getImageData(0, 0, width, height))
     let pixels = canvasContext.getImageData(0, 0, width, height).data;
+
     if (this.configuration.modelName.toLowerCase() === 'mobilenet' || this.configuration.modelName.toLowerCase() === 'posenet') {
       const meanMN = 127.5;
       const stdMN = 127.5;
@@ -383,13 +382,14 @@ class WebMLJSBenchmark extends Benchmark {
       let modelArch = ModelArch.get(this.modelVersion);
       let smType = 'Singleperson';
       let cacheMap = new Map();
-      if (this.configuration.backend !== 'native') {
+      if (this.configuration.backend !== 'native' && this.configuration.backend.toLowerCase() !== 'webml') {
         this.model = new PoseNet(modelArch, this.modelVersion, this.outputStride,
                                  this.scaleInputSize, smType, cacheMap, this.configuration.backend);
       } else {
         this.model = new PoseNet(modelArch, this.modelVersion, this.outputStride,
-                                 this.scaleInputSize, smType, cacheMap);
+                                 this.scaleInputSize, smType, cacheMap);                                              
       }
+      
     }
 
     let logger = new Logger();
