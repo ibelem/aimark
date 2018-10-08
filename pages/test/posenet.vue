@@ -80,7 +80,7 @@
                 </section>
               </template>
             </b-table>
- 
+            <div class='mt has-text-primary is-size-7-desktop is-size-7-mobile is-size-7-tablet'>{{ nalabel }}</div>
  
           </div>
         </div>
@@ -110,7 +110,8 @@
     testresult,
     posenetbase64,
     bardata,
-    runTest
+    runTest,
+    nalabel
   } from '~/static/js/testms.js'
   
   
@@ -218,6 +219,7 @@
         let i = 0;
         for (let item of this.task.backend) {
           for (let image of this.task.test.image) {
+            this.nalabel = '';
             let framework = this.task.framework;
             if(item == 'WebML') {
               framework = 'Web ML API'
@@ -237,6 +239,7 @@
             await runTest(configuration);
             this.progress.value = ++i;
             this.getTestImage = posenetbase64;
+            this.nalabel = nalabel;
             await this.timeout(2000);
           }
         }
@@ -303,6 +306,7 @@
     },
     data() {
       return {
+        nalabel: '',
         showBar: false,
         chartSettings: {
           yAxisType: ['KMB', 'percent'],
@@ -351,16 +355,7 @@
             'resolution': '513 x 513 px',
             // 'image': ['../img/posenet/tennis_in_crowd.jpg', '../img/posenet/ski.jpg']
             'image': ['../img/posenet/ski.jpg']
-          },
-          "platform": [
-            'android',
-            'windows',
-            'linux'
-          ],
-          "browser": [
-            'chrome',
-            'firefox'
-          ]
+          }
         }
       }
     }

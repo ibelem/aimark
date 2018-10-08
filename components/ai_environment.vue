@@ -18,7 +18,8 @@
     name: 'environment',
     head: {
       script: [{
-          src: 'https://cdn.jsdelivr.net/npm/ua-parser-js@0/dist/ua-parser.min.js',
+          // src: 'https://cdn.jsdelivr.net/npm/ua-parser-js@0/dist/ua-parser.min.js',
+          src: '../js/ua-parser.min.js',
           defer: true
         },
         {

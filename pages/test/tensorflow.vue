@@ -30,7 +30,7 @@
             <img id='testimage' v-show='getTestImage' :src="getTestImage" alt="Test Image">
             <!-- </div> -->
           </div>
-          <div class='inference_label has-text-primary is-size-6-desktop is-size-6-mobile is-size-6-tablet'>{{ current_inference }}</div>
+          <div class='inference_label has-text-primary is-size-6-desktop is-size-6-mobile is-size-6-tablet'>{{ tf_currentinference }}</div>
         </div>
         <div v-show="showlog" class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd">
           <div v-html='log' class="card" id='log'>
@@ -68,21 +68,21 @@
                           xxx
                       </span>
                   </b-table-column> -->
-</template>
+              </template>
 
-<template slot="empty">
-  <section class="section">
-    <div class="content has-text-grey has-text-centered">
-      <p>
-        <b-icon icon="emoticon-sad" size="is-large">
-        </b-icon>
-      </p>
-      <p>Nothing here.</p>
-    </div>
-  </section>
-</template>
+              <template slot="empty">
+                <section class="section">
+                  <div class="content has-text-grey has-text-centered">
+                    <p>
+                      <b-icon icon="emoticon-sad" size="is-large">
+                      </b-icon>
+                    </p>
+                    <p>Nothing here.</p>
+                  </div>
+                </section>
+              </template>
             </b-table>
- 
+            <div class='mt has-text-primary is-size-7-desktop is-size-7-mobile is-size-7-tablet'>{{ nalabel }}</div> 
  
           </div>
         </div>
@@ -115,9 +115,10 @@
   import {
     tf_finallog,
     tf_progress,
-    tf_current_inference,
+    tf_currentinference,
     tf_testresult,
-    tf_init_run
+    tf_init_run,
+    tf_nalabel
   } from '~/static/js/tf/index.js';
   
   
@@ -176,7 +177,8 @@
         this.showlog = true;
         for (let item of this.task.backend) {
           for (let image of this.task.test.image) {
-            this.tf_current_inference = '';
+            this.tf_currentinference = '';
+            this.tf_nalabel = '';
             let configuration = {
               framework: this.task.framework,
               modelName: this.task.model_name,
@@ -189,7 +191,8 @@
             }
             this.getTestImage = configuration.image;
             await tf_init_run(configuration);
-            this.tf_current_inference = tf_current_inference;
+            this.tf_currentinference = tf_currentinference;
+            this.tf_nalabel = tf_nalabel;
             await this.timeout(500);
             this.progress.value = ++i;
           }
@@ -255,9 +258,10 @@
     },
     data() {
       return {
+        tf_nalabel: '',
         showlog: false,
         showBar: false,
-        tf_current_inference: '',
+        tf_currentinference: '',
         chartSettings: {
           yAxisType: ['KMB', 'percent'],
           yAxisName: ['ms', ''],

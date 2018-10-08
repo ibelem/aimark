@@ -53,9 +53,10 @@ let tf_finallog = '';
 let modeltf_progress = 0;
 let tf_progress = 0 ;
 let probability = null;
-let tf_current_inference;
+let tf_currentinference;
 let tf_testresult = [];
 let tf_testresultforbenchmark;
+let tf_nalabel;
 
 class LoggerHTML {
   constructor() {
@@ -94,7 +95,7 @@ async function start_run(configuration) {
     logger.log(`${x.label}, ${x.value.toFixed(3)}\n`);
     if(i==0) {
       probability = `${x.label}, ${x.value.toFixed(3)}`;
-      tf_current_inference = probability;
+      tf_currentinference = probability;
     }
     i++;
     lh.add(`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="mdi mdi-source-commit-local mdi-12px"></i> ${x.label}, ${x.value.toFixed(3)}`)
@@ -139,6 +140,7 @@ function addtf_testresult(configuration, averageTime, probability){
   d['probability'] = probability;
   d['test_unit'] = 'ms';
   tf_testresult.push(d);
+  // tf_nalabel = 'N/A (*): Your browser doesn\'t support native WebML API'
 }
 
 async function tf_init_run(configuration) {
@@ -179,4 +181,4 @@ async function tf_init_run(configuration) {
 };
 // imageElement.src = imageURL;
 
-export { tf_finallog, tf_progress, tf_init_run, tf_testresult, tf_current_inference, tf_testresultforbenchmark };
+export { tf_finallog, tf_progress, tf_init_run, tf_testresult, tf_currentinference, tf_testresultforbenchmark, tf_nalabel };

@@ -44,7 +44,7 @@
             <img :src="running.test_image" alt="Test Image" v-bind:class="{ pnshow: pn_show }">
             <!-- </div> -->
           </div>
-          <div class='inference_label has-text-primary is-size-6-desktop is-size-6-mobile is-size-6-tablet'>{{ current_inference }}</div>
+          <div class='inference_label has-text-primary is-size-6-desktop is-size-6-mobile is-size-6-tablet'>{{ currentinference }}</div>
         </div>
       </div> 
         <div v-if='showresult'>
@@ -123,7 +123,7 @@
   import {
     finallog,
     modelprogress,
-    current_inference,
+    currentinference,
     testresult,
     testresultforbenchmark,
     bardata,
@@ -134,7 +134,7 @@
   import {
     tf_finallog,
     tf_progress,
-    tf_current_inference,
+    tf_currentinference,
     tf_testresultforbenchmark,
     tf_testresult,
     tf_init_run
@@ -212,7 +212,7 @@
         this.progress.value = 0;
         for (let item of task.backend) {
           for (let image of task.test.image) {
-            this.current_inference = '';
+            this.currentinference = '';
             let framework = task.framework;
             if(item == 'WebML') {
               framework = 'Web ML API';
@@ -237,7 +237,7 @@
             this.running.backend = task.backend;
             this.running.test_image = image;
             await runTest(configuration);
-            this.current_inference = current_inference;
+            this.currentinference = currentinference;
             await this.timeout(500);
             this.progress.value = ++i;
           }
@@ -256,7 +256,7 @@
         for (let item of task.backend) {
           for (let image of task.test.image) {
             this.pn_show = true;
-            this.current_inference = '';
+            this.currentinference = '';
             let framework = task.framework;
             if(item == 'WebML') {
               framework = 'Web ML API';
@@ -283,7 +283,7 @@
 
             console.log(this.running.test_image)
             await runTest(configuration);
-            this.current_inference = current_inference;
+            this.currentinference = currentinference;
             this.running.test_image = posenetbase64;
             await this.timeout(2000);
           }
@@ -300,7 +300,7 @@
         this.progress.value = 0;
         for (let item of task.backend) {
           for (let image of task.test.image) {
-            this.current_inference = '';
+            this.currentinference = '';
             let framework = task.framework;
             if(item == 'WebML') {
               framework = 'Web ML API';
@@ -325,7 +325,7 @@
             this.running.backend = task.backend;
             this.running.test_image = image;
             await tf_init_run(configuration);
-            this.current_inference = tf_current_inference;
+            this.currentinference = tf_currentinference;
             await this.timeout(500);
             this.progress.value = ++i;
           }
@@ -374,7 +374,7 @@
         showtask: false,
         showresult: false,
         pn_show: false,
-        current_inference: '',
+        currentinference: '',
         running: { 
           'id': '',
           'name': '',

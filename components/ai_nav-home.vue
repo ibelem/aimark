@@ -44,7 +44,10 @@
               MobileNet
             </a>
             <a class="navbar-item" href="../test/MobileNet2">
-              MobileNetV2
+              MobileNet V2
+            </a>
+            <a class="navbar-item" href="../test/SSDMobileNet">
+              SSD MobileNet
             </a>
             <a class="navbar-item" href="../test/SqueezeNet">
               SqueezeNet
@@ -55,10 +58,12 @@
             <a class="navbar-item" href="../test/PoseNet">
               PoseNet
             </a>
+            <!-- 
             <hr class="navbar-divider">
             <a class="navbar-item" href="">
               Todo WebDNN/more
             </a>
+            -->
           </div>
         </div>
         <nuxt-link class="navbar-item" to="../faq">

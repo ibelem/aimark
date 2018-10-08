@@ -30,7 +30,7 @@
             <img id='testimage' v-show='getTestImage' :src="getTestImage" alt="Test Image">
             <!-- </div> -->
           </div>
-          <div class='inference_label has-text-primary is-size-6-desktop is-size-6-mobile is-size-6-tablet'>{{ current_inference }}</div>
+          <div class='inference_label has-text-primary is-size-6-desktop is-size-6-mobile is-size-6-tablet'>{{ currentinference }}</div>
         </div>
         <div v-show="getBackend" class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd">
           <div v-html='log' class="card" id='log'>
@@ -82,7 +82,7 @@
                 </section>
               </template>
             </b-table>
- 
+            <div class='mt has-text-primary is-size-7-desktop is-size-7-mobile is-size-7-tablet'>{{ nalabel }}</div> 
  
           </div>
         </div>
@@ -110,9 +110,10 @@
     finallog,
     modelprogress,
     testresult,
-    current_inference,
+    currentinference,
     bardata,
-    runTest
+    runTest,
+    nalabel
   } from '~/static/js/testms.js'
   
   
@@ -201,7 +202,8 @@
         let _this = this;
         for (let item of this.task.backend) {
           for (let image of this.task.test.image) {
-            this.current_inference = '';
+            this.currentinference = '';
+            this.nalabel = '';
             let framework = this.task.framework;
             if(item == 'WebML') {
               framework = 'Web ML API'
@@ -219,7 +221,8 @@
             this.getBackend = configuration.backend;
             this.getTestImage = configuration.image;
             await runTest(configuration);
-            this.current_inference = current_inference;
+            this.currentinference = currentinference;
+            this.nalabel = nalabel;
             await this.timeout(500);
             this.progress.value = ++i;
 
@@ -287,8 +290,9 @@
     },
     data() {
       return {
+        nalabel: '',
         showBar: false,
-        current_inference: '',
+        currentinference: '',
         chartSettings: {
           yAxisType: ['KMB', 'percent'],
           yAxisName: ['ms', ''],
