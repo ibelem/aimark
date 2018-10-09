@@ -37,6 +37,5 @@
   
   .subtitle {
     font-size: 1rem;
-  }
-  
+  }  
 </style>

@@ -85,7 +85,7 @@
 
 <style scoped>
   .hero {
-    background-image: url("../assets/img/home-hero.jpg");
+    background-image: url("../static/img/home-hero.jpg");
     background-attachment: fixed;
     background-size: cover;
     background-position: center center;

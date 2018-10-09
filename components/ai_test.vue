@@ -340,4 +340,7 @@
   .is-primary-gradient:hover {
     background: linear-gradient(30deg, rgba(222, 12, 101, 0.8), rgba(222, 12, 101, 1.0));
   }
+  footer .button {
+    border: 0px solid transparent;
+  }
 </style>

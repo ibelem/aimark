@@ -375,7 +375,7 @@ function NMS(options, outputBoxTensor, outputClassScoresTensor) {
 
 /**
 * Draw img and box
-* Update the code to '../js/testms.js'
+* Update the code to '../js/main.js'
 *
 // * @param {object} imageSource - Input image element
 // */

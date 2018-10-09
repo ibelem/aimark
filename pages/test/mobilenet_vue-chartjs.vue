@@ -121,7 +121,7 @@
     testresult,
     bardata,
     runTest
-  } from '~/static/js/testms.js'
+  } from '~/static/js/main.js'
   
   
   export default {

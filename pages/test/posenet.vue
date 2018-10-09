@@ -112,7 +112,7 @@
     bardata,
     runTest,
     nalabel
-  } from '~/static/js/testms.js'
+  } from '~/static/js/main.js'
   
   
   export default {

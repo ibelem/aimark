@@ -30,7 +30,7 @@
             <img id='testimage' v-show='getTestImage' :src="getTestImage" alt="Test Image">
             <!-- </div> -->
           </div>
-          <div class='inference_label has-text-primary is-size-6-desktop is-size-6-mobile is-size-6-tablet'>{{ tf_currentinference }}</div>
+          <div class='inference_label has-text-primary is-size-6-desktop is-size-6-mobile is-size-6-tablet'>{{ currentinference }}</div>
         </div>
         <div v-show="showlog" class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd">
           <div v-html='log' class="card" id='log'>
@@ -109,17 +109,16 @@
   import axios from 'axios-https-proxy-fix';
   
   import {
-    MobileNet,
+    MobileNetTF,
     modelprogress
   } from '~/static/js/tf/mobilenet.js';
   import {
-    tf_finallog,
-    tf_progress,
-    tf_currentinference,
-    tf_testresult,
+    finallog,
+    currentinference,
+    testresult,
     tf_init_run,
-    tf_nalabel
-  } from '~/static/js/tf/index.js';
+    nalabel
+  } from '~/static/js/main.js';
   
   
   export default {
@@ -177,8 +176,8 @@
         this.showlog = true;
         for (let item of this.task.backend) {
           for (let image of this.task.test.image) {
-            this.tf_currentinference = '';
-            this.tf_nalabel = '';
+            this.currentinference = '';
+            this.nalabel = '';
             let configuration = {
               framework: this.task.framework,
               modelName: this.task.model_name,
@@ -191,15 +190,15 @@
             }
             this.getTestImage = configuration.image;
             await tf_init_run(configuration);
-            this.tf_currentinference = tf_currentinference;
-            this.tf_nalabel = tf_nalabel;
+            this.currentinference = currentinference;
+            this.nalabel = nalabel;
             await this.timeout(500);
             this.progress.value = ++i;
           }
         }
         
   
-        this.test_result = tf_testresult;
+        this.test_result = testresult;
         this.showBar = true;
   
         this.barData.rows = [];
@@ -210,7 +209,7 @@
   
         let _this = this;
         this.task.test.image.map((image) => {
-          for (let item of tf_testresult) {
+          for (let item of testresult) {
             if (item.test_case == image.split('/').pop()) {
               t['Test Image'] = item.test_case;
               if (item.backend.toLowerCase() == 'webgl') {
@@ -242,7 +241,7 @@
         // }));
       },
       getLog: function() {
-        this.log = tf_finallog;
+        this.log = finallog;
       },
       getModelProgress: function() {
         this.progress_loading.value = modelprogress;
@@ -258,10 +257,10 @@
     },
     data() {
       return {
-        tf_nalabel: '',
+        nalabel: '',
         showlog: false,
         showBar: false,
-        tf_currentinference: '',
+        currentinference: '',
         chartSettings: {
           yAxisType: ['KMB', 'percent'],
           yAxisName: ['ms', ''],
@@ -288,7 +287,7 @@
         getTestImage: '',
         task: {
           "id": 1,
-          "model_name": 'MobileNet',
+          "model_name": 'MobileNet+TF',
           "backend": ['WebGL', 'CPU'],
           "iteration": 4,
           "framework": "webml-polyfill.js",

@@ -39,9 +39,7 @@
             <canvas class="testimage"></canvas>
             <!-- <div v-for="u in task.test_images.image" :key="u.id"> -->
             <!-- <img id='image' v-if="u" :src="u" alt="Test Image"> -->
-            {{ running.test_image }}ccc
             <img id='testimage' :src="running.test_image" alt="Test Image" v-bind:class="{ pnshow: pn_show }">
-            <img :src="running.test_image" alt="Test Image" v-bind:class="{ pnshow: pn_show }">
             <!-- </div> -->
           </div>
           <div class='inference_label has-text-primary is-size-6-desktop is-size-6-mobile is-size-6-tablet'>{{ currentinference }}</div>
@@ -125,20 +123,11 @@
     modelprogress,
     currentinference,
     testresult,
-    testresultforbenchmark,
     bardata,
     posenetbase64,
-    runTest
-  } from '~/static/js/testms.js'
-
-  import {
-    tf_finallog,
-    tf_progress,
-    tf_currentinference,
-    tf_testresultforbenchmark,
-    tf_testresult,
+    runTest,
     tf_init_run
-  } from '~/static/js/tf/index.js';
+  } from '~/static/js/main.js'
 
   export default {
     components: {
@@ -170,6 +159,10 @@
           defer: true
         },
         {
+          src: '../js/ssd_mobilenet/SsdMobileNet.js',
+          defer: true
+        },
+        {
           src: '../js/third_party/protobuf.min.js',
           defer: true
         },
@@ -183,6 +176,26 @@
         },
         {
           src: '../js/squeezenet/SqueezeNet.js',
+          defer: true
+        },
+        {
+          src: '../js/posenet/decodePose.js',
+          defer: true
+        },
+                {
+          src: '../js/posenet/helperFunc.js',
+          defer: true
+        },
+                {
+          src: '../js/posenet/utils.js',
+          defer: true
+        },
+        {
+          src: '../js/posenet/PoseNet.js',
+          defer: true
+        },
+        {
+          src: '../js/posenet/DrawOutputs.js',
           defer: true
         }
       ],
@@ -237,14 +250,17 @@
             this.running.backend = task.backend;
             this.running.test_image = image;
             await runTest(configuration);
-            this.currentinference = currentinference;
-            await this.timeout(500);
+            if(this.running.model != 'SSDMobileNet') {
+              this.currentinference = currentinference;
+            } else {
+              this.currentinference = '';
+            }
+            await this.timeout(300);
             this.progress.value = ++i;
           }
         }
   
-        this.test_result = testresultforbenchmark;
-        console.log(this.test_result)
+        this.test_result = testresult;
         this.showresult = true;
       },
       pn: async function(k) {
@@ -280,17 +296,15 @@
             this.running.model_version =task.model_version;
             this.running.backend = task.backend;
             this.running.test_image = image;
-
-            console.log(this.running.test_image)
             await runTest(configuration);
-            this.currentinference = currentinference;
+            this.currentinference = '';
             this.running.test_image = posenetbase64;
-            await this.timeout(2000);
+            this.progress.value = ++i;
+            await this.timeout(500);
           }
         }
   
-        this.test_result = testresultforbenchmark;
-        console.log(this.test_result)
+        this.test_result = testresult;
         this.showresult = true;
       },
       tf: async function(k) {
@@ -325,24 +339,28 @@
             this.running.backend = task.backend;
             this.running.test_image = image;
             await tf_init_run(configuration);
-            this.currentinference = tf_currentinference;
+            this.currentinference = currentinference;
             await this.timeout(500);
             this.progress.value = ++i;
           }
         }
-        this.test_result = tf_testresultforbenchmark;
+        this.test_result = testresult;
         this.showresult = true;
       },
       run: async function() {
-        // await this.orc(0)
-        // this.progress_total.value = 1;
-        // await this.orc(1)
-        // this.progress_total.value = 2;
-        // await this.orc(2)
-        // this.progress_total.value = 3;
-        // await this.tf(3)
-        // this.progress_total.value = 4;
+        await this.orc(0)
+        this.progress_total.value = 1;
+        await this.orc(1)
+        this.progress_total.value = 2;
+        await this.orc(2)
+        this.progress_total.value = 3;
+        await this.orc(3)
+        this.progress_total.value = 4;
+        // await this.tf(4)
+        // this.progress_total.value = 5;
         await this.pn(4)
+        this.progress_total.value = 5;
+
       }
     },
     computed: {
@@ -368,7 +386,7 @@
         },
         progress_total: {
           value: 0,
-          max: 4,
+          max: 5,
         },
         test_result: [],
         showtask: false,
@@ -382,7 +400,7 @@
           'model': '',
           'model_version': '',
           'backend': '',
-          'test_image': ''
+          'test_image': '../img/posenet/ski.jpg'
         },
         tasks: [{
             "id": 1,
@@ -403,20 +421,11 @@
             'test': {
               'resolution': '224 x 224 px',
               'image': ['../img/mobilenet/bee_eater.jpg']
-            },
-            "platform": [
-              'android',
-              'windows',
-              'linux'
-            ],
-            "browser": [
-              'chrome',
-              'firefox'
-            ]},
+            }},
             {
             "id": 2,
             "category": 'Object Recognition / Classification',
-            "name": 'Image Classification (MobileNetV2)',
+            "name": 'Image Classification (MobileNet V2)',
             "model_name": 'MobileNet',
             "url": 'MobileNet2',
             "backend": ['WASM', 'WebGL2', 'WebML'],
@@ -431,19 +440,33 @@
             "paper_url": 'https://arxiv.org/abs/1801.04381',
             'test': {
               'resolution': '224 x 224 px',
-              'image': ['../img/mobilenet/traffic_light.jpg']
-            },
-            "platform": [
-              'android',
-              'windows',
-              'linux'
-            ],
-            "browser": [
-              'chrome',
-              'firefox'
-            ]},
+              'image': ['../img/mobilenet/pinwheel.jpg']
+            }},
             {
-            "id": 3,
+              "id": 3,
+              "category": 'Object Recognition / Classification',
+              "name": 'Image Classification (SSD MobileNet)',
+              "model_name": 'SSDMobileNet',
+              "url": 'SSDMobileNet',
+              "backend": ['WASM', 'WebGL2', 'WebML'],
+              "iteration": 4,
+              "framework": "webml-polyfill.js",
+              "model": '../model/ssd_mobilenet/ssd_mobilenet.tflite',
+              "label": '../model/ssd_mobilenet/coco_labels_list.txt',
+              // "model": 'https://aimark.nos-eastchina1.126.net/model/ssd_mobilenet/ssd_mobilenet.tflite',
+              // "label": 'https://aimark.nos-eastchina1.126.net/model/ssd_mobilenet/coco_labels_list.txt',
+              "description": 'SSD (Single Shot MultiBox Detector) is an unified framework for object detection with a single network. Loading SSD MobileNet model (converted from Tensorflow SSD MobileNet model) trained by COCO in TensorFlow Lite format, constructs and inferences it by WebML API.',
+              "model_version": 'v1',
+              "accuracy": '70.9%',
+              "model_size": '27.3Mb',
+              "paper_url": 'https://arxiv.org/abs/1801.04381',
+              'test': {
+                'resolution': '300 x 300 px',
+                'image': ['../img/mobilenet/traffic_light.jpg']
+              }
+            },
+            {
+            "id": 4,
             "category": 'Object Recognition / Classification',
             "name": 'Image Classification (SqueezeNet)',
             "model_name": 'SqueezeNet',
@@ -461,50 +484,28 @@
             'test': {
               'resolution': '224 x 224 px',
               'image': ['../img/squeezenet/panda.jpg']
-            },
-            "platform": [
-              'android',
-              'windows',
-              'mac',
-              'ios',
-              'linux'
-            ],
-            "browser": [
-              'edge',
-              'chrome',
-              'firefox',
-              'safari'
-            ]
+            }
           },
-          {
-            "id": 4,
-            "category": 'Object Recognition / Classification',
-            "name": 'Image Classification (TensorFlow.js)',
-            "model_name": 'MobileNet',
-            "url": 'TensorFlow',
-            "backend": ['WebGL', 'CPU', 'WebML'],
-            "iteration": 4,
-            "framework": "webml-polyfill.js",
-            "model": '../model/tf/google/optimized_model.pb',
-            "label": '../model/tf/google/weights_manifest.json',
-            "description": 'TensorFlow.js is a JavaScript library for training and deploying ML models in the browser. Loading a pretrained TensorFlow SavedModel into the browser and run inference through TensorFlow.js.',
-            "model_version": 'v1.0',
-            "accuracy": '89.9%',
-            "model_size": '16.9Mb',
-            "paper_url": 'https://arxiv.org/pdf/1704.04861.pdf',
-            'test': {
-              'resolution': '224 x 224 px',
-              'image': ['../img/tensorflow/cat.jpg']
-            },
-            "platform": [
-              'android',
-              'windows',
-              'linux'
-            ],
-            "browser": [
-              'chrome',
-              'firefox'
-            ]},
+          // {
+          //   "id": 5,
+          //   "category": 'Object Recognition / Classification',
+          //   "name": 'Image Classification (TensorFlow.js)',
+          //   "model_name": 'MobileNet',
+          //   "url": 'TensorFlow',
+          //   "backend": ['WebGL', 'CPU', 'WebML'],
+          //   "iteration": 4,
+          //   "framework": "webml-polyfill.js",
+          //   "model": '../model/tf/google/optimized_model.pb',
+          //   "label": '../model/tf/google/weights_manifest.json',
+          //   "description": 'TensorFlow.js is a JavaScript library for training and deploying ML models in the browser. Loading a pretrained TensorFlow SavedModel into the browser and run inference through TensorFlow.js.',
+          //   "model_version": 'v1.0',
+          //   "accuracy": '89.9%',
+          //   "model_size": '16.9Mb',
+          //   "paper_url": 'https://arxiv.org/pdf/1704.04861.pdf',
+          //   'test': {
+          //     'resolution': '224 x 224 px',
+          //     'image': ['../img/tensorflow/cat.jpg']
+          //   }},
                       {
             "id": 5,
             "category": 'Visual Localisation',
@@ -524,16 +525,7 @@
             'test': {
               'resolution': '513 x 513 px',
               'image': ['../img/posenet/ski.jpg']
-            },
-            "platform": [
-              'android',
-              'windows',
-              'linux'
-            ],
-            "browser": [
-              'chrome',
-              'firefox'
-            ]},
+            }},
         ]
       }
     }

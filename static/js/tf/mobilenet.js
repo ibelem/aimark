@@ -34,7 +34,7 @@ const SCALAR_DIVISOR = 225 / 2;
 
 let modelprogress = 0;
 
-export class MobileNet {
+export class MobileNetTF {
   constructor() {
     this.PREPROCESS_DIVISOR = tfc.scalar(SCALAR_DIVISOR);
   }

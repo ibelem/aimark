@@ -32,9 +32,6 @@
         <a class="navbar-item" href="../benchmark">
           Benchmark
         </a>
-        <nuxt-link class="navbar-item" to="../ranking">
-          Ranking
-        </nuxt-link>
         <div class="navbar-item has-dropdown is-hoverable">
           <nuxt-link class="navbar-item" to="../test">
             Test
@@ -52,9 +49,11 @@
             <a class="navbar-item" href="../test/SqueezeNet">
               SqueezeNet
             </a>
+            <!-- 
             <a class="navbar-item" href="../test/TensorFlow">
               TensorFlow.js
             </a>
+            -->
             <a class="navbar-item" href="../test/PoseNet">
               PoseNet
             </a>
@@ -66,12 +65,16 @@
             -->
           </div>
         </div>
-        <nuxt-link class="navbar-item" to="../faq">
+        <nuxt-link class="navbar-item" to="../ranking">
+          Ranking
+        </nuxt-link>
+        <!-- <nuxt-link class="navbar-item" to="../faq">
           FAQ
         </nuxt-link>
         <nuxt-link class="navbar-item" to="../about">
           About
         </nuxt-link>
+        -->
       </div>
     </div>
   </nav>
