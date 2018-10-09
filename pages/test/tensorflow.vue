@@ -222,23 +222,6 @@
           this.barData.rows.push(t);
           t = {};
         })
-  
-        // await Promise.all(
-        //   this.task.backend.map(async (item) => {
-        //     await Promise.all(
-        //     this.task.test.image.map(async (test) => {
-        //       let configuration = {
-        //         framework: this.task.framework,
-        //         modelName: this.task.modelname.toLowerCase(),
-        //         backend: item,
-        //         iteration: this.task.iteration,
-        //         model: this.task.model,
-        //         label: this.task.label,
-        //         test: test
-        //       };
-        //       await run_mobilenet(configuration);
-        //     }));
-        // }));
       },
       getLog: function() {
         this.log = finallog;
