@@ -411,7 +411,7 @@
             "backend": ['WASM', 'WebGL2', 'WebML'],
             "iteration": 4,
             "framework": "webml-polyfill.js",
-            "model": '../model/mobilenet/zip/mobilenet_v1_1.0_224.tflite',
+            "model": '../model/mobilenet/mobilenet_v1_1.0_224.tflite',
             "label": '../model/mobilenet/labels.txt',
             // "model": 'https://aimark.nos-eastchina1.126.net/model/mobilenet/mobilenet_v1_1.0_224.tflite',
             // "label": 'https://aimark.nos-eastchina1.126.net/model/mobilenet/labels.txt',
