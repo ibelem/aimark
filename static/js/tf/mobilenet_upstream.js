@@ -28,8 +28,8 @@ const INPUT_NODE_NAME = 'input';
 const OUTPUT_NODE_NAME = 'MobilenetV1/Predictions/Reshape_1';
 const PREPROCESS_DIVISOR = tfc.scalar(255 / 2);
 
-const TFJS_MODEL_URL = 'http://aimark.nos-eastchina1.126.net/model/tf/google/optimized_model.pb';
-const WEIGHTS_MANIFEST_URL = 'http://aimark.nos-eastchina1.126.net/model/tf/google/weights_manifest.json';
+const TFJS_MODEL_URL = 'https://aimark.nos-eastchina1.126.net/model/tf/google/optimized_model.pb';
+const WEIGHTS_MANIFEST_URL = 'https://aimark.nos-eastchina1.126.net/model/tf/google/weights_manifest.json';
 
 export class MobileNet {
   constructor() {}
