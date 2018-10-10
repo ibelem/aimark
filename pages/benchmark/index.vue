@@ -9,105 +9,113 @@
           <button class="button is-primary wd" @click="run">Run Benchmark</button>
       </div>
     </section>
-    <section class="section" v-if="showtask">
-      <h2 class="has-text-primary is-size-5-desktop is-size-7-mobile is-size-5-tablet">
-        Task {{ running.id }}: {{ running.name }} <span v-if="running.model_version">{{ running.model_version }}</span>
-      </h2>
-      <div class='mb'>{{ running.description }}</div>
-      <div class="mt ic" v-if="running.backend">
+    <transition name="fade">
+      <section class="section" v-if="showtask">
+        <h2 class="has-text-primary is-size-5-desktop is-size-7-mobile is-size-5-tablet">
+          Task {{ running.id }}: {{ running.name }} <span v-if="running.model_version">{{ running.model_version }}</span>
+        </h2>
+        <div class='mb'>{{ running.description }}</div>
+        <div class="mt ic" v-if="running.backend">
+          <div class="columns mt">
+            <div class="column is-mobile is-one-third-tablet is-one-third-desktop is-one-third-widescreen is-one-third-fullhd ic">
+              <div class="">Loading task {{ running.id }} model file: {{ progress_loading_text }} </div>
+              <progress class="progress is-info mt" :value="progress_loading.value" :max="progress_loading.max">{{ progress_loading_text }}</progress>
+            </div>
+            <div class="column is-mobile is-one-third-tablet is-one-third-desktop is-one-third-widescreen is-one-third-fullhd ic">
+              <div class="">Task {{ running.id }}: {{ progress_text }} </div>
+              <progress class="progress is-info mt" :value="progress.value" :max="progress.max">{{ progress_text }}</progress>
+            </div>
+            <div class="column is-mobile is-one-third-tablet is-one-third-desktop is-one-third-widescreen is-one-third-fullhd ic">
+              <div class="">Total: {{ progress_total_text }} </div>
+              <progress class="progress is-info mt" :value="progress_total.value" :max="progress_total.max">{{ progress_total_text }}</progress>
+            </div>
+          </div>
+        </div>
+    
         <div class="columns mt">
-          <div class="column is-mobile is-one-third-tablet is-one-third-desktop is-one-third-widescreen is-one-third-fullhd ic">
-            <div class="">Loading task {{ running.id }} model file: {{ progress_loading_text }} </div>
-            <progress class="progress is-info mt" :value="progress_loading.value" :max="progress_loading.max">{{ progress_loading_text }}</progress>
+          <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
+            <div class="card is ic">
+              <canvas id="poseCanvas" width="513" height="513"></canvas>
+              <canvas id="poseCanvasPredict" width="513" height="513"></canvas>
+              <canvas class="testimage"></canvas>
+              <!-- <div v-for="u in task.test_images.image" :key="u.id"> -->
+              <!-- <img id='image' v-if="u" :src="u" alt="Test Image"> -->
+              <img id='testimage' :src="running.test_image" alt="Test Image" v-bind:class="{ pnshow: pn_show }">
+              <!-- </div> -->
+            </div>
+            <div class='inference_label has-text-primary is-size-6-desktop is-size-6-mobile is-size-6-tablet'>{{ currentinference }}</div>
           </div>
-          <div class="column is-mobile is-one-third-tablet is-one-third-desktop is-one-third-widescreen is-one-third-fullhd ic">
-            <div class="">Task {{ running.id }}: {{ progress_text }} </div>
-            <progress class="progress is-info mt" :value="progress.value" :max="progress.max">{{ progress_text }}</progress>
-          </div>
-          <div class="column is-mobile is-one-third-tablet is-one-third-desktop is-one-third-widescreen is-one-third-fullhd ic">
-            <div class="">Total: {{ progress_total_text }} </div>
-            <progress class="progress is-info mt" :value="progress_total.value" :max="progress_total.max">{{ progress_total_text }}</progress>
-          </div>
-        </div>
-      </div>
-  
-      <div class="columns mt">
-        <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
-          <div class="card is ic">
-            <canvas id="poseCanvas" width="513" height="513"></canvas>
-            <canvas id="poseCanvasPredict" width="513" height="513"></canvas>
-            <canvas class="testimage"></canvas>
-            <!-- <div v-for="u in task.test_images.image" :key="u.id"> -->
-            <!-- <img id='image' v-if="u" :src="u" alt="Test Image"> -->
-            <img id='testimage' :src="running.test_image" alt="Test Image" v-bind:class="{ pnshow: pn_show }">
-            <!-- </div> -->
-          </div>
-          <div class='inference_label has-text-primary is-size-6-desktop is-size-6-mobile is-size-6-tablet'>{{ currentinference }}</div>
-        </div>
-      </div> 
-        <div v-if='showresult'>
+        </div> 
+      </section>
+    </transition>
+    <section class="section" v-if='showresult'>
         <h2 class="is-size-5-desktop is-size-6-mobile is-size-5-tablet ic mt mb">Benchmark Result</h2>
-        Test Environment: <ai_environment />
+        <div class="is-size-7-mobile mt">Test Environment: <ai_environment /></div>
+        <div class='columns mb'>
+          <div class="column is-mobile is-12 ic">
+            <div class="mb mt">
+              <b-table :data="test_result" :bordered="false" :striped="true" :narrowed="false" :hoverable="true" :loading="false" :focusable="true" :mobile-cards="true">
+                <template slot-scope="props">
+                  <b-table-column field="id" label="Task">
+                      {{ props.row.id }}
+                  </b-table-column>
+                  <b-table-column field="name" label="Name">
+                      {{ props.row.name }}
+                  </b-table-column>
+                  <!-- <b-table-column field="model" label="Model">
+                      {{ props.row.model }}
+                  </b-table-column>
+                  -->
+                  <b-table-column field="model_version" label="Version">
+                      {{ props.row.model_version }}
+                  </b-table-column>
+                  <b-table-column field="backend" label="Backend">
+                      {{ props.row.backend }}
+                  </b-table-column>
+
+                  <!-- <b-table-column field="test_image" label="Test Image">
+                      {{ props.row.test_case }}
+                  </b-table-column>
+
+                  <b-table-column field="best_probability" label="Best Probability">
+                      {{ props.row.probability }}
+                  </b-table-column>
+                  -->
+
+                  <b-table-column field="test_result" label="Inference Time">
+                      {{ props.row.test_result }} ms
+                  </b-table-column>
+
+                  <!-- <b-table-column field="date" label="Date" centered>
+                      <span class="tag is-success">
+                          xxx
+                      </span>
+                  </b-table-column> -->
+                </template>
+
+                <template slot="empty">
+                  <section class="section">
+                    <div class="content has-text-grey has-text-centered">
+                      <p>
+                        <b-icon icon="emoticon-sad" size="is-large">
+                        </b-icon>
+                      </p>
+                      <p>Nothing here.</p>
+                    </div>
+                  </section>
+                </template>
+              </b-table>
+            </div>
+          </div> 
+        </div>
         <div class='columns mb'>
         <div class="column is-mobile is-12 ic">
-          <div class="mb mt">
-            <b-table :data="test_result" :bordered="false" :striped="true" :narrowed="false" :hoverable="true" :loading="false" :focusable="true" :mobile-cards="true">
-              <template slot-scope="props">
-                <b-table-column field="id" label="Task">
-                    {{ props.row.id }}
-                </b-table-column>
-                <b-table-column field="name" label="Name">
-                    {{ props.row.name }}
-                </b-table-column>
-                <!-- <b-table-column field="model" label="Model">
-                    {{ props.row.model }}
-                </b-table-column>
-                -->
-                <b-table-column field="model_version" label="Version">
-                    {{ props.row.model_version }}
-                </b-table-column>
-                <b-table-column field="backend" label="Backend">
-                    {{ props.row.backend }}
-                </b-table-column>
-
-                <!-- <b-table-column field="test_image" label="Test Image">
-                    {{ props.row.test_case }}
-                </b-table-column>
-
-                <b-table-column field="best_probability" label="Best Probability">
-                    {{ props.row.probability }}
-                </b-table-column>
-                -->
-
-                <b-table-column field="test_result" label="Inference Time">
-                    {{ props.row.test_result }} ms
-                </b-table-column>
-
-                <!-- <b-table-column field="date" label="Date" centered>
-                    <span class="tag is-success">
-                        xxx
-                    </span>
-                </b-table-column> -->
-              </template>
-
-              <template slot="empty">
-                <section class="section">
-                  <div class="content has-text-grey has-text-centered">
-                    <p>
-                      <b-icon icon="emoticon-sad" size="is-large">
-                      </b-icon>
-                    </p>
-                    <p>Nothing here.</p>
-                  </div>
-                </section>
-              </template>
-            </b-table>
- 
- 
+          <div class="bar-chart mt">
+            <ve-histogram v-if='showBar' :data="barData" :settings="chartSettings" class='cmh'></ve-histogram>
           </div>
+        </div>
+
         </div> 
-        </div> 
-      </div>
     </section>
     <ai_footer/>
   </div>
@@ -361,6 +369,37 @@
         await this.pn(4)
         this.progress_total.value = 5;
 
+        this.showBar = true;
+
+        this.barData.rows = [];
+        let t = {};
+        t['Tasks'] = 0;
+        t['WASM Polyfill'] = 0;
+        t['WebGL2 Polyfill'] = 0;
+        t['WebML'] = 0;
+      
+        let tasksid = []
+        for(let key of testresult){
+          tasksid.push(key.id);
+        }
+        tasksid = [...new Set(tasksid)]
+        tasksid.map((id) => {
+          for (let item of testresult) {
+            if (item.id == id) {
+              t['Tasks'] = "Task " + item.id;
+              if (item.backend.toLowerCase() == 'wasm') {
+                t['WASM Polyfill'] = item.test_result;
+              } else if (item.backend.toLowerCase() == 'webgl2') {
+                t['WebGL2 Polyfill'] = item.test_result;
+              } else if (item.backend.toLowerCase() == 'webml') {
+                t['WebML'] = item.test_result;
+              }  
+            }
+          }
+          this.barData.rows.push(t);
+          t = {};
+        })
+
       }
     },
     computed: {
@@ -376,6 +415,22 @@
     },
     data() {
       return {
+        showBar: false,
+        chartSettings: {
+          yAxisType: ['KMB', 'percent'],
+          yAxisName: ['ms', ''],
+          showLine: ['Probability']
+        },
+        barData: {
+          columns: ['Tasks', 'WASM Polyfill', 'WebGL2 Polyfill', 'WebML'],
+          rows: [{
+              'Task': '1',
+              'WASM Polyfill': 0,
+              'WebGL2 Polyfill': 0,
+              'WebML': 0
+            }
+          ]
+        },
         progress: {
           value: 0,
           max: 3,
@@ -569,6 +624,13 @@
 
   .pnshow {
     display: block !important;
+  }
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
   }
 
 </style>
