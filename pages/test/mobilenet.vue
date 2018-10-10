@@ -126,7 +126,7 @@
     name: "mobilenet",
     head: {
       script: [{
-          src: '../js/webml/dist/webml-polyfill.js',
+          src: '../js/webml/webml-polyfill.js',
           defer: true
         },
         {
