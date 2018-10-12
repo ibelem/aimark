@@ -245,7 +245,7 @@ class Benchmark {
       });
       // bkPoseImageSrc = imageElement.src;
       // imageElement.src = poseCanvas.toDataURL();
-      posenetbase64 = poseCanvas.toDataURL()
+      posenetbase64 = poseCanvas.toDataURL();
     } 
     return {"computeResults": computeResults, "decodeResults": decodeResults};
   }

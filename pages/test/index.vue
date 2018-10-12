@@ -3,7 +3,7 @@
     <ai_nav/>
     <section class="section">
       <h1 class="subtitle">
-        The AIMmark for Web consists of multiple AI tasks performed by separate neural networks on your desktop or smartphone browsers.
+        The AIMmark for Web consists of multiple AI tests performed by separate neural networks on your desktop or smartphone browsers.
       </h1>
       <ai_test/>
     </section>

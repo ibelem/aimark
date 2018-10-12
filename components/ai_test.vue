@@ -1,7 +1,7 @@
 <template>
   <section>
   
-    <h2 class="has-text-primary is-size-5-desktop is-size-6-mobile is-size-5-tablet mb">Tasks: Object Recognition / Classification</h2>
+    <h2 class="has-text-primary is-size-5-desktop is-size-6-mobile is-size-5-tablet mb">Tests: Object Recognition / Classification</h2>
     <div class="columns">
       <div v-for="task in tasks" v-if="task.category=='Object Recognition / Classification' && task.id < 5" :key="task.id" class="column is-mobile is-one-third-tablet is-one-third-desktop is-one-quarter-widescreen is-one-quarter-fullhd">
         <b-collapse class="card">
@@ -94,7 +94,7 @@
         </b-collapse>
       </div>
     </div>
-    <h2 class="has-text-primary is-size-5-desktop is-size-6-mobile is-size-5-tablet mb">Tasks: Visual Localisation</h2>
+    <h2 class="has-text-primary is-size-5-desktop is-size-6-mobile is-size-5-tablet mb">Tests: Visual Localisation</h2>
     <div class="columns">
       <div v-for="task in tasks" v-if="task.category=='Visual Localisation'" :key="task.id" class="column is-mobile is-one-third-tablet is-one-third-desktop is-one-quarter-widescreen is-one-quarter-fullhd">
         <b-collapse class="card">
@@ -246,27 +246,27 @@
               'image': ['../img/squeezenet/jeep.jpg', '../img/squeezenet/wallaby.jpg', '../img/squeezenet/panda.jpg']
             }
           },
-          {
-            "id": 5,
-            "category": 'Object Recognition / Classification',
-            "name": 'Image (TensorFlow.js)',
-            "model_name": 'MobileNet',
-            "url": 'TensorFlow',
-            "backend": ['WebGL', 'WebML'],
-            "iteration": 4,
-            "framework": "webml-polyfill.js",
-            "model": 'https://aimark.nos-eastchina1.126.net/model/tf/google/optimized_model.pb',
-            "label": 'https://aimark.nos-eastchina1.126.net/model/tf/google/weights_manifest.json',
-            "description": 'TensorFlow.js is a JavaScript library for training and deploying ML models in the browser. Loading a pretrained TensorFlow SavedModel into the browser and run inference through TensorFlow.js.',
-            "model_version": 'v1.0',
-            "accuracy": '89.9%',
-            "model_size": '16.9Mb',
-            "paper_url": 'https://arxiv.org/pdf/1704.04861.pdf',
-            'test': {
-              'resolution': '224 x 224 px',
-              'image': ['../img/mobilenet/bee_eater.jpg', '../img/mobilenet/traffic_light.jpg', '../img/mobilenet/pinwheel.jpg']
-            }
-            },
+          // {
+          //   "id": 5,
+          //   "category": 'Object Recognition / Classification',
+          //   "name": 'Image (TensorFlow.js)',
+          //   "model_name": 'MobileNet',
+          //   "url": 'TensorFlow',
+          //   "backend": ['WebGL', 'WebML'],
+          //   "iteration": 4,
+          //   "framework": "webml-polyfill.js",
+          //   "model": 'https://aimark.nos-eastchina1.126.net/model/tf/google/optimized_model.pb',
+          //   "label": 'https://aimark.nos-eastchina1.126.net/model/tf/google/weights_manifest.json',
+          //   "description": 'TensorFlow.js is a JavaScript library for training and deploying ML models in the browser. Loading a pretrained TensorFlow SavedModel into the browser and run inference through TensorFlow.js.',
+          //   "model_version": 'v1.0',
+          //   "accuracy": '89.9%',
+          //   "model_size": '16.9Mb',
+          //   "paper_url": 'https://arxiv.org/pdf/1704.04861.pdf',
+          //   'test': {
+          //     'resolution': '224 x 224 px',
+          //     'image': ['../img/mobilenet/bee_eater.jpg', '../img/mobilenet/traffic_light.jpg', '../img/mobilenet/pinwheel.jpg']
+          //   }
+          //   },
             {
             "id": 6,
             "category": 'Visual Localisation',

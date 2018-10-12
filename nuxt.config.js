@@ -35,7 +35,7 @@ module.exports = {
   ],
   */
   css: [
-    '~/assets/css/main.css'
+    { src: '~/assets/css/main.scss', lang: 'scss'}
   ],
   render: {
     bundleRenderer: {

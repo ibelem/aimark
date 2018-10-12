@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <ai_nav/>
+    <ai_mac_switcher/>
     <div class="section">
       <h2 class="has-text-primary is-size-5-desktop is-size-6-mobile is-size-5-tablet">
         {{ task.name }}
@@ -104,6 +105,7 @@
   import ai_footer from "~/components/ai_footer.vue";
   import ClipboardJS from 'clipboard';
   import axios from 'axios-https-proxy-fix';
+  import ai_mac_switcher from "~/components/ai_mac_switcher.vue";
   import {
     finallog,
     modelprogress,
@@ -119,7 +121,8 @@
     components: {
       ai_nav,
       ai_footer,
-      ClipboardJS
+      ClipboardJS,
+      ai_mac_switcher
     },
     name: "mobilenet",
     head: {
@@ -217,8 +220,8 @@
       },
       run: async function() {
         let i = 0;
-        for (let item of this.task.backend) {
-          for (let image of this.task.test.image) {
+        for (let image of this.task.test.image) {
+          for (let item of this.task.backend) {
             this.nalabel = '';
             let framework = this.task.framework;
             if(item == 'WebML') {

@@ -14,7 +14,7 @@
               AIMark
             </h1>
             <h2 class="subtitle">
-              The AIMark for web consists of multiple AI tasks performed by separate neural networks on your pc or smartphone browsers.
+              The AIMark for web consists of multiple AI tests performed by separate neural networks on your pc or smartphone browsers.
             </h2>
             <!-- <h2 class="subtitle">
               WebML is a Web API set for a dedicated API for Machine Learning inference in the browser.

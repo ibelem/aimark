@@ -1,9 +1,11 @@
 <template>
   <div class="container">
     <ai_nav/>
+    <ai_mac_switcher/>
+    <ai_upgrading/>
     <section class="section hero" v-if="showtask == false">
       <h2 class="subtitle">
-      Run AIMark for Web to test several key AI tasks on your PC or smartphone browsers and check its performance!
+      AIMark for Web, run key AI tests on your PC or smartphone browsers and check its performance!
       </h2>
       <div class='ic mb mt'>
           <button class="button is-primary wd" @click="run">Run Benchmark</button>
@@ -12,17 +14,17 @@
     <transition name="fade">
       <section class="section" v-if="showtask">
         <h2 class="has-text-primary is-size-5-desktop is-size-7-mobile is-size-5-tablet">
-          Task {{ running.id }}: {{ running.name }} <span v-if="running.model_version">{{ running.model_version }}</span>
+          Test {{ running.id }}: {{ running.name }} <span v-if="running.model_version">{{ running.model_version }}</span>
         </h2>
         <div class='mb'>{{ running.description }}</div>
         <div class="mt ic" v-if="running.backend">
           <div class="columns mt">
             <div class="column is-mobile is-one-third-tablet is-one-third-desktop is-one-third-widescreen is-one-third-fullhd ic">
-              <div class="">Loading task {{ running.id }} model file: {{ progress_loading_text }} </div>
+              <div class="">Loading test {{ running.id }} model file: {{ progress_loading_text }} </div>
               <progress class="progress is-info mt" :value="progress_loading.value" :max="progress_loading.max">{{ progress_loading_text }}</progress>
             </div>
             <div class="column is-mobile is-one-third-tablet is-one-third-desktop is-one-third-widescreen is-one-third-fullhd ic">
-              <div class="">Task {{ running.id }}: {{ progress_text }} </div>
+              <div class="">Test {{ running.id }}: {{ progress_text }} </div>
               <progress class="progress is-info mt" :value="progress.value" :max="progress.max">{{ progress_text }}</progress>
             </div>
             <div class="column is-mobile is-one-third-tablet is-one-third-desktop is-one-third-widescreen is-one-third-fullhd ic">
@@ -54,23 +56,31 @@
         <div class='columns mb'>
           <div class="column is-mobile is-12 ic">
             <div class="mb mt">
-              <b-table :data="test_result" :bordered="false" :striped="true" :narrowed="false" :hoverable="true" :loading="false" :focusable="true" :mobile-cards="true">
+              <b-table :data="barData.rows" :bordered="false" :striped="true" :narrowed="false" :hoverable="true" :loading="false" :focusable="true" :mobile-cards="true">
                 <template slot-scope="props">
-                  <b-table-column field="id" label="Task">
-                      {{ props.row.id }}
+                  <b-table-column field="Test" label="Test">
+                      {{ props.row.Test }}
                   </b-table-column>
-                  <b-table-column field="name" label="Name">
-                      {{ props.row.name }}
+                  <b-table-column field="Name" label="Name">
+                      {{ props.row.Name }}
                   </b-table-column>
                   <!-- <b-table-column field="model" label="Model">
                       {{ props.row.model }}
                   </b-table-column>
                   -->
-                  <b-table-column field="model_version" label="Version">
-                      {{ props.row.model_version }}
+                  <b-table-column field="Model Version" label="Version">
+                      {{ props.row.Version }}
                   </b-table-column>
-                  <b-table-column field="backend" label="Backend">
-                      {{ props.row.backend }}
+                  <b-table-column field="WASM_Polyfill" label="WASM Polyfill">
+                      {{ props.row.WASM_Polyfill }} ms
+                  </b-table-column>
+
+                  <b-table-column field="WebGL2_Polyfill" label="WebGL2 Polyfill">
+                      {{ props.row.WebGL2_Polyfill }} ms
+                  </b-table-column>
+
+                  <b-table-column field="WebML" label="WebML">
+                      {{ props.row.WebML }} ms
                   </b-table-column>
 
                   <!-- <b-table-column field="test_image" label="Test Image">
@@ -81,10 +91,6 @@
                       {{ props.row.probability }}
                   </b-table-column>
                   -->
-
-                  <b-table-column field="test_result" label="Inference Time">
-                      {{ props.row.test_result }} ms
-                  </b-table-column>
 
                   <!-- <b-table-column field="date" label="Date" centered>
                       <span class="tag is-success">
@@ -122,10 +128,12 @@
 </template>
 
 <script>
+  import ai_upgrading from "~/components/ai_upgrading.vue";
   import ai_nav from "~/components/ai_nav.vue";
   import ai_footer from "~/components/ai_footer.vue";
   import ai_test from "~/components/ai_test.vue";
   import ai_environment from "~/components/ai_environment_line.vue";
+  import ai_mac_switcher from "~/components/ai_mac_switcher.vue";
   import {
     finallog,
     modelprogress,
@@ -136,10 +144,11 @@
     runTest,
     tf_init_run
   } from '~/static/js/main.js'
+import { setTimeout } from 'timers';
 
   export default {
     components: {
-      ai_nav, ai_footer, ai_environment
+      ai_nav, ai_footer, ai_environment, ai_upgrading, ai_mac_switcher
     },
     head: {
       script: [{
@@ -226,6 +235,38 @@
       getModelProgress: function() {
         this.progress_loading.value = modelprogress;
       },
+      showData: function() {
+        this.barData.rows = [];
+        let t = {};
+        t['Test'] = 0;
+        t['WASM Polyfill'] = 0;
+        t['WebGL2 Polyfill'] = 0;
+        t['WebML'] = 0;
+      
+        let tasksid = []
+        for(let key of testresult){
+          tasksid.push(key.id);
+        }
+        tasksid = [...new Set(tasksid)]
+        tasksid.map((id) => {
+          for (let item of testresult) {
+            if (item.id == id) {
+              t['Test'] = "Test " + item.id;
+              t['Name'] = item.name;
+              t['Version'] = item.model_version;
+              if (item.backend.toLowerCase() == 'wasm') {
+                t['WASM_Polyfill'] = item.test_result;
+              } else if (item.backend.toLowerCase() == 'webgl2') {
+                t['WebGL2_Polyfill'] = item.test_result;
+              } else if (item.backend.toLowerCase() == 'webml') {
+                t['WebML'] = item.test_result;
+              }  
+            }
+          }
+          this.barData.rows.push(t);
+          t = {};
+        })
+      },
       orc: async function(k) {
         let task = this.tasks[k];
         this.showtask = true;
@@ -269,6 +310,7 @@
         }
   
         this.test_result = testresult;
+        this.showData();
         this.showresult = true;
       },
       pn: async function(k) {
@@ -313,6 +355,7 @@
         }
   
         this.test_result = testresult;
+        this.showData();
         this.showresult = true;
       },
       tf: async function(k) {
@@ -353,6 +396,7 @@
           }
         }
         this.test_result = testresult;
+        this.showData();
         this.showresult = true;
       },
       run: async function() {
@@ -370,36 +414,6 @@
         this.progress_total.value = 5;
 
         this.showBar = true;
-
-        this.barData.rows = [];
-        let t = {};
-        t['Tasks'] = 0;
-        t['WASM Polyfill'] = 0;
-        t['WebGL2 Polyfill'] = 0;
-        t['WebML'] = 0;
-      
-        let tasksid = []
-        for(let key of testresult){
-          tasksid.push(key.id);
-        }
-        tasksid = [...new Set(tasksid)]
-        tasksid.map((id) => {
-          for (let item of testresult) {
-            if (item.id == id) {
-              t['Tasks'] = "Task " + item.id;
-              if (item.backend.toLowerCase() == 'wasm') {
-                t['WASM Polyfill'] = item.test_result;
-              } else if (item.backend.toLowerCase() == 'webgl2') {
-                t['WebGL2 Polyfill'] = item.test_result;
-              } else if (item.backend.toLowerCase() == 'webml') {
-                t['WebML'] = item.test_result;
-              }  
-            }
-          }
-          this.barData.rows.push(t);
-          t = {};
-        })
-
       }
     },
     computed: {
@@ -415,6 +429,8 @@
     },
     data() {
       return {
+        ismac: true,
+        isSwitchedCustom: 'MPS Backend',
         showBar: false,
         chartSettings: {
           yAxisType: ['KMB', 'percent'],
@@ -422,11 +438,11 @@
           showLine: ['Probability']
         },
         barData: {
-          columns: ['Tasks', 'WASM Polyfill', 'WebGL2 Polyfill', 'WebML'],
+          columns: ['Test', 'WASM_Polyfill', 'WebGL2_Polyfill', 'WebML'],
           rows: [{
-              'Task': '1',
-              'WASM Polyfill': 0,
-              'WebGL2 Polyfill': 0,
+              'Test': '1',
+              'WASM_Polyfill': 0,
+              'WebGL2_Polyfill': 0,
               'WebML': 0
             }
           ]
@@ -598,6 +614,7 @@
 </script>
 
 <style scoped>
+ 
   .title {
     font-weight: 200;
   }
