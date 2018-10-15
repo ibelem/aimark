@@ -2,7 +2,7 @@
   <div class="container">
     <ai_nav/>
     <ai_mac_switcher/>
-    <ai_upgrading/>
+    <!-- <ai_upgrading/> -->
     <section class="section hero" v-if="showtask == false">
       <h2 class="subtitle">
       AIMark for Web, run key AI tests on your PC or smartphone browsers and check its performance!
