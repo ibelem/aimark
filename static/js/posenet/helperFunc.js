@@ -30,7 +30,7 @@ function getURL(version) {
   let address;
   // const urlBase = 'https://storage.googleapis.com/tfjs-models/weights/posenet/';
   // const urlBase = 'https://aimark.nos-eastchina1.126.net/model/posenet/';
-  const urlBase = '../js/posenet/';
+  const urlBase = '../model/posenet/';
   switch (version) {
     case 1.01:
       address = urlBase + 'mobilenet_v1_101/';
