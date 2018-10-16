@@ -2474,6 +2474,14 @@ export default {
   font-size: 1rem;
 }
 
+.tooltip:after {
+  border-radius: 0px;
+}
+
+.tooltip.is-primary:after {
+  background-color: rgba(222, 12, 101, 0.9);
+}
+
 .blank {
   height: 1rem;
 }
