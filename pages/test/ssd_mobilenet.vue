@@ -315,7 +315,7 @@
           "label": '../model/ssd_mobilenet/coco_labels_list.txt',
           // "model": 'https://aimark.nos-eastchina1.126.net/model/ssd_mobilenet/ssd_mobilenet.tflite',
           // "label": 'https://aimark.nos-eastchina1.126.net/model/ssd_mobilenet/coco_labels_list.txt',
-          "name": 'Image Classification (SSD MobileNet)',
+          "name": 'Object Detection (SSD MobileNet)',
           "description": 'SSD (Single Shot MultiBox Detector) is an unified framework for object detection with a single network. Loading SSD MobileNet model (converted from Tensorflow SSD MobileNet model) trained by COCO in TensorFlow Lite format, constructs and inferences it by WebML API.',
           "model_version": 'v1',
           "accuracy": '70.9%',

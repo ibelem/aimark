@@ -38,16 +38,16 @@
           </nuxt-link>
           <div class="navbar-dropdown is-boxed">
             <a class="navbar-item" href="../test/MobileNet">
-              MobileNet
+              MobileNet V1
             </a>
             <a class="navbar-item" href="../test/MobileNet2">
               MobileNet V2
             </a>
-            <a class="navbar-item" href="../test/SSDMobileNet">
-              SSD MobileNet
-            </a>
             <a class="navbar-item" href="../test/SqueezeNet">
               SqueezeNet
+            </a>
+            <a class="navbar-item" href="../test/SSDMobileNet">
+              SSD MobileNet
             </a>
             <!-- 
             <a class="navbar-item" href="../test/TensorFlow">

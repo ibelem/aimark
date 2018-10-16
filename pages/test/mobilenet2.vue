@@ -315,7 +315,7 @@
           "label": '../model/mobilenet/labels.txt',
           // "model": 'https://aimark.nos-eastchina1.126.net/model/mobilenet/mobilenet_v2_1.0_224.tflite',
           // "label": 'https://aimark.nos-eastchina1.126.net/model/mobilenet/labels.txt',
-          "name": 'Image Classification (MobileNetV2)',
+          "name": 'Image Classification (MobileNet V2)',
           "description": 'MobileNetV2 improves the state of the art performance of mobile models. Loading MobileNet model trained by ImageNet in TensorFlow Lite format, constructs and inferences it by WebML API.',
           "model_version": 'v2.0_224',
           "accuracy": '71.8%',

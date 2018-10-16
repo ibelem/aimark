@@ -256,7 +256,7 @@
                     </b-table-column> 
                     <b-table-column v-else field="test4" label="Test 4 (ms)" sortable>
                         {{ props.row.test4 }}
-                    </b-table-column> 
+                    </b-table-column>  
 
                     <b-table-column v-if="props.row.test5 == 0" field="test5" label="Test 5 (ms)" sortable>
                       N/A
@@ -461,7 +461,7 @@
                     </b-table-column> 
                     <b-table-column v-else field="test4" label="Test 4 (ms)" sortable>
                         {{ props.row.test4 }}
-                    </b-table-column> 
+                    </b-table-column>  
 
                     <b-table-column v-if="props.row.test5 == 0" field="test5" label="Test 5 (ms)" sortable>
                       N/A
@@ -1231,7 +1231,7 @@ export default {
         console.log(item.test1);
         if (item.OS == "Windows") {
           total =
-            item.test1 + item.test2 + item.test3 + item.test4 + item.test5;
+            item.test1 + item.test2 + item.test4 + item.test3 + item.test5;
         }
       });
       return total;
@@ -1258,8 +1258,8 @@ export default {
           Backend: "WASM", BackendNative: "",
           test1: 492.2,
           test2: 318.3,
-          test3: 1034.63,
-          test4: 295.13,
+          test4: 1034.63,
+          test3: 295.13,
           test5: 855.63,
           total: 2995.89
         },
@@ -1276,8 +1276,8 @@ export default {
           Backend: "WebGL2", BackendNative: "",
           test1: 181.3,
           test2: 107.5,
-          test3: 386.53,
-          test4: 136.13,
+          test4: 386.53,
+          test3: 136.13,
           test5: 232.73,
           total: 1044.19
         },
@@ -1294,8 +1294,8 @@ export default {
           Backend: "WebML", BackendNative: "",
           test1: 13.13,
           test2: 13.1,
-          test3: 24.17,
-          test4: 7.23,
+          test4: 24.17,
+          test3: 7.23,
           test5: 15.57,
           total: 73.20
         },
@@ -1312,8 +1312,8 @@ export default {
           Backend: "WASM", BackendNative: "",
           test1: 1265.6,
           test2: 841.4,
-          test3: 2239.77,
-          test4: 686,
+          test4: 2239.77,
+          test3: 686,
           test5: 2097.8,
           total: 7130.57
         },
@@ -1330,8 +1330,8 @@ export default {
           Backend: "WebGL2", BackendNative: "",
           test1: 439.93,
           test2: 307.1,
-          test3: 1276.8,
-          test4: 452.03,
+          test4: 1276.8,
+          test3: 452.03,
           test5: 716,
           total: 3191.86
         },
@@ -1348,8 +1348,8 @@ export default {
           Backend: "WebML", BackendNative: "",
           test1: 36.37,
           test2: 37.63,
-          test3: 81.33,
-          test4: 18.63,
+          test4: 81.33,
+          test3: 18.63,
           test5: 55.93,
           total: 229.89
         },
@@ -1366,8 +1366,8 @@ export default {
           Backend: "WASM", BackendNative: "",
           test1: 376.8,
           test2: 237.93,
-          test3: 782.8,
-          test4: 221.63,
+          test4: 782.8,
+          test3: 221.63,
           test5: 655.33,
           total: 2274.49
         },
@@ -1384,8 +1384,8 @@ export default {
           Backend: "WebGL2", BackendNative: "",
           test1: 164.13,
           test2: 75.6,
-          test3: 310.7,
-          test4: 104.37,
+          test4: 310.7,
+          test3: 104.37,
           test5: 223.57,
           total: 878.37
         },
@@ -1402,8 +1402,8 @@ export default {
           Backend: "WebML", BackendNative: "",
           test1: 9.23,
           test2: 9.4,
-          test3: 19.47,
-          test4: 5.73,
+          test4: 19.47,
+          test3: 5.73,
           test5: 13.73,
           total: 57.56
         },
@@ -1420,8 +1420,8 @@ export default {
           Backend: "WASM", BackendNative: "",
           test1: 375.4,
           test2: 243.9,
-          test3: 793.43,
-          test4: 225.83,
+          test4: 793.43,
+          test3: 225.83,
           test5: 645.43,
           total: 2283.99
         },
@@ -1438,8 +1438,8 @@ export default {
           Backend: "WebGL2", BackendNative: "",
           test1: 37.53,
           test2: 33.37,
-          test3: 152.53,
-          test4: 39.03,
+          test4: 152.53,
+          test3: 39.03,
           test5: 60.87,
           total: 323.33
         },
@@ -1456,8 +1456,8 @@ export default {
           Backend: "WebML", BackendNative: "",
           test1: 0,
           test2: 0,
-          test3: 0,
           test4: 0,
+          test3: 0,
           test5: 0,
           total: 0
         },
@@ -1474,8 +1474,8 @@ export default {
           Backend: "WASM", BackendNative: "",
           test1: 409.43,
           test2: 263.43,
-          test3: 873.33,
-          test4: 242.37,
+          test4: 873.33,
+          test3: 242.37,
           test5: 721.8,
           total: 2510.36
         },
@@ -1492,8 +1492,8 @@ export default {
           Backend: "WebGL2", BackendNative: "",
           test1: 127.4,
           test2: 104.13,
-          test3: 319.3,
-          test4: 168.8,
+          test4: 319.3,
+          test3: 168.8,
           test5: 219.13,
           total: 938.76
         },
@@ -1510,8 +1510,8 @@ export default {
           Backend: "WebML", BackendNative: "",
           test1: 0,
           test2: 12.6,
-          test3: 0,
-          test4: 6.7,
+          test4: 0,
+          test3: 6.7,
           test5: 0,
           total: 0
         },
@@ -1528,8 +1528,8 @@ export default {
           Backend: "WASM", BackendNative: "",
           test1: 432.3,
           test2: 274.57,
-          test3: 933.1,
-          test4: 267.83,
+          test4: 933.1,
+          test3: 267.83,
           test5: 756.17,
           total: 2663.97
         },
@@ -1546,8 +1546,8 @@ export default {
           Backend: "WebGL2", BackendNative: "",
           test1: 186.47,
           test2: 110.3,
-          test3: 392.6,
-          test4: 146.23,
+          test4: 392.6,
+          test3: 146.23,
           test5: 243.13,
           total: 1078.73
         },
@@ -1564,8 +1564,8 @@ export default {
           Backend: "WebML", BackendNative: "",
           test1: 10.17,
           test2: 10.3,
-          test3: 21.8,
-          test4: 5.8,
+          test4: 21.8,
+          test3: 5.8,
           test5: 14.8,
           total: 62.87
         },
@@ -1582,8 +1582,8 @@ export default {
           Backend: "WASM", BackendNative: "",
           test1: 437.37,
           test2: 275.6,
-          test3: 906.7,
-          test4: 256.63,
+          test4: 906.7,
+          test3: 256.63,
           test5: 741.43,
           total: 2617.73
         },
@@ -1600,8 +1600,8 @@ export default {
           Backend: "WebGL2", BackendNative: "",
           test1: 39.07,
           test2: 35.17,
-          test3: 119.53,
-          test4: 39.07,
+          test4: 119.53,
+          test3: 39.07,
           test5: 68.47,
           total: 301.31
         },
@@ -1618,8 +1618,8 @@ export default {
           Backend: "WebML", BackendNative: "",
           test1: 0,
           test2: 0,
-          test3: 0,
           test4: 0,
+          test3: 0,
           test5: 0,
           total: 0
         },
@@ -1637,8 +1637,8 @@ export default {
           Backend: "WASM", BackendNative: "",
           test1: 413.63,
           test2: 265.07,
-          test3: 854.13,
-          test4: 244.97,
+          test4: 854.13,
+          test3: 244.97,
           test5: 704.87,
           total: 2482.67
         },
@@ -1655,8 +1655,8 @@ export default {
           Backend: "WebGL2", BackendNative: "",
           test1: 167.87,
           test2: 98.5,
-          test3: 373.87,
-          test4: 133.53,
+          test4: 373.87,
+          test3: 133.53,
           test5: 222.07,
           total: 995.84
         },
@@ -1673,8 +1673,8 @@ export default {
           Backend: "WebML", BackendNative: "",
           test1: 9.83,
           test2: 11.1,
-          test3: 20.17,
-          test4: 5.63,
+          test4: 20.17,
+          test3: 5.63,
           test5: 15.47,
           total: 62.20
         },
@@ -1691,8 +1691,8 @@ export default {
           Backend: "WASM", BackendNative: "",
           test1: 386.63,
           test2: 260.63,
-          test3: 776.63,
-          test4: 221.87,
+          test4: 776.63,
+          test3: 221.87,
           test5: 650.1,
           total: 2295.86
         },
@@ -1709,8 +1709,8 @@ export default {
           Backend: "WebGL2", BackendNative: "",
           test1: 40.17,
           test2: 38.2,
-          test3: 184.77,
-          test4: 40.63,
+          test4: 184.77,
+          test3: 40.63,
           test5: 68.7,
           total: 372.47
         },
@@ -1727,8 +1727,8 @@ export default {
           Backend: "WebML", BackendNative: "",
           test1: 0,
           test2: 0,
-          test3: 0,
           test4: 0,
+          test3: 0,
           test5: 0,
           total: 0
         },
@@ -1745,8 +1745,8 @@ export default {
           Backend: "WASM", BackendNative: "",
           test1: 428.17,
           test2: 284.2,
-          test3: 909.8,
-          test4: 255.53,
+          test4: 909.8,
+          test3: 255.53,
           test5: 741.43,
           total: 2619.13
         },
@@ -1763,8 +1763,8 @@ export default {
           Backend: "WebGL2", BackendNative: "",
           test1: 42.7,
           test2: 40.37,
-          test3: 127.47,
-          test4: 43.63,
+          test4: 127.47,
+          test3: 43.63,
           test5: 72.3,
           total: 326.47
         },
@@ -1781,8 +1781,8 @@ export default {
           Backend: "WebML", BackendNative: "",
           test1: 0,
           test2: 0,
-          test3: 0,
           test4: 0,
+          test3: 0,
           test5: 0,
           total: 0
         },
@@ -1799,8 +1799,8 @@ export default {
           Backend: "WASM", BackendNative: "",
           test1: 1584.77,
           test2: 1050.37,
-          test3: 3326.27,
-          test4: 927.87,
+          test4: 3326.27,
+          test3: 927.87,
           test5: 2764.63,
           total: 9653.91
         },
@@ -1817,8 +1817,8 @@ export default {
           Backend: "WebGL2", BackendNative: "",
           test1: 275.57,
           test2: 221,
-          test3: 142.3,
-          test4: 242.43,
+          test4: 142.3,
+          test3: 242.43,
           test5: 390.47,
           total: 1271.77
         },
@@ -1835,8 +1835,8 @@ export default {
           Backend: "WebML", BackendNative: "",
           test1: 247.97,
           test2: 166.33,
-          test3: 453.3,
-          test4: 130.9,
+          test4: 453.3,
+          test3: 130.9,
           test5: 379.67,
           total: 1378.17
         },
@@ -1853,8 +1853,8 @@ export default {
           Backend: "WASM", BackendNative: "",
           test1: 2117,
           test2: 1403.7,
-          test3: 4472.8,
-          test4: 1140.2,
+          test4: 4472.8,
+          test3: 1140.2,
           test5: 2824.87,
           total: 11958.57
         },
@@ -1871,8 +1871,8 @@ export default {
           Backend: "WebGL2", BackendNative: "",
           test1: 269.83,
           test2: 226.97,
-          test3: 181.9,
-          test4: 239.07,
+          test4: 181.9,
+          test3: 239.07,
           test5: 389.3,
           total: 1307.07
         },
@@ -1889,8 +1889,8 @@ export default {
           Backend: "WebML", BackendNative: "",
           test1: 147.37,
           test2: 135.33,
-          test3: 245.5,
-          test4: 56.93,
+          test4: 245.5,
+          test3: 56.93,
           test5: 146.33,
           total: 731.46
         },
@@ -1907,8 +1907,8 @@ export default {
           Backend: "WASM", BackendNative: "",
           test1: 1596.63,
           test2: 1054.9,
-          test3: 3383.87,
-          test4: 926.3,
+          test4: 3383.87,
+          test3: 926.3,
           test5: 2793.87,
           total: 9755.57
         },
@@ -1924,8 +1924,8 @@ export default {
           Backend: "WebGL2", BackendNative: "",
           test1: 461.37,
           test2: 301.37,
-          test3: 147.07,
-          test4: 455.4,
+          test4: 147.07,
+          test3: 455.4,
           test5: 712.63,
           total: 2077.87
         },
@@ -1942,8 +1942,8 @@ export default {
           Backend: "WebML", BackendNative: "",
           test1: 76.8,
           test2: 80,
-          test3: 118.2,
-          test4: 54.63,
+          test4: 118.2,
+          test3: 54.63,
           test5: 109.1,
           total: 438.73
         },
@@ -1960,8 +1960,8 @@ export default {
         //   Backend: "WASM", BackendNative: "",
         //   test1: 510.8,
         //   test2: 350.03,
-        //   test3: 1038.7,
-        //   test4: 297.63,
+        //   test4: 1038.7,
+        //   test3: 297.63,
         //   test5: 856.6,
         //   total: 3053.76
         // },
@@ -1978,8 +1978,8 @@ export default {
         //   Backend: "WebGL2", BackendNative: "",
         //   test1: 95.7,
         //   test2: 70.43,
-        //   test3: 274.63,
-        //   test4: 95.73,
+        //   test4: 274.63,
+        //   test3: 95.73,
         //   test5: 154.43,
         //   total: 690.92
         // },
@@ -1996,8 +1996,8 @@ export default {
         //   Backend: "WebML", BackendNative: "",
         //   test1: 58.63,
         //   test2: 62.3,
-        //   test3: 114.73,
-        //   test4: 15.07,
+        //   test4: 114.73,
+        //   test3: 15.07,
         //   test5: 94.23,
         //   total: 344.96
         // },
@@ -2017,8 +2017,8 @@ export default {
           Backend: "WASM", BackendNative: "",
           test1: 360.97,
           test2: 228.47,
-          test3: 762.97,
-          test4: 220.50,
+          test4: 762.97,
+          test3: 220.50,
           test5: 630.83,
           total: 2203.74
         },
@@ -2035,8 +2035,8 @@ export default {
           Backend: "WebGL2", BackendNative: "",
           test1: 129.43,
           test2: 98.03,
-          test3: 347.7,
-          test4: 127.93,
+          test4: 347.7,
+          test3: 127.93,
           test5: 214.33,
           total: 917.42
         },
@@ -2053,8 +2053,8 @@ export default {
           Backend: "WebML", BackendNative: "",
           test1: 10.63,
           test2: 15.33,
-          test3: 20.13,
-          test4: 5.80,
+          test4: 20.13,
+          test3: 5.80,
           test5: 14.37,
           total: 66.26
         },
@@ -2072,8 +2072,8 @@ export default {
           Backend: "WASM", BackendNative: "",
           test1: 329.53,
           test2: 210.17,
-          test3: 690.27,
-          test4: 201.17,
+          test4: 690.27,
+          test3: 201.17,
           test5: 567.47,
           total: 1998.61
         },
@@ -2090,8 +2090,8 @@ export default {
           Backend: "WebGL2", BackendNative: "",
           test1: 112.03,
           test2: 89.93,
-          test3: 307.87,
-          test4: 120.93,
+          test4: 307.87,
+          test3: 120.93,
           test5: 203.9,
           total: 834.66
         },
@@ -2108,8 +2108,8 @@ export default {
           Backend: "WebML", BackendNative: "",
           test1: 11.23,
           test2: 9.97,
-          test3: 20.53,
-          test4: 5.93,
+          test4: 20.53,
+          test3: 5.93,
           test5: 15,
           total: 62.66
         },
@@ -2130,8 +2130,8 @@ export default {
           BackendNative: "MPS",
           test1: 506.57,
           test2: 332.67,
-          test3: 1056.23,
-          test4: 299.6,
+          test4: 1056.23,
+          test3: 299.6,
           test5: 893.9,
           total: 3088.97
         },
@@ -2149,8 +2149,8 @@ export default {
           BackendNative: "MPS",
           test1: 94.87,
           test2: 63.3,
-          test3: 300.23,
-          test4: 97.23,
+          test4: 300.23,
+          test3: 97.23,
           test5: 155.97,
           total: 711.60
         },
@@ -2168,8 +2168,8 @@ export default {
           BackendNative: "MPS",
           test1: 24.2,
           test2: 0,
-          test3: 40.9,
-          test4: 13.03,
+          test4: 40.9,
+          test3: 13.03,
           test5: 28.33,
           total: 0
         },
@@ -2187,8 +2187,8 @@ export default {
           BackendNative: "MPS",
           test1: 1558.4,
           test2: 1439.2,
-          test3: 4527.03,
-          test4: 1388.6,
+          test4: 4527.03,
+          test3: 1388.6,
           test5: 3347.47,
           total: 12260.70
         },
@@ -2206,8 +2206,8 @@ export default {
           BackendNative: "MPS",
           test1: 144.67,
           test2: 104.03,
-          test3: 522.17,
-          test4: 118.8,
+          test4: 522.17,
+          test3: 118.8,
           test5: 235.3,
           total: 1124.97
         },
@@ -2225,8 +2225,8 @@ export default {
           BackendNative: "MPS",
           test1: 60.7,
           test2: 0,
-          test3: 40.63,
-          test4: 13.5,
+          test4: 40.63,
+          test3: 13.5,
           test5: 29.13,
           total: 0
         },
@@ -2244,8 +2244,8 @@ export default {
           BackendNative: "BNNS",
           test1: 509.2,
           test2: 337.07,
-          test3: 1055.93,
-          test4: 303.1,
+          test4: 1055.93,
+          test3: 303.1,
           test5: 876.63,
           total: 3081.93
         },
@@ -2263,8 +2263,8 @@ export default {
           BackendNative: "BNNS",
           test1: 84.63,
           test2: 70.17,
-          test3: 291.83,
-          test4: 90.03,
+          test4: 291.83,
+          test3: 90.03,
           test5: 149.77,
           total: 686.43
         },
@@ -2282,8 +2282,8 @@ export default {
           BackendNative: "BNNS",
           test1: 0,
           test2: 0,
-          test3: 0,
-          test4: 13.77,
+          test4: 0,
+          test3: 13.77,
           test5: 0,
           total: 0
         },
@@ -2301,8 +2301,8 @@ export default {
           BackendNative: "BNNS",
           test1: 2126.07,
           test2: 1232.5,
-          test3: 3799.63,
-          test4: 1173.93,
+          test4: 3799.63,
+          test3: 1173.93,
           test5: 3593.57,
           total: 11925.70
         },
@@ -2320,8 +2320,8 @@ export default {
           BackendNative: "BNNS",
           test1: 106.37,
           test2: 84.4,
-          test3: 451.1,
-          test4: 113.07,
+          test4: 451.1,
+          test3: 113.07,
           test5: 176.83,
           total: 931.77
         },
@@ -2339,8 +2339,8 @@ export default {
           BackendNative: "BNNS",
           test1: 0,
           test2: 0,
-          test3: 0,
-          test4: 41.6,
+          test4: 0,
+          test3: 41.6,
           test5: 0,
           total: 0
         },
@@ -2359,8 +2359,8 @@ export default {
           BackendNative: "MPS",
           test1: 477.10,
           test2: 321.47,
-          test3: 1016.40,
-          test4: 289.97,
+          test4: 1016.40,
+          test3: 289.97,
           test5: 846.70,
           total: 2951.64
         },
@@ -2378,8 +2378,8 @@ export default {
           BackendNative: "MPS",
           test1: 105.20,
           test2: 81.73,
-          test3: 307.37,
-          test4: 114.70,
+          test4: 307.37,
+          test3: 114.70,
           test5: 172.03,
           total: 781.03
         },
@@ -2397,8 +2397,8 @@ export default {
           BackendNative: "MPS",
           test1: 21.90,
           test2: 0,
-          test3: 31.37,
-          test4: 11.57,
+          test4: 31.37,
+          test3: 11.57,
           test5: 17.93,
           total: 0
         },
@@ -2416,8 +2416,8 @@ export default {
           BackendNative: "BNNS",
           test1: 480.40,
           test2: 320.40,
-          test3: 1024.20,
-          test4: 306.30,
+          test4: 1024.20,
+          test3: 306.30,
           test5: 834.47,
           total: 2965.77
         },
@@ -2435,8 +2435,8 @@ export default {
           BackendNative: "BNNS",
           test1: 104.23,
           test2: 80.27,
-          test3: 313.70,
-          test4: 109.47,
+          test4: 313.70,
+          test3: 109.47,
           test5: 167.10,
           total: 774.77
         },
@@ -2454,8 +2454,8 @@ export default {
           BackendNative: "BNNS",
           test1: 0,
           test2: 0,
-          test3: 0,
-          test4: 10.50,
+          test4: 0,
+          test3: 10.50,
           test5: 0,
           total: 0
         }

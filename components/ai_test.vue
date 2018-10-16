@@ -1,9 +1,9 @@
 <template>
   <section>
   
-    <h2 class="has-text-primary is-size-5-desktop is-size-6-mobile is-size-5-tablet mb">Tests: Object Recognition / Classification</h2>
+    <h2 class="has-text-primary is-size-5-desktop is-size-6-mobile is-size-5-tablet mb">Tests: Image Classification</h2>
     <div class="columns">
-      <div v-for="task in tasks" v-if="task.category=='Object Recognition / Classification' && task.id < 5" :key="task.id" class="column is-mobile is-one-third-tablet is-one-third-desktop is-one-quarter-widescreen is-one-quarter-fullhd">
+      <div v-for="task in tasks" v-if="task.category=='Image Classification' && task.id < 5" :key="task.id" class="column is-mobile is-one-third-tablet is-one-third-desktop is-one-quarter-widescreen is-one-quarter-fullhd">
         <b-collapse class="card">
           <div slot="trigger" slot-scope="props" class="card-header">
             <p class="card-header-title">
@@ -48,6 +48,55 @@
         </b-collapse>
       </div>
     </div>
+
+    <h2 class="has-text-primary is-size-5-desktop is-size-6-mobile is-size-5-tablet mb">Tests: Object Detection</h2>
+        <div class="columns">
+      <div v-for="task in tasks" v-if="task.category=='Object Detection' && task.id < 5" :key="task.id" class="column is-mobile is-one-third-tablet is-one-third-desktop is-one-quarter-widescreen is-one-quarter-fullhd">
+        <b-collapse class="card">
+          <div slot="trigger" slot-scope="props" class="card-header">
+            <p class="card-header-title">
+             {{ task.name }}
+            </p>
+            <a class="card-header-icon">
+              <b-icon :icon="props.open ? 'menu-down' : 'menu-up'">
+              </b-icon>
+            </a>
+          </div>
+          <div class="card-content">
+            <div class="content lh">
+              {{ task.description }}
+              <ul>
+                <li>Neural Network: {{ task.model_name }} {{ task.model_version }}</li>
+                <li>Model Size: {{ task.model_size }}</li>
+                <li>Image Resolution: {{ task.test.resolution }}</li>
+                <li>Accuracy: {{ task.accuracy }}</li>
+                <li>Backend: <span v-for="(b, index) in task.backend" :key="index">{{ b }} </span> </li>
+              </ul>
+              <!--
+              <div class='rl'>
+                <div class='il' v-for="p in task.platform" :key="p.id">
+                <i v-if="p  == 'android'" class="mdi mdi-android-head mdi-24px"></i> <i v-if="p  == 'ios'" class="mdi mdi-apple-ios mdi-24px"></i> <i v-if="p  == 'mac'" class="mdi mdi-apple mdi-24px"></i> <i v-if="p  == 'windows'" class="mdi mdi-windows mdi-24px"></i> <i v-if="p  == 'linux'" class="mdi mdi-linux mdi-24px"></i>
+                </div>
+                <div class='il' v-for="b in task.browser" :key="b.id">
+                <i v-if="b  == 'edge'" class="mdi mdi-edge mdi-24px"></i> <i v-if="b  == 'chrome'" class="mdi mdi-google-chrome mdi-24px"></i> <i v-if="b  == 'firefox'" class="mdi mdi-firefox mdi-24px"></i> <i v-if="b  == 'safari'" class="mdi mdi-apple-safari mdi-24px"></i>
+                </div>
+              </div>
+              -->
+            </div>
+          </div>
+          <footer class="card-footer">
+            <a class="card-footer-item" :href="task.paper_url">Paper</a>
+            <a class="card-footer-item" :href="task.model">Model</a>
+          </footer>
+          <footer class="card-footer">
+            <!-- <nuxt-link class='card-footer-item button is-primary-gradient' :to="{ name: 'test-id', params: { id: task.id } }">Run Test</nuxt-link> -->
+            <!-- <nuxt-link class='card-footer-item button is-primary-gradient' :to="'../test/'+ task.page">Run Test</nuxt-link>-->
+            <a class='card-footer-item button is-primary-gradient' :href="'../test/'+ task.url">Run Test</a>
+          </footer>
+        </b-collapse>
+      </div>
+    </div>
+
         <div class="columns">
       <div v-for="task in tasks" v-if="task.category=='Object Recognition / Classification' && task.id >= 5 && task.id < 9" :key="task.id" class="column is-mobile is-one-third-tablet is-one-third-desktop is-one-quarter-widescreen is-one-quarter-fullhd">
         <b-collapse class="card">
@@ -94,9 +143,9 @@
         </b-collapse>
       </div>
     </div>
-    <h2 class="has-text-primary is-size-5-desktop is-size-6-mobile is-size-5-tablet mb">Tests: Visual Localisation</h2>
+    <h2 class="has-text-primary is-size-5-desktop is-size-6-mobile is-size-5-tablet mb">Tests: Human Pose Estimation</h2>
     <div class="columns">
-      <div v-for="task in tasks" v-if="task.category=='Visual Localisation'" :key="task.id" class="column is-mobile is-one-third-tablet is-one-third-desktop is-one-quarter-widescreen is-one-quarter-fullhd">
+      <div v-for="task in tasks" v-if="task.category=='Human Pose Estimation'" :key="task.id" class="column is-mobile is-one-third-tablet is-one-third-desktop is-one-quarter-widescreen is-one-quarter-fullhd">
         <b-collapse class="card">
           <div slot="trigger" slot-scope="props" class="card-header">
             <p class="card-header-title">
@@ -155,15 +204,15 @@
       return {
         tasks: [{
             "id": 1,
-            "category": 'Object Recognition / Classification',
-            "name": 'Image (MobileNet)',
+            "category": 'Image Classification',
+            "name": 'MobileNet V1',
             "model_name": 'MobileNet',
             "url": 'MobileNet',
             "backend": ['WASM', 'WebGL2', 'WebML'],
             "iteration": 4,
             "framework": "webml-polyfill.js",
-            "model": 'https://aimark.nos-eastchina1.126.net/model/mobilenet/mobilenet_v1_1.0_224.tflite',
-            "label": 'https://aimark.nos-eastchina1.126.net/model/mobilenet/labels.txt',
+            "model": '../model/mobilenet/mobilenet_v1_1.0_224.tflite',
+            "label": '../model/mobilenet/labels.txt',
             "description": 'An efficient Convolutional Neural Networks for Mobile Vision Applications. Loading MobileNet model trained by ImageNet in TensorFlow Lite format, constructs and inferences it by WebML API.',
             "model_version": 'v1.0',
             "accuracy": '89.9%',
@@ -184,15 +233,15 @@
             ]},
             {
             "id": 2,
-            "category": 'Object Recognition / Classification',
-            "name": 'Image (MobileNet V2)',
+            "category": 'Image Classification',
+            "name": 'MobileNet V2',
             "model_name": 'MobileNet',
             "url": 'MobileNet2',
             "backend": ['WASM', 'WebGL2', 'WebML'],
             "iteration": 4,
             "framework": "webml-polyfill.js",
-            "model": 'https://aimark.nos-eastchina1.126.net/model/mobilenet/mobilenet_v2_1.0_224.tflite',
-            "label": 'https://aimark.nos-eastchina1.126.net/model/mobilenet/labels.txt',
+            "model": '../model/mobilenet/mobilenet_v2_1.0_224.tflite',
+            "label": '../model/mobilenet/labels.txt',
             "description": 'MobileNetV2 improves the state of the art performance of mobile models. Loading MobileNet model v2.0 trained by ImageNet in TensorFlow Lite format, constructs and inferences it by WebML API. ',
             "model_version": 'v2.0',
             "accuracy": '91.0%',
@@ -203,9 +252,30 @@
               'image': ['../img/mobilenet/bee_eater.jpg', '../img/mobilenet/traffic_light.jpg', '../img/mobilenet/pinwheel.jpg']
             }},
             {
-              "id": 3,
-              "category": 'Object Recognition / Classification',
-              "name": 'Image (SSD MobileNet)',
+            "id": 3,
+            "category": 'Image Classification',
+            "name": 'SqueezeNet',
+            "model_name": 'SqueezeNet',
+            "url": 'SqueezeNet',
+            "backend": ['WASM', 'WebGL2', 'WebML'],
+            "iteration": 4,
+            "framework": "webml-polyfill.js",
+            "model": '../model/squeezenet/model.onnx',
+            "label": '../model/squeezenet/labels.json',
+            "description": 'A light-weight CNN providing Alexnet level accuracy with 50X fewer parameters. Loading SqueezeNet model trained by ImageNet in ONNX format, constructs and inferences it by WebML API.',
+            "model_version": 'v1.1',
+            "accuracy": '79.12%',
+            "model_size": '5.0Mb',
+            "paper_url": 'https://arxiv.org/abs/1602.07360',
+            'test': {
+              'resolution': '224 x 224 px',
+              'image': ['../img/squeezenet/jeep.jpg', '../img/squeezenet/wallaby.jpg', '../img/squeezenet/panda.jpg']
+            }
+          },
+          {
+              "id": 4,
+              "category": 'Object Detection',
+              "name": 'SSD MobileNet',
               "model_name": 'SSDMobileNet',
               "url": 'SSDMobileNet',
               "backend": ['WASM', 'WebGL2', 'WebML'],
@@ -225,27 +295,6 @@
                 'image': ['../img/mobilenet/bee_eater.jpg', '../img/mobilenet/traffic_light.jpg', '../img/mobilenet/pinwheel.jpg']
               }
             },
-            {
-            "id": 4,
-            "category": 'Object Recognition / Classification',
-            "name": 'Image (SqueezeNet)',
-            "model_name": 'SqueezeNet',
-            "url": 'SqueezeNet',
-            "backend": ['WASM', 'WebGL2', 'WebML'],
-            "iteration": 4,
-            "framework": "webml-polyfill.js",
-            "model": 'https://aimark.nos-eastchina1.126.net/model/squeezenet/model.onnx',
-            "label": 'https://aimark.nos-eastchina1.126.net/model/squeezenet/labels.json',
-            "description": 'A light-weight CNN providing Alexnet level accuracy with 50X fewer parameters. Loading SqueezeNet model trained by ImageNet in ONNX format, constructs and inferences it by WebML API.',
-            "model_version": 'v1.1',
-            "accuracy": '79.12%',
-            "model_size": '5.0Mb',
-            "paper_url": 'https://arxiv.org/abs/1602.07360',
-            'test': {
-              'resolution': '224 x 224 px',
-              'image': ['../img/squeezenet/jeep.jpg', '../img/squeezenet/wallaby.jpg', '../img/squeezenet/panda.jpg']
-            }
-          },
           // {
           //   "id": 5,
           //   "category": 'Object Recognition / Classification',
@@ -269,16 +318,15 @@
           //   },
             {
             "id": 6,
-            "category": 'Visual Localisation',
-            "name": 'Pose Detection (PoseNet)',
+            "category": 'Human Pose Estimation',
+            "name": 'PoseNet',
             "model_name": 'PoseNet',
             "url": 'PoseNet',
             "backend": ['WASM', 'WebGL2', 'WebML'],
             "iteration": 4,
-            "model": 'https://aimark.nos-eastchina1.126.net/model/posenet/',
-            "label": 'https://aimark.nos-eastchina1.126.net/model/posenet/',
-            "name": 'Pose Detection (PoseNet)',
-            "description": 'PoseNet is able to estimate your location and orientation from a single colour image. This task loads a pretrained PoseNet model, constructs and infers it by WebML API.',
+            "model": 'https://github.com/tensorflow/tfjs-models/tree/master/posenet',
+            "label": '../model/posenet/',
+            "description": 'PoseNet is a machine learning model that allows for Real-time Human Pose Estimation which can be used to estimate either a single pose or multiple poses. This task loads a pretrained PoseNet model, constructs and infers it by WebML API.',
             "model_version": 'v1.101',
             "accuracy": '%',
             "model_size": '13.3Mb',

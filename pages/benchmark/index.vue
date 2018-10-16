@@ -475,8 +475,8 @@ import { setTimeout } from 'timers';
         },
         tasks: [{
             "id": 1,
-            "category": 'Object Recognition / Classification',
-            "name": 'Image Classification (MobileNet)',
+            "category": 'Image Classification',
+            "name": 'Image Classification (MobileNet V1)',
             "model_name": 'MobileNet',
             "url": 'MobileNet',
             "backend": ['WASM', 'WebGL2', 'WebML'],
@@ -497,7 +497,7 @@ import { setTimeout } from 'timers';
             }},
             {
             "id": 2,
-            "category": 'Object Recognition / Classification',
+            "category": 'Image Classification',
             "name": 'Image Classification (MobileNet V2)',
             "model_name": 'MobileNet',
             "url": 'MobileNet2',
@@ -519,8 +519,31 @@ import { setTimeout } from 'timers';
             }},
             {
               "id": 3,
-              "category": 'Object Recognition / Classification',
-              "name": 'Image Classification (SSD MobileNet)',
+              "category": 'Image Classification',
+              "name": 'Image Classification (SqueezeNet)',
+              "model_name": 'SqueezeNet',
+              "url": 'SqueezeNet',
+              "backend": ['WASM', 'WebGL2', 'WebML'],
+              "iteration": 4,
+              "framework": "webml-polyfill.js",
+              "model": '../model/squeezenet/model.onnx',
+              "label": '../model/squeezenet/labels.json',
+              // "model": 'https://aimark.nos-eastchina1.126.net/model/squeezenet/model.onnx',
+              // "label": 'https://aimark.nos-eastchina1.126.net/model/squeezenet/labels.json',
+              "description": 'A light-weight CNN providing Alexnet level accuracy with 50X fewer parameters. Loading SqueezeNet model trained by ImageNet in ONNX format, constructs and inferences it by WebML API.',
+              "model_version": 'v1.1',
+              "accuracy": '79.12%',
+              "model_size": '5.0Mb',
+              "paper_url": 'https://arxiv.org/abs/1602.07360',
+              'test': {
+                'resolution': '224 x 224 px',
+                'image': ['../img/squeezenet/panda.jpg']
+              }
+            },
+            {
+              "id": 4,
+              "category": 'Object Detection',
+              "name": 'Object Detection (SSD MobileNet)',
               "model_name": 'SSDMobileNet',
               "url": 'SSDMobileNet',
               "backend": ['WASM', 'WebGL2', 'WebML'],
@@ -540,29 +563,6 @@ import { setTimeout } from 'timers';
                 'image': ['../img/mobilenet/traffic_light.jpg']
               }
             },
-            {
-            "id": 4,
-            "category": 'Object Recognition / Classification',
-            "name": 'Image Classification (SqueezeNet)',
-            "model_name": 'SqueezeNet',
-            "url": 'SqueezeNet',
-            "backend": ['WASM', 'WebGL2', 'WebML'],
-            "iteration": 4,
-            "framework": "webml-polyfill.js",
-            "model": '../model/squeezenet/model.onnx',
-            "label": '../model/squeezenet/labels.json',
-            // "model": 'https://aimark.nos-eastchina1.126.net/model/squeezenet/model.onnx',
-            // "label": 'https://aimark.nos-eastchina1.126.net/model/squeezenet/labels.json',
-            "description": 'A light-weight CNN providing Alexnet level accuracy with 50X fewer parameters. Loading SqueezeNet model trained by ImageNet in ONNX format, constructs and inferences it by WebML API.',
-            "model_version": 'v1.1',
-            "accuracy": '79.12%',
-            "model_size": '5.0Mb',
-            "paper_url": 'https://arxiv.org/abs/1602.07360',
-            'test': {
-              'resolution': '224 x 224 px',
-              'image': ['../img/squeezenet/panda.jpg']
-            }
-          },
           // {
           //   "id": 5,
           //   "category": 'Object Recognition / Classification',
@@ -587,8 +587,8 @@ import { setTimeout } from 'timers';
           //   }},
                       {
             "id": 5,
-            "category": 'Visual Localisation',
-            "name": 'Pose Detection (PoseNet)',
+            "category": 'Human Pose Estimation',
+            "name": 'Human Pose Estimation (PoseNet)',
             "model_name": 'PoseNet',
             "url": 'PoseNet',
             "backend": ['WASM', 'WebGL2', 'WebML'],
@@ -598,7 +598,7 @@ import { setTimeout } from 'timers';
             "label": '../model/posenet/',
             // "model": 'https://aimark.nos-eastchina1.126.net/model/posenet/',
             // "label": 'https://aimark.nos-eastchina1.126.net/model/posenet/',
-            "description": 'PoseNet is able to estimate your location and orientation from a single colour image. This task loads a pretrained PoseNet model, constructs and infers it by WebML API.',
+            "description": 'PoseNet is a machine learning model that allows for Real-time Human Pose Estimation which can be used to estimate either a single pose or multiple poses. This task loads a pretrained PoseNet model, constructs and infers it by WebML API.',
             "model_version": 'v1.101',
             "accuracy": '%',
             "model_size": '13.3Mb',

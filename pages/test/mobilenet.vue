@@ -333,7 +333,7 @@
           "label": '../model/mobilenet/labels.txt',
           // "model": 'https://aimark.nos-eastchina1.126.net/model/mobilenet/mobilenet_v1_1.0_224.tflite',
           // "label": 'https://aimark.nos-eastchina1.126.net/model/mobilenet/labels.txt',
-          "name": 'Image Classification (MobileNet)',
+          "name": 'Image Classification (MobileNet V1)',
           "description": 'An efficient Convolutional Neural Networks for Mobile Vision Applications. Loading MobileNet model trained by ImageNet in TensorFlow Lite format, constructs and inferences it by WebML API.',
           "model_version": 'v1.0_224',
           "accuracy": '70.9%',
