@@ -323,7 +323,7 @@
           "paper_url": 'http://arxiv.org/abs/1512.00567',
           'test': {
             'resolution': '224 x 224 px',
-            'image': ['../img/mobilenet/traffic_light.jpg', '../img/mobilenet/pinwheel.jpg', '../img/mobilenet/warplane']
+            'image': ['../img/mobilenet/traffic_light.jpg', '../img/mobilenet/pinwheel.jpg', '../img/mobilenet/warplane.jpg']
           }
         }
       }
