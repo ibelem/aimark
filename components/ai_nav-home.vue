@@ -46,6 +46,9 @@
             <a class="navbar-item" href="../test/SqueezeNet">
               SqueezeNet
             </a>
+            <a class="navbar-item" href="../test/Inception3">
+              Inception V3
+            </a>
             <a class="navbar-item" href="../test/SSDMobileNet">
               SSD MobileNet
             </a>

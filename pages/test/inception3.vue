@@ -149,7 +149,7 @@
           defer: true
         },
         {
-          src: '../js/mobilenet/MobileNet.js',
+          src: '../js/inception/Inception_V3.js',
           defer: true
         }
       ],
@@ -323,7 +323,7 @@
           "paper_url": 'http://arxiv.org/abs/1512.00567',
           'test': {
             'resolution': '224 x 224 px',
-            'image': ['../img/mobilenet/bee_eater.jpg', '../img/mobilenet/traffic_light.jpg', '../img/mobilenet/pinwheel.jpg']
+            'image': ['../img/mobilenet/traffic_light.jpg', '../img/mobilenet/pinwheel.jpg', '../img/mobilenet/warplane']
           }
         }
       }

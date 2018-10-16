@@ -176,6 +176,10 @@ import { setTimeout } from 'timers';
           defer: true
         },
         {
+          src: '../js/inception/Inception_V3.js',
+          defer: true
+        },
+        {
           src: '../js/ssd_mobilenet/SsdMobileNet.js',
           defer: true
         },
@@ -412,7 +416,8 @@ import { setTimeout } from 'timers';
         // this.progress_total.value = 5;
         await this.pn(4)
         this.progress_total.value = 5;
-
+        await this.orc(5)
+        this.progress_total.value = 6;
         this.showBar = true;
       }
     },
@@ -457,7 +462,7 @@ import { setTimeout } from 'timers';
         },
         progress_total: {
           value: 0,
-          max: 5,
+          max: 6,
         },
         test_result: [],
         showtask: false,
@@ -607,6 +612,29 @@ import { setTimeout } from 'timers';
               'resolution': '513 x 513 px',
               'image': ['../img/posenet/ski.jpg']
             }},
+                      {
+          "id": 6,
+          "category": 'Image Classification',
+          "name": 'Inception',
+          "model_name": 'Inception',
+          "url": 'Inception3',
+          "backend": ['WASM', 'WebGL2', 'WebML'],
+          "iteration": 4,
+          "framework": "webml-polyfill.js",
+          "model": '../model/inception/inception_v3.tflite',
+          "label": '../model/inception/labels.txt',
+          // "model": 'https://aimark.nos-eastchina1.126.net/model/inception/inception_v3.tflite',
+          // "label": 'https://aimark.nos-eastchina1.126.net/model/inception/labels.txt',
+          "description": 'Inception-v3 is trained for the ImageNet Large Visual Recognition Challenge. Loading Inception-v3 model trained by ImageNet in TensorFlow Lite format, constructs and inferences it by WebML API.',
+          "model_version": 'v3',
+          "accuracy": '93.8%',
+          "model_size": '95.3Mb',
+          "paper_url": 'http://arxiv.org/abs/1512.00567',
+          'test': {
+            'resolution': '299 x 299 px',
+            'image': ['../img/mobilenet/warplane.jpg']
+          }
+          },
         ]
       }
     }

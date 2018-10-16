@@ -273,7 +273,30 @@
             }
           },
           {
-              "id": 4,
+          "id": 4,
+          "category": 'Image Classification',
+          "name": 'Inception',
+          "model_name": 'Inception',
+          "url": 'Inception3',
+          "backend": ['WASM', 'WebGL2', 'WebML'],
+          "iteration": 4,
+          "framework": "webml-polyfill.js",
+          "model": '../model/inception/inception_v3.tflite',
+          "label": '../model/inception/labels.txt',
+          // "model": 'https://aimark.nos-eastchina1.126.net/model/inception/inception_v3.tflite',
+          // "label": 'https://aimark.nos-eastchina1.126.net/model/inception/labels.txt',
+          "description": 'Inception-v3 is trained for the ImageNet Large Visual Recognition Challenge. Loading Inception-v3 model trained by ImageNet in TensorFlow Lite format, constructs and inferences it by WebML API.',
+          "model_version": 'v3',
+          "accuracy": '93.8%',
+          "model_size": '95.3Mb',
+          "paper_url": 'http://arxiv.org/abs/1512.00567',
+          'test': {
+            'resolution': '224 x 224 px',
+            'image': ['../img/mobilenet/bee_eater.jpg', '../img/mobilenet/traffic_light.jpg', '../img/mobilenet/pinwheel.jpg']
+          }
+          },
+          {
+              "id": 5,
               "category": 'Object Detection',
               "name": 'SSD MobileNet',
               "model_name": 'SSDMobileNet',

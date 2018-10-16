@@ -12,6 +12,12 @@ const MODEL_DIC = {
     inputTensorSize: 224 * 224 * 3,
     outputTensorSize: 1000
   },
+  inception: {
+    width: 299,
+    height: 299,
+    inputTensorSize: 299*299*3,
+    outputTensorSize: 1001
+  },
   posenet: {
     width: 513,
     height: 513
@@ -176,7 +182,7 @@ class Benchmark {
     let computeResults = [];
     let decodeResults = [];
     let configModelName = this.configuration.modelName.toLowerCase();
-    if (configModelName === 'mobilenet' || configModelName === 'squeezenet') {
+    if (configModelName === 'mobilenet' || configModelName === 'squeezenet' || configModelName === 'inception') {
     for (let i = 0; i < this.configuration.iteration; i++) {
       this.onExecuteSingle(i);
       await new Promise(resolve => requestAnimationFrame(resolve));
@@ -326,7 +332,11 @@ class WebMLJSBenchmark extends Benchmark {
 
     this.model = null;
     this.labels = null;
+
+    // only for Inception V3
+    this.tfModel = null;
   }
+
   async loadModelAndLabels() {
     let arrayBuffer = await this.loadUrl(this.configuration.model, true);
     let bytes = new Uint8Array(arrayBuffer);
@@ -377,7 +387,7 @@ class WebMLJSBenchmark extends Benchmark {
 
     let drawContent;
 
-    if (configModelName === 'mobilenet' || configModelName === 'squeezenet') {
+    if (configModelName === 'mobilenet' || configModelName === 'inception' || configModelName === 'squeezenet') {
       this.inputTensor = new Float32Array(MODEL_DIC[configModelName].inputTensorSize);
       this.outputTensor = new Float32Array(MODEL_DIC[configModelName].outputTensorSize);
       drawContent = imageElement;
@@ -435,10 +445,9 @@ class WebMLJSBenchmark extends Benchmark {
     
     canvasContext = canvasElement.getContext('2d');
     canvasContext.drawImage(imageElement, 0, 0, width, height);
-    // console.log(canvasContext.getImageData(0, 0, width, height))
     let pixels = canvasContext.getImageData(0, 0, width, height).data;
 
-    if (configModelName === 'mobilenet' || configModelName === 'ssdmobilenet' || configModelName === 'posenet') {
+    if (configModelName === 'mobilenet' || configModelName === 'inception' || configModelName === 'ssdmobilenet' || configModelName === 'posenet') {
       const meanMN = 127.5;
       const stdMN = 127.5;
       for (let y = 0; y < height; ++y) {
@@ -476,6 +485,16 @@ class WebMLJSBenchmark extends Benchmark {
         this.model = new MobileNet(targetModel, this.configuration.backend);
       } else {
         this.model = new MobileNet(targetModel);
+      }
+    } else if (configModelName === 'inception') {
+      let resultI = await this.loadModelAndLabels();
+      this.labels = resultI.text.split('\n');
+      let flatBuffer = new flatbuffers.ByteBuffer(resultI.bytes);
+      targetModel = tflite.Model.getRootAsModel(flatBuffer);
+      if (this.configuration.backend !== 'native') {
+        this.model = new Inception_V3(targetModel, this.configuration.backend);
+      } else {
+        this.model = new Inception_V3(targetModel);
       }
     } else if (configModelName === 'ssdmobilenet') {
       let resultSSDMN = await this.loadModelAndLabels();
@@ -542,6 +561,11 @@ class WebMLJSBenchmark extends Benchmark {
     let result = await this.model.compute(this.inputTensor, this.outputTensor);
     lh.add(`&nbsp;&nbsp;&nbsp;&nbsp; <i class="mdi mdi-check mdi-6px"></i> Compute result: ${result}`)
     await this.printPredictResult();
+  }
+
+  async executeSingleAsyncI() {
+    let result = await this.model.compute(this.inputTensor, this.outputTensor);
+    lh.add(`&nbsp;&nbsp;&nbsp;&nbsp; <i class="mdi mdi-check mdi-6px"></i> Compute result: ${result}`)
   }
 
   async executeSingleAsyncPN() {
