@@ -35,7 +35,7 @@
         </a>
         <div class="navbar-item has-dropdown is-hoverable">
           <nuxt-link class="navbar-item" to="../test">
-            Test
+            Tests
           </nuxt-link>
           <div class="navbar-dropdown is-boxed">
             <a class="navbar-item" href="../test/MobileNet">
