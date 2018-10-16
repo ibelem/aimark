@@ -16,7 +16,8 @@
   
   export default {
     components: {
-      ai_nav, ai_footer
+      ai_nav,
+      ai_footer
     },
     asyncData() {
       return new Promise(resolve => {

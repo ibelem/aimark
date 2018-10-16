@@ -12,7 +12,7 @@
     <div v-if='ispolyfill' class='webmlbadge is-small mr'>
       <div class='webml-title'>Polyfill</div>
       <div class='webml-status webml-status-true'>
-        <span >Enabled</span>
+        <span>Enabled</span>
       </div>
     </div>
   </div>
@@ -25,7 +25,7 @@
       setTimeout(this.updateWebMLStatus, 100);
     },
     methods: {
-      updateWebMLStatus: function(){
+      updateWebMLStatus: function() {
         if (navigator.ml && navigator.ml.getNeuralNetworkContext()) {
           if (!navigator.ml.isPolyfill) {
             this.webmlstatus = true;
@@ -50,7 +50,10 @@
 </script>
 
 <style scoped>
-  .mr { margin: 0 0.40rem;}
+  .mr {
+    margin: 0 0.40rem;
+  }
+  
   .webmlbadge {
     display: inline-block;
   }
@@ -62,7 +65,7 @@
     color: rgba(255, 255, 255, 1.0);
     padding: 0.5rem;
   }
-
+  
   .webml-title:hover {
     border: 1px solid rgba(222, 12, 101, 1.0);
     background: rgba(222, 12, 101, 1.0);
@@ -84,21 +87,23 @@
     color: rgba(0, 0, 0, 0.8);
     border: 1px solid rgba(222, 12, 101, 0.9);
   }
-
+  
   @media (max-width: 768px) {
     .webmlbadge {
       font-size: 0.8rem;
     }
-    .webml-title, .webml-status {
+    .webml-title,
+    .webml-status {
       padding: 0.25rem 0.5rem;
     }
-    }
-
+  }
+  
   @media (max-width: 320px) {
     .webmlbadge {
       font-size: 0.70rem;
     }
-    .webml-title, .webml-status {
+    .webml-title,
+    .webml-status {
       padding: 0.25rem;
     }
   }

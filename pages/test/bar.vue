@@ -10,10 +10,10 @@
   import ai_chart from '~/components/ai_chart.vue';
   
   export default {
-  components: {
-          ai_nav,
+    components: {
+      ai_nav,
       ai_footer,
-    ai_chart
+      ai_chart
+    }
   }
-}
 </script>

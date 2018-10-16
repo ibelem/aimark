@@ -7,8 +7,10 @@
       <ai_environment/>
       <br>
       <p>
-         
-        &copy;2018 AIMark <!-- 人工智能基准测试 <br>--> <!-- <nuxt-link to="">WebML Team</nuxt-link> -->
+  
+        &copy;2018 AIMark
+        <!-- 人工智能基准测试 <br>-->
+        <!-- <nuxt-link to="">WebML Team</nuxt-link> -->
         <!--<a href="http://www.miitbeian.gov.cn/">沪ICP备17028566号-4</a>-->
       </p>
     </div>
@@ -22,7 +24,9 @@
   
   export default {
     components: {
-      ai_environment, ai_connection, ai_webml_badge
+      ai_environment,
+      ai_connection,
+      ai_webml_badge
     }
   };
 </script>

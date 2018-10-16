@@ -5,10 +5,10 @@
     <!-- <ai_upgrading/> -->
     <section class="section hero" v-if="showtask == false">
       <h2 class="subtitle">
-      AIMark for Web, run key AI tests on your PC or smartphone browsers and check its performance!
+        AIMark for Web, run key AI tests on your PC or smartphone browsers and check its performance!
       </h2>
       <div class='ic mb mt'>
-          <button class="button is-primary wd" @click="run">Run Benchmark</button>
+        <button class="button is-primary wd" @click="run">Run Benchmark</button>
       </div>
     </section>
     <transition name="fade">
@@ -33,7 +33,7 @@
             </div>
           </div>
         </div>
-    
+  
         <div class="columns mt">
           <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
             <div class="card is ic">
@@ -47,69 +47,71 @@
             </div>
             <div class='inference_label has-text-primary is-size-6-desktop is-size-6-mobile is-size-6-tablet'>{{ currentinference }}</div>
           </div>
-        </div> 
+        </div>
       </section>
     </transition>
     <section class="section" v-if='showresult'>
-        <h2 class="is-size-5-desktop is-size-6-mobile is-size-5-tablet ic mt mb">Benchmark Result</h2>
-        <div class="is-size-7-mobile mt">Test Environment: <ai_environment /></div>
-        <div class='columns mb'>
-          <div class="column is-mobile is-12 ic">
-            <div class="mb mt">
-              <b-table :data="barData.rows" :bordered="false" :striped="true" :narrowed="false" :hoverable="true" :loading="false" :focusable="true" :mobile-cards="true">
-                <template slot-scope="props">
-                  <b-table-column field="Test" label="Test">
-                      {{ props.row.Test }}
-                  </b-table-column>
-                  <b-table-column field="Name" label="Name">
-                      {{ props.row.Name }}
-                  </b-table-column>
-                  <!-- <b-table-column field="model" label="Model">
-                      {{ props.row.model }}
-                  </b-table-column>
-                  -->
-                  <b-table-column field="Model Version" label="Version">
-                      {{ props.row.Version }}
-                  </b-table-column>
-                  <b-table-column field="WASM_Polyfill" label="WASM Polyfill">
-                      {{ props.row.WASM_Polyfill }} ms
-                  </b-table-column>
+      <h2 class="is-size-5-desktop is-size-6-mobile is-size-5-tablet ic mt mb">Benchmark Result</h2>
+      <div class="is-size-7-mobile mt">Test Environment:
+        <ai_environment />
+      </div>
+      <div class='columns mb'>
+        <div class="column is-mobile is-12 ic">
+          <div class="mb mt">
+            <b-table :data="barData.rows" :bordered="false" :striped="true" :narrowed="false" :hoverable="true" :loading="false" :focusable="true" :mobile-cards="true">
+              <template slot-scope="props">
+                      <b-table-column field="Test" label="Test">
+                          {{ props.row.Test }}
+                      </b-table-column>
+                      <b-table-column field="Name" label="Name">
+                          {{ props.row.Name }}
+                      </b-table-column>
+                      <!-- <b-table-column field="model" label="Model">
+                          {{ props.row.model }}
+                      </b-table-column>
+                      -->
+                      <b-table-column field="Model Version" label="Version">
+                          {{ props.row.Version }}
+                      </b-table-column>
+                      <b-table-column field="WASM_Polyfill" label="WASM Polyfill">
+                          {{ props.row.WASM_Polyfill }} ms
+                      </b-table-column>
+    
+                      <b-table-column field="WebGL2_Polyfill" label="WebGL2 Polyfill">
+                          {{ props.row.WebGL2_Polyfill }} ms
+                      </b-table-column>
+    
+                      <b-table-column field="WebML" label="WebML">
+                          {{ props.row.WebML }} ms
+                      </b-table-column>
+    
+                      <!-- <b-table-column field="test_image" label="Test Image">
+                          {{ props.row.test_case }}
+                      </b-table-column>
+    
+                      <b-table-column field="best_probability" label="Best Probability">
+                          {{ props.row.probability }}
+                      </b-table-column>
+                      -->
+    
+                      <!-- <b-table-column field="date" label="Date" centered>
+                          <span class="tag is-success">
+                              xxx
+                          </span>
+                      </b-table-column> -->
+</template>
 
-                  <b-table-column field="WebGL2_Polyfill" label="WebGL2 Polyfill">
-                      {{ props.row.WebGL2_Polyfill }} ms
-                  </b-table-column>
-
-                  <b-table-column field="WebML" label="WebML">
-                      {{ props.row.WebML }} ms
-                  </b-table-column>
-
-                  <!-- <b-table-column field="test_image" label="Test Image">
-                      {{ props.row.test_case }}
-                  </b-table-column>
-
-                  <b-table-column field="best_probability" label="Best Probability">
-                      {{ props.row.probability }}
-                  </b-table-column>
-                  -->
-
-                  <!-- <b-table-column field="date" label="Date" centered>
-                      <span class="tag is-success">
-                          xxx
-                      </span>
-                  </b-table-column> -->
-                </template>
-
-                <template slot="empty">
-                  <section class="section">
-                    <div class="content has-text-grey has-text-centered">
-                      <p>
-                        <b-icon icon="emoticon-sad" size="is-large">
-                        </b-icon>
-                      </p>
-                      <p>Nothing here.</p>
-                    </div>
-                  </section>
-                </template>
+<template slot="empty">
+  <section class="section">
+    <div class="content has-text-grey has-text-centered">
+      <p>
+        <b-icon icon="emoticon-sad" size="is-large">
+        </b-icon>
+      </p>
+      <p>Nothing here.</p>
+    </div>
+  </section>
+</template>
               </b-table>
             </div>
           </div> 
@@ -144,11 +146,17 @@
     runTest,
     tf_init_run
   } from '~/static/js/main.js'
-import { setTimeout } from 'timers';
-
+  import {
+    setTimeout
+  } from 'timers';
+  
   export default {
     components: {
-      ai_nav, ai_footer, ai_environment, ai_upgrading, ai_mac_switcher
+      ai_nav,
+      ai_footer,
+      ai_environment,
+      ai_upgrading,
+      ai_mac_switcher
     },
     head: {
       script: [{
@@ -203,11 +211,11 @@ import { setTimeout } from 'timers';
           src: '../js/posenet/decodePose.js',
           defer: true
         },
-                {
+        {
           src: '../js/posenet/helperFunc.js',
           defer: true
         },
-                {
+        {
           src: '../js/posenet/utils.js',
           defer: true
         },
@@ -233,7 +241,7 @@ import { setTimeout } from 'timers';
       clearInterval(this.getModelProgress);
     },
     methods: {
-      timeout: function (ms) {
+      timeout: function(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
       },
       getModelProgress: function() {
@@ -246,9 +254,9 @@ import { setTimeout } from 'timers';
         t['WASM Polyfill'] = 0;
         t['WebGL2 Polyfill'] = 0;
         t['WebML'] = 0;
-      
+  
         let tasksid = []
-        for(let key of testresult){
+        for (let key of testresult) {
           tasksid.push(key.id);
         }
         tasksid = [...new Set(tasksid)]
@@ -264,7 +272,7 @@ import { setTimeout } from 'timers';
                 t['WebGL2_Polyfill'] = item.test_result;
               } else if (item.backend.toLowerCase() == 'webml') {
                 t['WebML'] = item.test_result;
-              }  
+              }
             }
           }
           this.barData.rows.push(t);
@@ -280,7 +288,7 @@ import { setTimeout } from 'timers';
           for (let image of task.test.image) {
             this.currentinference = '';
             let framework = task.framework;
-            if(item == 'WebML') {
+            if (item == 'WebML') {
               framework = 'Web ML API';
             }
             let configuration = {
@@ -299,11 +307,11 @@ import { setTimeout } from 'timers';
             this.running.name = task.name;
             this.running.description = task.description;
             this.running.model = task.model_name;
-            this.running.model_version =task.model_version;
+            this.running.model_version = task.model_version;
             this.running.backend = task.backend;
             this.running.test_image = image;
             await runTest(configuration);
-            if(this.running.model != 'SSDMobileNet') {
+            if (this.running.model != 'SSDMobileNet') {
               this.currentinference = currentinference;
             } else {
               this.currentinference = '';
@@ -322,13 +330,13 @@ import { setTimeout } from 'timers';
         this.showtask = true;
         let i = 0;
         this.progress.value = 0;
-
+  
         for (let item of task.backend) {
           for (let image of task.test.image) {
             this.pn_show = true;
             this.currentinference = '';
             let framework = task.framework;
-            if(item == 'WebML') {
+            if (item == 'WebML') {
               framework = 'Web ML API';
             }
             let configuration = {
@@ -347,7 +355,7 @@ import { setTimeout } from 'timers';
             this.running.name = task.name;
             this.running.description = task.description;
             this.running.model = task.model_name;
-            this.running.model_version =task.model_version;
+            this.running.model_version = task.model_version;
             this.running.backend = task.backend;
             this.running.test_image = image;
             await runTest(configuration);
@@ -371,7 +379,7 @@ import { setTimeout } from 'timers';
           for (let image of task.test.image) {
             this.currentinference = '';
             let framework = task.framework;
-            if(item == 'WebML') {
+            if (item == 'WebML') {
               framework = 'Web ML API';
             }
             let configuration = {
@@ -390,7 +398,7 @@ import { setTimeout } from 'timers';
             this.running.name = task.name;
             this.running.description = task.description;
             this.running.model = task.model_name;
-            this.running.model_version =task.model_version;
+            this.running.model_version = task.model_version;
             this.running.backend = task.backend;
             this.running.test_image = image;
             await tf_init_run(configuration);
@@ -445,12 +453,11 @@ import { setTimeout } from 'timers';
         barData: {
           columns: ['Test', 'WASM_Polyfill', 'WebGL2_Polyfill', 'WebML'],
           rows: [{
-              'Test': '1',
-              'WASM_Polyfill': 0,
-              'WebGL2_Polyfill': 0,
-              'WebML': 0
-            }
-          ]
+            'Test': '1',
+            'WASM_Polyfill': 0,
+            'WebGL2_Polyfill': 0,
+            'WebML': 0
+          }]
         },
         progress: {
           value: 0,
@@ -469,7 +476,7 @@ import { setTimeout } from 'timers';
         showresult: false,
         pn_show: false,
         currentinference: '',
-        running: { 
+        running: {
           'id': '',
           'name': '',
           'description': '',
@@ -499,8 +506,9 @@ import { setTimeout } from 'timers';
             'test': {
               'resolution': '224 x 224 px',
               'image': ['../img/mobilenet/bee_eater.jpg']
-            }},
-            {
+            }
+          },
+          {
             "id": 2,
             "category": 'Image Classification',
             "name": 'Image Classification (MobileNet V2)',
@@ -521,53 +529,54 @@ import { setTimeout } from 'timers';
             'test': {
               'resolution': '224 x 224 px',
               'image': ['../img/mobilenet/pinwheel.jpg']
-            }},
-            {
-              "id": 3,
-              "category": 'Image Classification',
-              "name": 'Image Classification (SqueezeNet)',
-              "model_name": 'SqueezeNet',
-              "url": 'SqueezeNet',
-              "backend": ['WASM', 'WebGL2', 'WebML'],
-              "iteration": 4,
-              "framework": "webml-polyfill.js",
-              "model": '../model/squeezenet/model.onnx',
-              "label": '../model/squeezenet/labels.json',
-              // "model": 'https://aimark.nos-eastchina1.126.net/model/squeezenet/model.onnx',
-              // "label": 'https://aimark.nos-eastchina1.126.net/model/squeezenet/labels.json',
-              "description": 'A light-weight CNN providing Alexnet level accuracy with 50X fewer parameters. Loading SqueezeNet model trained by ImageNet in ONNX format, constructs and inferences it by WebML API.',
-              "model_version": 'v1.1',
-              "accuracy": '79.12%',
-              "model_size": '5.0Mb',
-              "paper_url": 'https://arxiv.org/abs/1602.07360',
-              'test': {
-                'resolution': '224 x 224 px',
-                'image': ['../img/squeezenet/panda.jpg']
-              }
-            },
-            {
-              "id": 4,
-              "category": 'Object Detection',
-              "name": 'Object Detection (SSD MobileNet)',
-              "model_name": 'SSDMobileNet',
-              "url": 'SSDMobileNet',
-              "backend": ['WASM', 'WebGL2', 'WebML'],
-              "iteration": 4,
-              "framework": "webml-polyfill.js",
-              "model": '../model/ssd_mobilenet/ssd_mobilenet.tflite',
-              "label": '../model/ssd_mobilenet/coco_labels_list.txt',
-              // "model": 'https://aimark.nos-eastchina1.126.net/model/ssd_mobilenet/ssd_mobilenet.tflite',
-              // "label": 'https://aimark.nos-eastchina1.126.net/model/ssd_mobilenet/coco_labels_list.txt',
-              "description": 'SSD (Single Shot MultiBox Detector) is an unified framework for object detection with a single network. Loading SSD MobileNet model (converted from Tensorflow SSD MobileNet model) trained by COCO in TensorFlow Lite format, constructs and inferences it by WebML API.',
-              "model_version": 'v1',
-              "accuracy": '70.9%',
-              "model_size": '27.3Mb',
-              "paper_url": 'https://arxiv.org/abs/1801.04381',
-              'test': {
-                'resolution': '300 x 300 px',
-                'image': ['../img/mobilenet/traffic_light.jpg']
-              }
-            },
+            }
+          },
+          {
+            "id": 3,
+            "category": 'Image Classification',
+            "name": 'Image Classification (SqueezeNet)',
+            "model_name": 'SqueezeNet',
+            "url": 'SqueezeNet',
+            "backend": ['WASM', 'WebGL2', 'WebML'],
+            "iteration": 4,
+            "framework": "webml-polyfill.js",
+            "model": '../model/squeezenet/model.onnx',
+            "label": '../model/squeezenet/labels.json',
+            // "model": 'https://aimark.nos-eastchina1.126.net/model/squeezenet/model.onnx',
+            // "label": 'https://aimark.nos-eastchina1.126.net/model/squeezenet/labels.json',
+            "description": 'A light-weight CNN providing Alexnet level accuracy with 50X fewer parameters. Loading SqueezeNet model trained by ImageNet in ONNX format, constructs and inferences it by WebML API.',
+            "model_version": 'v1.1',
+            "accuracy": '79.12%',
+            "model_size": '5.0Mb',
+            "paper_url": 'https://arxiv.org/abs/1602.07360',
+            'test': {
+              'resolution': '224 x 224 px',
+              'image': ['../img/squeezenet/panda.jpg']
+            }
+          },
+          {
+            "id": 4,
+            "category": 'Object Detection',
+            "name": 'Object Detection (SSD MobileNet)',
+            "model_name": 'SSDMobileNet',
+            "url": 'SSDMobileNet',
+            "backend": ['WASM', 'WebGL2', 'WebML'],
+            "iteration": 4,
+            "framework": "webml-polyfill.js",
+            "model": '../model/ssd_mobilenet/ssd_mobilenet.tflite',
+            "label": '../model/ssd_mobilenet/coco_labels_list.txt',
+            // "model": 'https://aimark.nos-eastchina1.126.net/model/ssd_mobilenet/ssd_mobilenet.tflite',
+            // "label": 'https://aimark.nos-eastchina1.126.net/model/ssd_mobilenet/coco_labels_list.txt',
+            "description": 'SSD (Single Shot MultiBox Detector) is an unified framework for object detection with a single network. Loading SSD MobileNet model (converted from Tensorflow SSD MobileNet model) trained by COCO in TensorFlow Lite format, constructs and inferences it by WebML API.',
+            "model_version": 'v1',
+            "accuracy": '70.9%',
+            "model_size": '27.3Mb',
+            "paper_url": 'https://arxiv.org/abs/1801.04381',
+            'test': {
+              'resolution': '300 x 300 px',
+              'image': ['../img/mobilenet/traffic_light.jpg']
+            }
+          },
           // {
           //   "id": 5,
           //   "category": 'Object Recognition / Classification',
@@ -590,7 +599,7 @@ import { setTimeout } from 'timers';
           //     'resolution': '224 x 224 px',
           //     'image': ['../img/tensorflow/cat.jpg']
           //   }},
-                      {
+          {
             "id": 5,
             "category": 'Human Pose Estimation',
             "name": 'Human Pose Estimation (PoseNet)',
@@ -611,29 +620,30 @@ import { setTimeout } from 'timers';
             'test': {
               'resolution': '513 x 513 px',
               'image': ['../img/posenet/ski.jpg']
-            }},
-                      {
-          "id": 6,
-          "category": 'Image Classification',
-          "name": 'Inception',
-          "model_name": 'Inception',
-          "url": 'Inception3',
-          "backend": ['WASM', 'WebGL2', 'WebML'],
-          "iteration": 4,
-          "framework": "webml-polyfill.js",
-          "model": '../model/inception/inception_v3.tflite',
-          "label": '../model/inception/labels.txt',
-          // "model": 'https://aimark.nos-eastchina1.126.net/model/inception/inception_v3.tflite',
-          // "label": 'https://aimark.nos-eastchina1.126.net/model/inception/labels.txt',
-          "description": 'Inception-v3 is trained for the ImageNet Large Visual Recognition Challenge. Loading Inception-v3 model trained by ImageNet in TensorFlow Lite format, constructs and inferences it by WebML API.',
-          "model_version": 'v3',
-          "accuracy": '93.8%',
-          "model_size": '95.3Mb',
-          "paper_url": 'http://arxiv.org/abs/1512.00567',
-          'test': {
-            'resolution': '299 x 299 px',
-            'image': ['../img/mobilenet/warplane.jpg']
-          }
+            }
+          },
+          {
+            "id": 6,
+            "category": 'Image Classification',
+            "name": 'Image Classification (Inception V3)',
+            "model_name": 'Inception',
+            "url": 'Inception3',
+            "backend": ['WASM', 'WebGL2', 'WebML'],
+            "iteration": 4,
+            "framework": "webml-polyfill.js",
+            "model": '../model/inception/inception_v3.tflite',
+            "label": '../model/inception/labels.txt',
+            // "model": 'https://aimark.nos-eastchina1.126.net/model/inception/inception_v3.tflite',
+            // "label": 'https://aimark.nos-eastchina1.126.net/model/inception/labels.txt',
+            "description": 'Inception-v3 is trained for the ImageNet Large Visual Recognition Challenge. Loading Inception-v3 model trained by ImageNet in TensorFlow Lite format, constructs and inferences it by WebML API.',
+            "model_version": 'v3',
+            "accuracy": '93.8%',
+            "model_size": '95.3Mb',
+            "paper_url": 'http://arxiv.org/abs/1512.00567',
+            'test': {
+              'resolution': '299 x 299 px',
+              'image': ['../img/mobilenet/warplane.jpg']
+            }
           },
         ]
       }
@@ -642,7 +652,6 @@ import { setTimeout } from 'timers';
 </script>
 
 <style scoped>
- 
   .title {
     font-weight: 200;
   }
@@ -651,7 +660,7 @@ import { setTimeout } from 'timers';
     font-weight: ２00;
     font-size: 1rem;
   }
-
+  
   .hero {
     height: 50vh;
     display: flex;
@@ -659,23 +668,35 @@ import { setTimeout } from 'timers';
     justify-content: center;
     flex-direction: column;
   }
-
-  .mb { margin-bottom: 1rem; }
-  .mt { margin-top: 1rem; }
-
-  #poseCanvasPredict, #poseCanvas, .testimage {
-    display: none; 
+  
+  .mb {
+    margin-bottom: 1rem;
   }
-
+  
+  .mt {
+    margin-top: 1rem;
+  }
+  
+  #poseCanvasPredict,
+  #poseCanvas,
+  .testimage {
+    display: none;
+  }
+  
   .pnshow {
     display: block !important;
   }
-
-  .fade-enter-active, .fade-leave-active {
+  
+  .fade-enter-active,
+  .fade-leave-active {
     transition: opacity .5s;
   }
-  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  
+  .fade-enter,
+  .fade-leave-to
+  /* .fade-leave-active below version 2.1.8 */
+  
+  {
     opacity: 0;
   }
-
 </style>

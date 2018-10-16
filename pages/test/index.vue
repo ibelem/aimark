@@ -15,10 +15,12 @@
   import ai_nav from "~/components/ai_nav.vue";
   import ai_footer from "~/components/ai_footer.vue";
   import ai_test from "~/components/ai_test.vue";
-
+  
   export default {
     components: {
-      ai_nav, ai_footer, ai_test
+      ai_nav,
+      ai_footer,
+      ai_test
     },
     asyncData() {
       return new Promise(resolve => {
@@ -37,5 +39,5 @@
   
   .subtitle {
     font-size: 1rem;
-  }  
+  }
 </style>

@@ -25,10 +25,10 @@
       <div class="columns mt">
         <div class="column ic">
           <div class="card is ic noborder">
-              <canvas id="poseCanvas" width="513" height="513"></canvas>
-              <canvas id="poseCanvasPredict" width="513" height="513"></canvas>
-              <canvas class="testimage"></canvas>
-              <img id='testimage' v-show='getTestImage' :src="getTestImage" alt="Test Image"> 
+            <canvas id="poseCanvas" width="513" height="513"></canvas>
+            <canvas id="poseCanvasPredict" width="513" height="513"></canvas>
+            <canvas class="testimage"></canvas>
+            <img id='testimage' v-show='getTestImage' :src="getTestImage" alt="Test Image">
           </div>
         </div>
         <div v-show="getBackend" class="column">
@@ -39,47 +39,47 @@
           </div>
         </div>
       </div>
- 
+  
       <h2 v-if='showBar' class="is-size-5-desktop is-size-6-mobile is-size-5-tablet ic mt">{{ task.name }} Benchmark</h2>
       <div class='columns' v-if='showBar'>
         <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
           <div class="mt">
             <b-table :data="test_result" :bordered="false" :striped="true" :narrowed="false" :hoverable="true" :loading="false" :focusable="true" :mobile-cards="true">
               <template slot-scope="props">
-                <b-table-column field="backend" label="Backend">
-                    {{ props.row.backend }}
-                </b-table-column>
+                  <b-table-column field="backend" label="Backend">
+                      {{ props.row.backend }}
+                  </b-table-column>
+  
+                  <b-table-column field="test_image" label="Test Image">
+                      {{ props.row.test_case }}
+                  </b-table-column>
+  
+                  <b-table-column field="decode_result" label="Decode Time">
+                      {{ props.row.decode_result }} ms
+                  </b-table-column>
+  
+                  <b-table-column field="test_result" label="Inference Time">
+                      {{ props.row.test_result }} ms
+                  </b-table-column>
+  
+                  <!-- <b-table-column field="date" label="Date" centered>
+                      <span class="tag is-success">
+                          xxx
+                      </span>
+                  </b-table-column> -->
+</template>
 
-                <b-table-column field="test_image" label="Test Image">
-                    {{ props.row.test_case }}
-                </b-table-column>
-
-                <b-table-column field="decode_result" label="Decode Time">
-                    {{ props.row.decode_result }} ms
-                </b-table-column>
-
-                <b-table-column field="test_result" label="Inference Time">
-                    {{ props.row.test_result }} ms
-                </b-table-column>
-
-                <!-- <b-table-column field="date" label="Date" centered>
-                    <span class="tag is-success">
-                        xxx
-                    </span>
-                </b-table-column> -->
-              </template>
-
-              <template slot="empty">
-                <section class="section">
-                  <div class="content has-text-grey has-text-centered">
-                    <p>
-                      <b-icon icon="emoticon-sad" size="is-large">
-                      </b-icon>
-                    </p>
-                    <p>Nothing here.</p>
-                  </div>
-                </section>
-              </template>
+<template slot="empty">
+  <section class="section">
+    <div class="content has-text-grey has-text-centered">
+      <p>
+        <b-icon icon="emoticon-sad" size="is-large">
+        </b-icon>
+      </p>
+      <p>Nothing here.</p>
+    </div>
+  </section>
+</template>
             </b-table>
             <div class='mt has-text-primary is-size-7-desktop is-size-7-mobile is-size-7-tablet'>{{ nalabel }}</div>
  
@@ -154,19 +154,19 @@
           src: '../js/posenet/decodePose.js',
           defer: true
         },
-                {
+        {
           src: '../js/posenet/helperFunc.js',
           defer: true
         },
-                {
+        {
           src: '../js/posenet/utils.js',
           defer: true
         },
-                {
+        {
           src: '../js/posenet/PoseNet.js',
           defer: true
         },
-                {
+        {
           src: '../js/posenet/DrawOutputs.js',
           defer: true
         }
@@ -192,7 +192,7 @@
       clearInterval(this.getLog);
     },
     methods: {
-      timeout: function (ms) {
+      timeout: function(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
       },
       uniqueList: function(array) {
@@ -224,7 +224,7 @@
           for (let item of this.task.backend) {
             this.nalabel = '';
             let framework = this.task.framework;
-            if(item == 'WebML') {
+            if (item == 'WebML') {
               framework = 'Web ML API'
             }
             let configuration = {
@@ -249,14 +249,14 @@
   
         this.test_result = testresult;
         this.showBar = true;
-
+  
         this.barData.rows = [];
         let t = {};
         t['Test Image'] = 0;
         t['WASM Polyfill'] = 0;
         t['WebGL2 Polyfill'] = 0;
         t['WebML'] = 0;
-        
+  
         let _this = this;
         this.task.test.image.map((image) => {
           for (let item of testresult) {
@@ -268,7 +268,7 @@
                 t['WebGL2 Polyfill'] = item.test_result;
               } else if (item.backend.toLowerCase() == 'webml') {
                 t['WebML'] = item.test_result;
-              }  
+              }
             }
           }
           this.barData.rows.push(t);
@@ -319,12 +319,11 @@
         barData: {
           columns: ['Test Image', 'WASM Polyfill', 'WebGL2 Polyfill', 'WebML'],
           rows: [{
-              'Test Image': 'bee_eater.jpg',
-              'WASM Polyfill': 0,
-              'WebGL2 Polyfill': 0,
-              'WebML': 0
-            }
-          ]
+            'Test Image': 'bee_eater.jpg',
+            'WASM Polyfill': 0,
+            'WebGL2 Polyfill': 0,
+            'WebML': 0
+          }]
         },
         progress: {
           value: 0,
@@ -366,64 +365,63 @@
 </script>
 
 <style scoped>
-img,
-.is {
-  width: 513px !important;
-  height: 513px !important;
-}
-
-.image {
-  width: 513px !important;
-  height: 513px !important;
-  /* display: none !important; */
-}
-
-.testimage {
-  width: 513px !important;
-  height: 513px !important;
-}
-
-#poseCanvasPredict, #poseCanvas, .testimage {
- display: none; 
-}
-
-#log {
-  height: 513px;
-  max-height: 513px;
-}
-
-.cmh,
-.cmh canvas {
-  max-height: 380px !important;
-}
-
-@media (max-width: 768px) {
   img,
   .is {
-    width: auto !important;
-    height: auto !important;
+    width: 513px !important;
+    height: 513px !important;
   }
+  
   .image {
-    width: auto !important;
-    height: auto !important;
+    width: 513px !important;
+    height: 513px !important;
     /* display: none !important; */
   }
-
-  .noborder {
-    box-shadow: 0 0px 0px rgba(10, 10, 10, 0.1), 0 0px 0px rgba(10, 10, 10, 0.1) !important;
+  
+  .testimage {
+    width: 513px !important;
+    height: 513px !important;
   }
-
+  
+  #poseCanvasPredict,
+  #poseCanvas,
+  .testimage {
+    display: none;
+  }
+  
   #log {
-    height: 112px;
-    max-height: 112px;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    padding: 1rem;
+    height: 513px;
+    max-height: 513px;
   }
-
+  
   .cmh,
   .cmh canvas {
-    max-height: 320px !important;
+    max-height: 380px !important;
   }
-}
+  
+  @media (max-width: 768px) {
+    img,
+    .is {
+      width: auto !important;
+      height: auto !important;
+    }
+    .image {
+      width: auto !important;
+      height: auto !important;
+      /* display: none !important; */
+    }
+    .noborder {
+      box-shadow: 0 0px 0px rgba(10, 10, 10, 0.1), 0 0px 0px rgba(10, 10, 10, 0.1) !important;
+    }
+    #log {
+      height: 112px;
+      max-height: 112px;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      padding: 1rem;
+    }
+    .cmh,
+    .cmh canvas {
+      max-height: 320px !important;
+    }
+  }
 </style>

@@ -17,12 +17,12 @@
               The AIMark for web consists of multiple AI tests performed by separate neural networks on your pc or smartphone browsers.
             </h2>
             <!-- <h2 class="subtitle">
-              WebML is a Web API set for a dedicated API for Machine Learning inference in the browser.
-            </h2>
-            -->
+                WebML is a Web API set for a dedicated API for Machine Learning inference in the browser.
+              </h2>
+              -->
             <a href="benchmark" class="button is-primary">
-              Run Benchmark
-            </a>
+                Run Benchmark
+              </a>
             <nuxt-link to="test" class="button is-non-primary ml">
               View Tests
             </nuxt-link>
@@ -101,13 +101,13 @@
   .entrance:hover {
     background-color: rgba(222, 12, 101, 0.1);
   }
-
+  
   .button.is-non-primary {
     background-color: transparent;
     color: rgba(255, 255, 255, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.6);
   }
-
+  
   .button.is-non-primary:hover {
     background-color: transparent;
     color: rgba(255, 255, 255, 1.0);

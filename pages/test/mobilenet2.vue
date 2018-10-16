@@ -41,47 +41,47 @@
           </div>
         </div>
       </div>
- 
+  
       <h2 v-if='showBar' class="is-size-5-desktop is-size-6-mobile is-size-5-tablet ic mt">{{ task.name }} Benchmark</h2>
       <div class='columns' v-if='showBar'>
         <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
           <div class="mt">
             <b-table :data="test_result" :bordered="false" :striped="true" :narrowed="false" :hoverable="true" :loading="false" :focusable="true" :mobile-cards="true">
               <template slot-scope="props">
-                <b-table-column field="backend" label="Backend">
-                    {{ props.row.backend }}
-                </b-table-column>
+                  <b-table-column field="backend" label="Backend">
+                      {{ props.row.backend }}
+                  </b-table-column>
+  
+                  <b-table-column field="test_image" label="Test Image">
+                      {{ props.row.test_case }}
+                  </b-table-column>
+  
+                  <b-table-column field="best_probability" label="Best Probability">
+                      {{ props.row.probability }}
+                  </b-table-column>
+  
+                  <b-table-column field="test_result" label="Inference Time">
+                      {{ props.row.test_result }} ms
+                  </b-table-column>
+  
+                  <!-- <b-table-column field="date" label="Date" centered>
+                      <span class="tag is-success">
+                          xxx
+                      </span>
+                  </b-table-column> -->
+</template>
 
-                <b-table-column field="test_image" label="Test Image">
-                    {{ props.row.test_case }}
-                </b-table-column>
-
-                <b-table-column field="best_probability" label="Best Probability">
-                    {{ props.row.probability }}
-                </b-table-column>
-
-                <b-table-column field="test_result" label="Inference Time">
-                    {{ props.row.test_result }} ms
-                </b-table-column>
-
-                <!-- <b-table-column field="date" label="Date" centered>
-                    <span class="tag is-success">
-                        xxx
-                    </span>
-                </b-table-column> -->
-              </template>
-
-              <template slot="empty">
-                <section class="section">
-                  <div class="content has-text-grey has-text-centered">
-                    <p>
-                      <b-icon icon="emoticon-sad" size="is-large">
-                      </b-icon>
-                    </p>
-                    <p>Nothing here.</p>
-                  </div>
-                </section>
-              </template>
+<template slot="empty">
+  <section class="section">
+    <div class="content has-text-grey has-text-centered">
+      <p>
+        <b-icon icon="emoticon-sad" size="is-large">
+        </b-icon>
+      </p>
+      <p>Nothing here.</p>
+    </div>
+  </section>
+</template>
             </b-table>
             <div class='mt has-text-primary is-size-7-desktop is-size-7-mobile is-size-7-tablet'>{{ nalabel }}</div> 
  
@@ -174,7 +174,7 @@
       clearInterval(this.getLog);
     },
     methods: {
-      timeout: function (ms) {
+      timeout: function(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
       },
       uniqueList: function(array) {
@@ -207,7 +207,7 @@
             this.currentinference = '';
             this.nalabel = '';
             let framework = this.task.framework;
-            if(item == 'WebML') {
+            if (item == 'WebML') {
               framework = 'Web ML API'
             }
             let configuration = {
@@ -232,14 +232,14 @@
   
         this.test_result = testresult;
         this.showBar = true;
-
+  
         this.barData.rows = [];
         let t = {};
         t['Test Image'] = 0;
         t['WASM Polyfill'] = 0;
         t['WebGL2 Polyfill'] = 0;
         t['WebML'] = 0;
-        
+  
         let _this = this;
         this.task.test.image.map((image) => {
           for (let item of testresult) {
@@ -251,7 +251,7 @@
                 t['WebGL2 Polyfill'] = item.test_result;
               } else if (item.backend.toLowerCase() == 'webml') {
                 t['WebML'] = item.test_result;
-              }  
+              }
             }
           }
           this.barData.rows.push(t);
@@ -286,12 +286,11 @@
         barData: {
           columns: ['Test Image', 'WASM Polyfill', 'WebGL2 Polyfill', 'WebML'],
           rows: [{
-              'Test Image': 'bee_eater.jpg',
-              'WASM Polyfill': 0,
-              'WebGL2 Polyfill': 0,
-              'WebML': 0
-            }
-          ]
+            'Test Image': 'bee_eater.jpg',
+            'WASM Polyfill': 0,
+            'WebGL2 Polyfill': 0,
+            'WebML': 0
+          }]
         },
         progress: {
           value: 0,
@@ -332,4 +331,5 @@
 </script>
 
 <style scoped>
+  
 </style>

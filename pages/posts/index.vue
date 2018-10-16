@@ -7,53 +7,68 @@
       </li>
     </ul>
     <p>
-    <nuxt-link to="/index_post">Back to index_post</nuxt-link> 
+      <nuxt-link to="/index_post">Back to index_post</nuxt-link>
     </p>
   </div>
 </template>
 
 <script>
-// import axios from 'axios';
-import axios from 'axios-https-proxy-fix'; 
-
-export default {
-  asyncData({ req, params }) {
-    const proxy = { host: 'child-prc', port: 913 }
-    // We can return a Promise instead of calling the callback
-    return axios.get('https://jsonplaceholder.typicode.com/posts', {proxy})
-      .then((res) => {
-        return { posts: res.data.slice(0, 5) }
-      })
-  },
-  head: {
-    title: 'List of posts'
+  // import axios from 'axios';
+  import axios from 'axios-https-proxy-fix';
+  
+  export default {
+    asyncData({
+      req,
+      params
+    }) {
+      const proxy = {
+        host: 'child-prc',
+        port: 913
+      }
+      // We can return a Promise instead of calling the callback
+      return axios.get('https://jsonplaceholder.typicode.com/posts', {
+          proxy
+        })
+        .then((res) => {
+          return {
+            posts: res.data.slice(0, 5)
+          }
+        })
+    },
+    head: {
+      title: 'List of posts'
+    }
   }
-}
 </script>
 
 <style scoped>
-.container {
-  width: 70%;
-  margin: auto;
-  text-align: center;
-  padding-top: 100px;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-ul li {
-  border: 1px #ddd solid;
-  padding: 20px;
-  text-align: left;
-}
-ul li a {
-  color: gray;
-}
-p {
-  font-size: 20px;
-}
-a {
-  color: #41B883;
-}
+  .container {
+    width: 70%;
+    margin: auto;
+    text-align: center;
+    padding-top: 100px;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  ul li {
+    border: 1px #ddd solid;
+    padding: 20px;
+    text-align: left;
+  }
+  
+  ul li a {
+    color: gray;
+  }
+  
+  p {
+    font-size: 20px;
+  }
+  
+  a {
+    color: #41B883;
+  }
 </style>

@@ -36,58 +36,55 @@
           </div>
           <div class='ir'>
             <button class="btn button ir is-small" @click="copylog" data-clipboard-target="#log">
-                                          Copy Log
-                                        </button>
+                                            Copy Log
+                                          </button>
           </div>
         </div>
       </div>
-    
+  
       <h2 v-if='showBar' class="is-size-5-desktop is-size-6-mobile is-size-5-tablet ic mt">{{ task.name }} Benchmark</h2>
       <div class='columns mb' v-if='showBar'>
   
         <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
           <div class="mb mt">
   
-            <b-table :data="test_result" :bordered="false" :striped="true" 
-            :narrowed="false" :hoverable="true" :loading="false" 
-            :focusable="true" :mobile-cards="true">
+            <b-table :data="test_result" :bordered="false" :striped="true" :narrowed="false" :hoverable="true" :loading="false" :focusable="true" :mobile-cards="true">
   
               <template slot-scope="props">
-                  <b-table-column field="backend" label="Backend">
-                      {{ props.row.backend }}
-                  </b-table-column>
+                    <b-table-column field="backend" label="Backend">
+                        {{ props.row.backend }}
+                    </b-table-column>
+    
+                    <b-table-column field="test_image" label="Test Image">
+                        {{ props.row.test_case }}
+                    </b-table-column>
   
-                  <b-table-column field="test_image" label="Test Image">
-                      {{ props.row.test_case }}
-                  </b-table-column>
-
-                  <b-table-column field="best_probability" label="Best Probability">
-                      {{ props.row.probability }}
-                  </b-table-column>
-
-                  <b-table-column field="test_result" label="Test Result">
-                      {{ props.row.test_result }} ms
-                  </b-table-column>
+                    <b-table-column field="best_probability" label="Best Probability">
+                        {{ props.row.probability }}
+                    </b-table-column>
   
-                  <!-- <b-table-column field="date" label="Date" centered>
-                      <span class="tag is-success">
-                          xxx
-                      </span>
-                  </b-table-column> -->
+                    <b-table-column field="test_result" label="Test Result">
+                        {{ props.row.test_result }} ms
+                    </b-table-column>
+    
+                    <!-- <b-table-column field="date" label="Date" centered>
+                        <span class="tag is-success">
+                            xxx
+                        </span>
+                    </b-table-column> -->
+</template>
 
-              </template>
-
-              <template slot="empty">
-                <section class="section">
-                  <div class="content has-text-grey has-text-centered">
-                    <p>
-                      <b-icon icon="emoticon-sad" size="is-large">
-                      </b-icon>
-                    </p>
-                    <p>Nothing here.</p>
-                  </div>
-                </section>
-              </template>
+<template slot="empty">
+  <section class="section">
+    <div class="content has-text-grey has-text-centered">
+      <p>
+        <b-icon icon="emoticon-sad" size="is-large">
+        </b-icon>
+      </p>
+      <p>Nothing here.</p>
+    </div>
+  </section>
+</template>
             </b-table>
  
  
@@ -365,8 +362,9 @@
     overflow-x: hidden;
     padding: 1rem;
   }
-
-  .cmh, .cmh canvas {
+  
+  .cmh,
+  .cmh canvas {
     max-height: 200px !important;
   }
   

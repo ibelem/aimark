@@ -3,11 +3,11 @@
   
     <h2 class="has-text-primary is-size-5-desktop is-size-6-mobile is-size-5-tablet mb">Tests: Image Classification</h2>
     <div class="columns">
-      <div v-for="task in tasks" v-if="task.category=='Image Classification' && task.id < 5" :key="task.id" class="column is-mobile is-one-third-tablet is-one-third-desktop is-one-quarter-widescreen is-one-quarter-fullhd">
+      <div v-for="task in tasks" v-if="task.category=='Image Classification' && task.id < 10" :key="task.id" class="column is-mobile is-one-third-tablet is-one-third-desktop is-one-quarter-widescreen is-one-quarter-fullhd">
         <b-collapse class="card">
           <div slot="trigger" slot-scope="props" class="card-header">
             <p class="card-header-title">
-             {{ task.name }}
+              {{ task.name }}
             </p>
             <a class="card-header-icon">
               <b-icon :icon="props.open ? 'menu-down' : 'menu-up'">
@@ -25,15 +25,15 @@
                 <li>Backend: <span v-for="(b, index) in task.backend" :key="index">{{ b }} </span> </li>
               </ul>
               <!--
-              <div class='rl'>
-                <div class='il' v-for="p in task.platform" :key="p.id">
-                <i v-if="p  == 'android'" class="mdi mdi-android-head mdi-24px"></i> <i v-if="p  == 'ios'" class="mdi mdi-apple-ios mdi-24px"></i> <i v-if="p  == 'mac'" class="mdi mdi-apple mdi-24px"></i> <i v-if="p  == 'windows'" class="mdi mdi-windows mdi-24px"></i> <i v-if="p  == 'linux'" class="mdi mdi-linux mdi-24px"></i>
-                </div>
-                <div class='il' v-for="b in task.browser" :key="b.id">
-                <i v-if="b  == 'edge'" class="mdi mdi-edge mdi-24px"></i> <i v-if="b  == 'chrome'" class="mdi mdi-google-chrome mdi-24px"></i> <i v-if="b  == 'firefox'" class="mdi mdi-firefox mdi-24px"></i> <i v-if="b  == 'safari'" class="mdi mdi-apple-safari mdi-24px"></i>
-                </div>
-              </div>
-              -->
+                  <div class='rl'>
+                    <div class='il' v-for="p in task.platform" :key="p.id">
+                    <i v-if="p  == 'android'" class="mdi mdi-android-head mdi-24px"></i> <i v-if="p  == 'ios'" class="mdi mdi-apple-ios mdi-24px"></i> <i v-if="p  == 'mac'" class="mdi mdi-apple mdi-24px"></i> <i v-if="p  == 'windows'" class="mdi mdi-windows mdi-24px"></i> <i v-if="p  == 'linux'" class="mdi mdi-linux mdi-24px"></i>
+                    </div>
+                    <div class='il' v-for="b in task.browser" :key="b.id">
+                    <i v-if="b  == 'edge'" class="mdi mdi-edge mdi-24px"></i> <i v-if="b  == 'chrome'" class="mdi mdi-google-chrome mdi-24px"></i> <i v-if="b  == 'firefox'" class="mdi mdi-firefox mdi-24px"></i> <i v-if="b  == 'safari'" class="mdi mdi-apple-safari mdi-24px"></i>
+                    </div>
+                  </div>
+                  -->
             </div>
           </div>
           <footer class="card-footer">
@@ -48,14 +48,14 @@
         </b-collapse>
       </div>
     </div>
-
+  
     <h2 class="has-text-primary is-size-5-desktop is-size-6-mobile is-size-5-tablet mb">Tests: Object Detection</h2>
-        <div class="columns">
-      <div v-for="task in tasks" v-if="task.category=='Object Detection' && task.id < 5" :key="task.id" class="column is-mobile is-one-third-tablet is-one-third-desktop is-one-quarter-widescreen is-one-quarter-fullhd">
+    <div class="columns">
+      <div v-for="task in tasks" v-if="task.category=='Object Detection'" :key="task.id" class="column is-mobile is-one-third-tablet is-one-third-desktop is-one-quarter-widescreen is-one-quarter-fullhd">
         <b-collapse class="card">
           <div slot="trigger" slot-scope="props" class="card-header">
             <p class="card-header-title">
-             {{ task.name }}
+              {{ task.name }}
             </p>
             <a class="card-header-icon">
               <b-icon :icon="props.open ? 'menu-down' : 'menu-up'">
@@ -73,15 +73,15 @@
                 <li>Backend: <span v-for="(b, index) in task.backend" :key="index">{{ b }} </span> </li>
               </ul>
               <!--
-              <div class='rl'>
-                <div class='il' v-for="p in task.platform" :key="p.id">
-                <i v-if="p  == 'android'" class="mdi mdi-android-head mdi-24px"></i> <i v-if="p  == 'ios'" class="mdi mdi-apple-ios mdi-24px"></i> <i v-if="p  == 'mac'" class="mdi mdi-apple mdi-24px"></i> <i v-if="p  == 'windows'" class="mdi mdi-windows mdi-24px"></i> <i v-if="p  == 'linux'" class="mdi mdi-linux mdi-24px"></i>
-                </div>
-                <div class='il' v-for="b in task.browser" :key="b.id">
-                <i v-if="b  == 'edge'" class="mdi mdi-edge mdi-24px"></i> <i v-if="b  == 'chrome'" class="mdi mdi-google-chrome mdi-24px"></i> <i v-if="b  == 'firefox'" class="mdi mdi-firefox mdi-24px"></i> <i v-if="b  == 'safari'" class="mdi mdi-apple-safari mdi-24px"></i>
-                </div>
-              </div>
-              -->
+                  <div class='rl'>
+                    <div class='il' v-for="p in task.platform" :key="p.id">
+                    <i v-if="p  == 'android'" class="mdi mdi-android-head mdi-24px"></i> <i v-if="p  == 'ios'" class="mdi mdi-apple-ios mdi-24px"></i> <i v-if="p  == 'mac'" class="mdi mdi-apple mdi-24px"></i> <i v-if="p  == 'windows'" class="mdi mdi-windows mdi-24px"></i> <i v-if="p  == 'linux'" class="mdi mdi-linux mdi-24px"></i>
+                    </div>
+                    <div class='il' v-for="b in task.browser" :key="b.id">
+                    <i v-if="b  == 'edge'" class="mdi mdi-edge mdi-24px"></i> <i v-if="b  == 'chrome'" class="mdi mdi-google-chrome mdi-24px"></i> <i v-if="b  == 'firefox'" class="mdi mdi-firefox mdi-24px"></i> <i v-if="b  == 'safari'" class="mdi mdi-apple-safari mdi-24px"></i>
+                    </div>
+                  </div>
+                  -->
             </div>
           </div>
           <footer class="card-footer">
@@ -96,60 +96,14 @@
         </b-collapse>
       </div>
     </div>
-
-        <div class="columns">
-      <div v-for="task in tasks" v-if="task.category=='Object Recognition / Classification' && task.id >= 5 && task.id < 9" :key="task.id" class="column is-mobile is-one-third-tablet is-one-third-desktop is-one-quarter-widescreen is-one-quarter-fullhd">
-        <b-collapse class="card">
-          <div slot="trigger" slot-scope="props" class="card-header">
-            <p class="card-header-title">
-             {{ task.name }}
-            </p>
-            <a class="card-header-icon">
-              <b-icon :icon="props.open ? 'menu-down' : 'menu-up'">
-              </b-icon>
-            </a>
-          </div>
-          <div class="card-content">
-            <div class="content lh">
-              {{ task.description }}
-              <ul>
-                <li>Neural Network: {{ task.model_name }} {{ task.model_version }}</li>
-                <li>Model Size: {{ task.model_size }}</li>
-                <li>Image Resolution: {{ task.test.resolution }}</li>
-                <li>Accuracy: {{ task.accuracy }}</li>
-                <li>Backend: <span v-for="(b, index) in task.backend" :key="index">{{ b }} </span> </li>
-              </ul>
-              <!--
-              <div class='rl'>
-                <div class='il' v-for="p in task.platform" :key="p.id">
-                <i v-if="p  == 'android'" class="mdi mdi-android-head mdi-24px"></i> <i v-if="p  == 'ios'" class="mdi mdi-apple-ios mdi-24px"></i> <i v-if="p  == 'mac'" class="mdi mdi-apple mdi-24px"></i> <i v-if="p  == 'windows'" class="mdi mdi-windows mdi-24px"></i> <i v-if="p  == 'linux'" class="mdi mdi-linux mdi-24px"></i>
-                </div>
-                <div class='il' v-for="b in task.browser" :key="b.id">
-                <i v-if="b  == 'edge'" class="mdi mdi-edge mdi-24px"></i> <i v-if="b  == 'chrome'" class="mdi mdi-google-chrome mdi-24px"></i> <i v-if="b  == 'firefox'" class="mdi mdi-firefox mdi-24px"></i> <i v-if="b  == 'safari'" class="mdi mdi-apple-safari mdi-24px"></i>
-                </div>
-              </div>
-              -->
-            </div>
-          </div>
-          <footer class="card-footer">
-            <a class="card-footer-item" :href="task.paper_url">Paper</a>
-            <a class="card-footer-item" :href="task.model">Model</a>
-          </footer>
-          <footer class="card-footer">
-            <!-- <nuxt-link class='card-footer-item button is-primary-gradient' :to="{ name: 'test-id', params: { id: task.id } }">Run Test</nuxt-link> -->
-            <!-- <nuxt-link class='card-footer-item button is-primary-gradient' :to="'../test/'+ task.page">Run Test</nuxt-link>-->
-            <a class='card-footer-item button is-primary-gradient' :href="'../test/'+ task.url">Run Test</a>
-          </footer>
-        </b-collapse>
-      </div>
-    </div>
+  
     <h2 class="has-text-primary is-size-5-desktop is-size-6-mobile is-size-5-tablet mb">Tests: Human Pose Estimation</h2>
     <div class="columns">
       <div v-for="task in tasks" v-if="task.category=='Human Pose Estimation'" :key="task.id" class="column is-mobile is-one-third-tablet is-one-third-desktop is-one-quarter-widescreen is-one-quarter-fullhd">
         <b-collapse class="card">
           <div slot="trigger" slot-scope="props" class="card-header">
             <p class="card-header-title">
-             {{ task.name }}
+              {{ task.name }}
             </p>
             <a class="card-header-icon">
               <b-icon :icon="props.open ? 'menu-down' : 'menu-up'">
@@ -167,15 +121,15 @@
                 <li>Backend: <span v-for="(b, index) in task.backend" :key="index">{{ b }} </span> </li>
               </ul>
               <!--
-              <div class='rl'>
-                <div class='il' v-for="p in task.platform" :key="p.id">
-                <i v-if="p  == 'android'" class="mdi mdi-android-head mdi-24px"></i> <i v-if="p  == 'ios'" class="mdi mdi-apple-ios mdi-24px"></i> <i v-if="p  == 'mac'" class="mdi mdi-apple mdi-24px"></i> <i v-if="p  == 'windows'" class="mdi mdi-windows mdi-24px"></i> <i v-if="p  == 'linux'" class="mdi mdi-linux mdi-24px"></i>
-                </div>
-                <div class='il' v-for="b in task.browser" :key="b.id">
-                <i v-if="b  == 'edge'" class="mdi mdi-edge mdi-24px"></i> <i v-if="b  == 'chrome'" class="mdi mdi-google-chrome mdi-24px"></i> <i v-if="b  == 'firefox'" class="mdi mdi-firefox mdi-24px"></i> <i v-if="b  == 'safari'" class="mdi mdi-apple-safari mdi-24px"></i>
-                </div>
-              </div>
-              -->
+                  <div class='rl'>
+                    <div class='il' v-for="p in task.platform" :key="p.id">
+                    <i v-if="p  == 'android'" class="mdi mdi-android-head mdi-24px"></i> <i v-if="p  == 'ios'" class="mdi mdi-apple-ios mdi-24px"></i> <i v-if="p  == 'mac'" class="mdi mdi-apple mdi-24px"></i> <i v-if="p  == 'windows'" class="mdi mdi-windows mdi-24px"></i> <i v-if="p  == 'linux'" class="mdi mdi-linux mdi-24px"></i>
+                    </div>
+                    <div class='il' v-for="b in task.browser" :key="b.id">
+                    <i v-if="b  == 'edge'" class="mdi mdi-edge mdi-24px"></i> <i v-if="b  == 'chrome'" class="mdi mdi-google-chrome mdi-24px"></i> <i v-if="b  == 'firefox'" class="mdi mdi-firefox mdi-24px"></i> <i v-if="b  == 'safari'" class="mdi mdi-apple-safari mdi-24px"></i>
+                    </div>
+                  </div>
+                  -->
             </div>
           </div>
           <footer class="card-footer">
@@ -230,8 +184,9 @@
             "browser": [
               'chrome',
               'firefox'
-            ]},
-            {
+            ]
+          },
+          {
             "id": 2,
             "category": 'Image Classification',
             "name": 'MobileNet V2',
@@ -250,8 +205,9 @@
             'test': {
               'resolution': '224 x 224 px',
               'image': ['../img/mobilenet/bee_eater.jpg', '../img/mobilenet/traffic_light.jpg', '../img/mobilenet/pinwheel.jpg']
-            }},
-            {
+            }
+          },
+          {
             "id": 3,
             "category": 'Image Classification',
             "name": 'SqueezeNet',
@@ -273,51 +229,51 @@
             }
           },
           {
-          "id": 4,
-          "category": 'Image Classification',
-          "name": 'Inception',
-          "model_name": 'Inception',
-          "url": 'Inception3',
-          "backend": ['WASM', 'WebGL2', 'WebML'],
-          "iteration": 4,
-          "framework": "webml-polyfill.js",
-          "model": '../model/inception/inception_v3.tflite',
-          "label": '../model/inception/labels.txt',
-          // "model": 'https://aimark.nos-eastchina1.126.net/model/inception/inception_v3.tflite',
-          // "label": 'https://aimark.nos-eastchina1.126.net/model/inception/labels.txt',
-          "description": 'Inception-v3 is trained for the ImageNet Large Visual Recognition Challenge. Loading Inception-v3 model trained by ImageNet in TensorFlow Lite format, constructs and inferences it by WebML API.',
-          "model_version": 'v3',
-          "accuracy": '93.8%',
-          "model_size": '95.3Mb',
-          "paper_url": 'http://arxiv.org/abs/1512.00567',
-          'test': {
-            'resolution': '224 x 224 px',
-            'image': ['../img/mobilenet/bee_eater.jpg', '../img/mobilenet/traffic_light.jpg', '../img/mobilenet/pinwheel.jpg']
-          }
+            "id": 4,
+            "category": 'Image Classification',
+            "name": 'Inception V3',
+            "model_name": 'Inception',
+            "url": 'Inception3',
+            "backend": ['WASM', 'WebGL2', 'WebML'],
+            "iteration": 4,
+            "framework": "webml-polyfill.js",
+            "model": '../model/inception/inception_v3.tflite',
+            "label": '../model/inception/labels.txt',
+            // "model": 'https://aimark.nos-eastchina1.126.net/model/inception/inception_v3.tflite',
+            // "label": 'https://aimark.nos-eastchina1.126.net/model/inception/labels.txt',
+            "description": 'Inception-v3 is trained for the ImageNet Large Visual Recognition Challenge. Loading Inception-v3 model trained by ImageNet in TensorFlow Lite format, constructs and inferences it by WebML API.',
+            "model_version": 'v3',
+            "accuracy": '93.8%',
+            "model_size": '95.3Mb',
+            "paper_url": 'http://arxiv.org/abs/1512.00567',
+            'test': {
+              'resolution': '224 x 224 px',
+              'image': ['../img/mobilenet/bee_eater.jpg', '../img/mobilenet/traffic_light.jpg', '../img/mobilenet/pinwheel.jpg']
+            }
           },
           {
-              "id": 5,
-              "category": 'Object Detection',
-              "name": 'SSD MobileNet',
-              "model_name": 'SSDMobileNet',
-              "url": 'SSDMobileNet',
-              "backend": ['WASM', 'WebGL2', 'WebML'],
-              "iteration": 4,
-              "framework": "webml-polyfill.js",
-              "model": '../model/ssd_mobilenet/ssd_mobilenet.tflite',
-              "label": '../model/ssd_mobilenet/coco_labels_list.txt',
-              // "model": 'https://aimark.nos-eastchina1.126.net/model/ssd_mobilenet/ssd_mobilenet.tflite',
-              // "label": 'https://aimark.nos-eastchina1.126.net/model/ssd_mobilenet/coco_labels_list.txt',
-              "description": 'SSD (Single Shot MultiBox Detector) is an unified framework for object detection with a single network. Loading SSD MobileNet model (converted from Tensorflow SSD MobileNet model) trained by COCO in TensorFlow Lite format, constructs and inferences it by WebML API.',
-              "model_version": 'v1',
-              "accuracy": '70.9%',
-              "model_size": '27.3Mb',
-              "paper_url": 'https://arxiv.org/abs/1801.04381',
-              'test': {
-                'resolution': '300 x 300 px',
-                'image': ['../img/mobilenet/bee_eater.jpg', '../img/mobilenet/traffic_light.jpg', '../img/mobilenet/pinwheel.jpg']
-              }
-            },
+            "id": 5,
+            "category": 'Object Detection',
+            "name": 'SSD MobileNet',
+            "model_name": 'SSDMobileNet',
+            "url": 'SSDMobileNet',
+            "backend": ['WASM', 'WebGL2', 'WebML'],
+            "iteration": 4,
+            "framework": "webml-polyfill.js",
+            "model": '../model/ssd_mobilenet/ssd_mobilenet.tflite',
+            "label": '../model/ssd_mobilenet/coco_labels_list.txt',
+            // "model": 'https://aimark.nos-eastchina1.126.net/model/ssd_mobilenet/ssd_mobilenet.tflite',
+            // "label": 'https://aimark.nos-eastchina1.126.net/model/ssd_mobilenet/coco_labels_list.txt',
+            "description": 'SSD (Single Shot MultiBox Detector) is an unified framework for object detection with a single network. Loading SSD MobileNet model (converted from Tensorflow SSD MobileNet model) trained by COCO in TensorFlow Lite format, constructs and inferences it by WebML API.',
+            "model_version": 'v1',
+            "accuracy": '70.9%',
+            "model_size": '27.3Mb',
+            "paper_url": 'https://arxiv.org/abs/1801.04381',
+            'test': {
+              'resolution': '300 x 300 px',
+              'image': ['../img/mobilenet/bee_eater.jpg', '../img/mobilenet/traffic_light.jpg', '../img/mobilenet/pinwheel.jpg']
+            }
+          },
           // {
           //   "id": 5,
           //   "category": 'Object Recognition / Classification',
@@ -339,7 +295,7 @@
           //     'image': ['../img/mobilenet/bee_eater.jpg', '../img/mobilenet/traffic_light.jpg', '../img/mobilenet/pinwheel.jpg']
           //   }
           //   },
-            {
+          {
             "id": 6,
             "category": 'Human Pose Estimation',
             "name": 'PoseNet',
@@ -358,7 +314,7 @@
               'resolution': '513 x 513 px',
               'image': ['../img/posenet/tennis_in_crowd.jpg']
             }
-            },
+          },
         ]
       }
     }
@@ -371,7 +327,7 @@
     font-size: 0.95rem;
     margin-bottom: 1.0rem;
   }
-
+  
   .card-header-title {
     height: 3rem;
   }
@@ -393,11 +349,11 @@
     margin: 0 0 0 0.5rem;
     color: rgba(0, 0, 0, 0.6);
   }
-
+  
   .rl i:hover {
     color: rgba(0, 0, 0, 1.0);
   }
-
+  
   .il {
     display: inline-block;
   }
@@ -411,6 +367,7 @@
   .is-primary-gradient:hover {
     background: linear-gradient(30deg, rgba(222, 12, 101, 0.8), rgba(222, 12, 101, 1.0));
   }
+  
   footer .button {
     border: 0px solid transparent;
   }
