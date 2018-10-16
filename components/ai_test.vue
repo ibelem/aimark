@@ -328,9 +328,9 @@
             "label": '../model/posenet/',
             "description": 'PoseNet is a machine learning model that allows for Real-time Human Pose Estimation which can be used to estimate either a single pose or multiple poses. This task loads a pretrained PoseNet model, constructs and infers it by WebML API.',
             "model_version": 'v1.101',
-            "accuracy": '%',
+            "accuracy": 'Go with MobileNet',
             "model_size": '13.3Mb',
-            "paper_url": 'https://arxiv.org/abs/1505.07427',
+            "paper_url": 'https://arxiv.org/abs/1803.08225',
             'test': {
               'resolution': '513 x 513 px',
               'image': ['../img/posenet/tennis_in_crowd.jpg']

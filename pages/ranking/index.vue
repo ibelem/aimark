@@ -2185,12 +2185,12 @@ export default {
           Chromium: "70.0.3503.0",
           Backend: "WASM", 
           BackendNative: "MPS",
-          test1: 1558.4,
-          test2: 1439.2,
-          test4: 4527.03,
-          test3: 1388.6,
-          test5: 3347.47,
-          total: 12260.70
+          test1: 504.67,
+          test2: 332.6,
+          test4: 1058.27,
+          test3: 294.63,
+          test5: 872.1,
+          total: 3062.27
         },
         {
           Id: '002',
@@ -2204,12 +2204,12 @@ export default {
           Chromium: "70.0.3503.0",
           Backend: "WebGL2", 
           BackendNative: "MPS",
-          test1: 144.67,
-          test2: 104.03,
-          test4: 522.17,
-          test3: 118.8,
-          test5: 235.3,
-          total: 1124.97
+          test1: 91.13,
+          test2: 82.77,
+          test4: 301.07,
+          test3: 99.03,
+          test5: 145.67,
+          total: 729.67
         },
         {
           Id: '002',
@@ -2223,11 +2223,11 @@ export default {
           Chromium: "70.0.3503.0",
           Backend: "WebML", 
           BackendNative: "MPS",
-          test1: 60.7,
+          test1: 24,
           test2: 0,
-          test4: 40.63,
-          test3: 13.5,
-          test5: 29.13,
+          test4: 39.77,
+          test3: 12.4,
+          test5: 27.47,
           total: 0
         },
         {
@@ -2299,12 +2299,12 @@ export default {
           Chromium: "70.0.3503.0",
           Backend: "WASM", 
           BackendNative: "BNNS",
-          test1: 2126.07,
-          test2: 1232.5,
-          test4: 3799.63,
-          test3: 1173.93,
-          test5: 3593.57,
-          total: 11925.70
+          test1: 507.1,
+          test2: 334.5,
+          test4: 1059,
+          test3: 295.63,
+          test5: 873.63,
+          total: 3069.86
         },
         {
           Id: '002',
@@ -2318,12 +2318,12 @@ export default {
           Chromium: "70.0.3503.0",
           Backend: "WebGL2",
           BackendNative: "BNNS",
-          test1: 106.37,
-          test2: 84.4,
-          test4: 451.1,
-          test3: 113.07,
-          test5: 176.83,
-          total: 931.77
+          test1: 84.77,
+          test2: 63.9,
+          test4: 287.4,
+          test3: 85.1,
+          test5: 143.2,
+          total: 664.37
         },
         {
           Id: '002',
@@ -2340,7 +2340,7 @@ export default {
           test1: 0,
           test2: 0,
           test4: 0,
-          test3: 41.6,
+          test3: 12.13,
           test5: 0,
           total: 0
         },

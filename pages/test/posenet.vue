@@ -348,7 +348,7 @@
           "label": '../model/posenet/',
           // "model": 'https://aimark.nos-eastchina1.126.net/model/posenet/',
           // "label": 'https://aimark.nos-eastchina1.126.net/model/posenet/',
-          "name": 'Human Pose Estimation: Pose Detection (PoseNet)',
+          "name": 'Human Pose Estimation (PoseNet)',
           "description": 'PoseNet is a machine learning model that allows for Real-time Human Pose Estimation which can be used to estimate either a single pose or multiple poses. This task loads a pretrained PoseNet model, constructs and infers it by WebML API.',
           "model_version": 'v1.101',
           "accuracy": '%',

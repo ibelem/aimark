@@ -20,8 +20,11 @@
               WebML is a Web API set for a dedicated API for Machine Learning inference in the browser.
             </h2>
             -->
-            <nuxt-link to="test" class="button is-primary">
-              Run
+            <a href="benchmark" class="button is-primary">
+              Run Benchmark
+            </a>
+            <nuxt-link to="test" class="button is-non-primary ml">
+              View Tests
             </nuxt-link>
           </div>
         </div>
@@ -30,27 +33,6 @@
   
     <div class="container">
       <div class="notification">
-        <!--
-          This container is <strong>centered</strong> on desktop.
-          <section>
-            <b-field>
-              <button class="button is-primary is-medium" @click="openLoading">
-                      Launch loading
-                  </button>
-            </b-field>
-            <b-field>
-              <b-switch v-model="isFullPage">Display loader over full page</b-switch>
-            </b-field>
-            <b-notification :closable="false">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
-              <b-loading :is-full-page="isFullPage" :active.sync="isLoading" :can-cancel="true"></b-loading>
-            </b-notification>
-            <b-field label="Select a date">
-              <b-datepicker placeholder="Click to select..." icon="calendar-today">
-              </b-datepicker>
-            </b-field>
-          </section>
-          -->
       </div>
       <ai_footer/>
     </div>
@@ -118,6 +100,18 @@
   
   .entrance:hover {
     background-color: rgba(222, 12, 101, 0.1);
+  }
+
+  .button.is-non-primary {
+    background-color: transparent;
+    color: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+  }
+
+  .button.is-non-primary:hover {
+    background-color: transparent;
+    color: rgba(255, 255, 255, 1.0);
+    border: 1px solid rgba(255, 255, 255, 1.0);
   }
   
   .title {
