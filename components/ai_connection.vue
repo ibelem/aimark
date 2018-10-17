@@ -1,5 +1,4 @@
-<template v-if='networkstatus.length>
-   0'>
+<template v-if='networkstatus.length > 0'>
   <div></div>
 </template>
 
@@ -8,7 +7,6 @@
     name: "ai_connection",
     beforeMount: function() {
       let _this = this;
-  
       var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
   
       function updateConnectionStatus() {

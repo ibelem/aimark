@@ -6,8 +6,6 @@
 
 <style lang="scss">
   @import "~bulma/sass/utilities/_all";
-
-  // $primary: hsl(348, 100%, 61%);
   $primary: rgba(222, 12, 101, 1.0);
   $primary-invert: findColorInvert($primary);
   $twitter: #4099FF;

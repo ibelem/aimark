@@ -3,10 +3,8 @@
     <div v-if="devicevendor.toString().length > 0 || devicemodel.toString().length > 0 || devicetype.toString().length > 0">
       <span v-if="devicevendor">{{ devicevendor }} </span> <span v-if="devicemodel">{{ devicemodel }} </span> <span v-if="devicetype" class="cap">{{ devicetype }}</span>
     </div>
-    <span v-if="cpuarchitecture">{{ cpuarchitecture.toUpperCase() }} {{ cpuhardwareconcurrency }} Cores /</span>
-    <span v-if="devicememory">
-          {{ devicememory }} GB /
-          </span> {{ getGPU() }}<br> {{ os }} {{ osversion }} {{ osplatform }} / {{ browsername }} {{ browserversion }}
+    <span v-if="cpuarchitecture">{{ cpuarchitecture.toUpperCase() }} {{ cpuhardwareconcurrency }} Cores / </span>
+    <span v-if="devicememory">{{ devicememory }} GB / </span> {{ getGPU() }}<br> {{ os }} {{ osversion }} {{ osplatform }} / {{ browsername }} {{ browserversion }}
   </div>
 </template>
 

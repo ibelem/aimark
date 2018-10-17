@@ -1,6 +1,5 @@
 <template>
   <section>
-  
     <h2 class="has-text-primary is-size-5-desktop is-size-6-mobile is-size-5-tablet mb">Tests: Image Classification</h2>
     <div class="columns">
       <div v-for="task in tasks" v-if="task.category=='Image Classification' && task.id < 10" :key="task.id" class="column is-mobile is-one-third-tablet is-one-third-desktop is-one-quarter-widescreen is-one-quarter-fullhd">
@@ -24,16 +23,6 @@
                 <li>Accuracy: {{ task.accuracy }}</li>
                 <li>Backend: <span v-for="(b, index) in task.backend" :key="index">{{ b }} </span> </li>
               </ul>
-              <!--
-                  <div class='rl'>
-                    <div class='il' v-for="p in task.platform" :key="p.id">
-                    <i v-if="p  == 'android'" class="mdi mdi-android-head mdi-24px"></i> <i v-if="p  == 'ios'" class="mdi mdi-apple-ios mdi-24px"></i> <i v-if="p  == 'mac'" class="mdi mdi-apple mdi-24px"></i> <i v-if="p  == 'windows'" class="mdi mdi-windows mdi-24px"></i> <i v-if="p  == 'linux'" class="mdi mdi-linux mdi-24px"></i>
-                    </div>
-                    <div class='il' v-for="b in task.browser" :key="b.id">
-                    <i v-if="b  == 'edge'" class="mdi mdi-edge mdi-24px"></i> <i v-if="b  == 'chrome'" class="mdi mdi-google-chrome mdi-24px"></i> <i v-if="b  == 'firefox'" class="mdi mdi-firefox mdi-24px"></i> <i v-if="b  == 'safari'" class="mdi mdi-apple-safari mdi-24px"></i>
-                    </div>
-                  </div>
-                  -->
             </div>
           </div>
           <footer class="card-footer">
@@ -41,8 +30,6 @@
             <a class="card-footer-item" :href="task.model">Model</a>
           </footer>
           <footer class="card-footer">
-            <!-- <nuxt-link class='card-footer-item button is-primary-gradient' :to="{ name: 'test-id', params: { id: task.id } }">Run Test</nuxt-link> -->
-            <!-- <nuxt-link class='card-footer-item button is-primary-gradient' :to="'../test/'+ task.page">Run Test</nuxt-link>-->
             <a class='card-footer-item button is-primary-gradient' :href="'../test/'+ task.url">Run Test</a>
           </footer>
         </b-collapse>
@@ -72,16 +59,6 @@
                 <li>Accuracy: {{ task.accuracy }}</li>
                 <li>Backend: <span v-for="(b, index) in task.backend" :key="index">{{ b }} </span> </li>
               </ul>
-              <!--
-                  <div class='rl'>
-                    <div class='il' v-for="p in task.platform" :key="p.id">
-                    <i v-if="p  == 'android'" class="mdi mdi-android-head mdi-24px"></i> <i v-if="p  == 'ios'" class="mdi mdi-apple-ios mdi-24px"></i> <i v-if="p  == 'mac'" class="mdi mdi-apple mdi-24px"></i> <i v-if="p  == 'windows'" class="mdi mdi-windows mdi-24px"></i> <i v-if="p  == 'linux'" class="mdi mdi-linux mdi-24px"></i>
-                    </div>
-                    <div class='il' v-for="b in task.browser" :key="b.id">
-                    <i v-if="b  == 'edge'" class="mdi mdi-edge mdi-24px"></i> <i v-if="b  == 'chrome'" class="mdi mdi-google-chrome mdi-24px"></i> <i v-if="b  == 'firefox'" class="mdi mdi-firefox mdi-24px"></i> <i v-if="b  == 'safari'" class="mdi mdi-apple-safari mdi-24px"></i>
-                    </div>
-                  </div>
-                  -->
             </div>
           </div>
           <footer class="card-footer">
@@ -89,8 +66,6 @@
             <a class="card-footer-item" :href="task.model">Model</a>
           </footer>
           <footer class="card-footer">
-            <!-- <nuxt-link class='card-footer-item button is-primary-gradient' :to="{ name: 'test-id', params: { id: task.id } }">Run Test</nuxt-link> -->
-            <!-- <nuxt-link class='card-footer-item button is-primary-gradient' :to="'../test/'+ task.page">Run Test</nuxt-link>-->
             <a class='card-footer-item button is-primary-gradient' :href="'../test/'+ task.url">Run Test</a>
           </footer>
         </b-collapse>
@@ -120,16 +95,6 @@
                 <li>Accuracy: {{ task.accuracy }}</li>
                 <li>Backend: <span v-for="(b, index) in task.backend" :key="index">{{ b }} </span> </li>
               </ul>
-              <!--
-                  <div class='rl'>
-                    <div class='il' v-for="p in task.platform" :key="p.id">
-                    <i v-if="p  == 'android'" class="mdi mdi-android-head mdi-24px"></i> <i v-if="p  == 'ios'" class="mdi mdi-apple-ios mdi-24px"></i> <i v-if="p  == 'mac'" class="mdi mdi-apple mdi-24px"></i> <i v-if="p  == 'windows'" class="mdi mdi-windows mdi-24px"></i> <i v-if="p  == 'linux'" class="mdi mdi-linux mdi-24px"></i>
-                    </div>
-                    <div class='il' v-for="b in task.browser" :key="b.id">
-                    <i v-if="b  == 'edge'" class="mdi mdi-edge mdi-24px"></i> <i v-if="b  == 'chrome'" class="mdi mdi-google-chrome mdi-24px"></i> <i v-if="b  == 'firefox'" class="mdi mdi-firefox mdi-24px"></i> <i v-if="b  == 'safari'" class="mdi mdi-apple-safari mdi-24px"></i>
-                    </div>
-                  </div>
-                  -->
             </div>
           </div>
           <footer class="card-footer">
@@ -137,8 +102,6 @@
             <a class="card-footer-item" :href="task.model">Model</a>
           </footer>
           <footer class="card-footer">
-            <!-- <nuxt-link class='card-footer-item button is-primary-gradient' :to="{ name: 'test-id', params: { id: task.id } }">Run Test</nuxt-link> -->
-            <!-- <nuxt-link class='card-footer-item button is-primary-gradient' :to="'../test/'+ task.page">Run Test</nuxt-link>-->
             <a class='card-footer-item button is-primary-gradient' :href="'../test/'+ task.url">Run Test</a>
           </footer>
         </b-collapse>

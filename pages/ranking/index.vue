@@ -19,72 +19,72 @@
                       <div class="mb mt ir">
                         <b-table :data="ranking" :default-sort-direction="defaultSortDirection" default-sort="total" :bordered="false" :striped="true" :narrowed="false" :hoverable="true" :loading="false" :focusable="true" :mobile-cards="true">
                           <template slot-scope="props" v-if='props.row.Backend == "WebML" && props.row.OS == "Windows"'>
-                      <b-table-column field="Model" label="Model" sortable>
-                          {{ props.row.Model }}
-                      </b-table-column>
-  
-                      <b-table-column field="CPU" label="CPU" sortable>
-                          {{ props.row.CPU }}
-                      </b-table-column>
-                      <b-table-column field="GPU" label="GPU" sortable>
-                          {{ props.row.GPU }}
-                      </b-table-column>
-                      <b-table-column field="RAM" label="RAM" sortable>
-                          {{ props.row.RAM }}
-                      </b-table-column>
-                      <b-table-column field="OS_Version" label="OS Version" sortable>
-                          {{ props.row.OS_Version.replace('10 ','') }}
-                      </b-table-column>
-                      <b-table-column field="Chromium" label="Chromium" sortable>
-                          {{ props.row.Chromium }}
-                      </b-table-column> 
-  
-                      <b-table-column v-if="props.row.test1 == 0" field="test1" label="Test 1 (ms)" sortable>
-                        N/A
-                      </b-table-column> 
-                      <b-table-column v-else field="test1" label="Test 1 (ms)" sortable>
-                          {{ props.row.test1 }}
-                      </b-table-column> 
-  
-                      <b-table-column v-if="props.row.test2 == 0" field="test2" label="Test 2 (ms)" sortable>
-                        N/A
-                      </b-table-column> 
-                      <b-table-column v-else field="test2" label="Test 2 (ms)" sortable>
-                          {{ props.row.test2 }}
-                      </b-table-column> 
-  
-                      <b-table-column v-if="props.row.test3 == 0" field="test3" label="Test 3 (ms)" sortable>
-                        N/A
-                      </b-table-column> 
-                      <b-table-column v-else field="test3" label="Test 3 (ms)" sortable>
-                          {{ props.row.test3 }}
-                      </b-table-column> 
-  
-                      <b-table-column v-if="props.row.test4 == 0" field="test4" label="Test 4 (ms)" sortable>
-                        N/A
-                      </b-table-column> 
-                      <b-table-column v-else field="test4" label="Test 4 (ms)" sortable>
-                          {{ props.row.test4 }}
-                      </b-table-column> 
-  
-                      <b-table-column v-if="props.row.test5 == 0" field="test5" label="Test 5 (ms)" sortable>
-                        N/A
-                      </b-table-column> 
-                      <b-table-column v-else field="test5" label="Test 5 (ms)" sortable>
-                          {{ props.row.test5 }}
-                      </b-table-column> 
-  
-                      <b-table-column v-if="props.row.total == 0" field="total" label="Total (ms)" sortable>
-                          N/A
-                      </b-table-column> 
-                      <b-table-column v-else field="total" label="Total (ms)" sortable>
-                          <b-tooltip v-if="getFast('Windows','WebML') == props.row.total" label="Best" always>
-                                {{ props.row.total }} 
-                          </b-tooltip>
-                          <b-tooltip v-else>
-                                {{ props.row.total }} 
-                          </b-tooltip>
-                      </b-table-column>
+                              <b-table-column field="Model" label="Model" sortable>
+                                  {{ props.row.Model }}
+                              </b-table-column>
+          
+                              <b-table-column field="CPU" label="CPU" sortable>
+                                  {{ props.row.CPU }}
+                              </b-table-column>
+                              <b-table-column field="GPU" label="GPU" sortable>
+                                  {{ props.row.GPU }}
+                              </b-table-column>
+                              <b-table-column field="RAM" label="RAM" sortable>
+                                  {{ props.row.RAM }}
+                              </b-table-column>
+                              <b-table-column field="OS_Version" label="OS Version" sortable>
+                                  {{ props.row.OS_Version.replace('10 ','') }}
+                              </b-table-column>
+                              <b-table-column field="Chromium" label="Chromium" sortable>
+                                  {{ props.row.Chromium }}
+                              </b-table-column> 
+          
+                              <b-table-column v-if="props.row.test1 == 0" field="test1" label="Test 1 (ms)" sortable>
+                                N/A
+                              </b-table-column> 
+                              <b-table-column v-else field="test1" label="Test 1 (ms)" sortable>
+                                  {{ props.row.test1 }}
+                              </b-table-column> 
+          
+                              <b-table-column v-if="props.row.test2 == 0" field="test2" label="Test 2 (ms)" sortable>
+                                N/A
+                              </b-table-column> 
+                              <b-table-column v-else field="test2" label="Test 2 (ms)" sortable>
+                                  {{ props.row.test2 }}
+                              </b-table-column> 
+          
+                              <b-table-column v-if="props.row.test3 == 0" field="test3" label="Test 3 (ms)" sortable>
+                                N/A
+                              </b-table-column> 
+                              <b-table-column v-else field="test3" label="Test 3 (ms)" sortable>
+                                  {{ props.row.test3 }}
+                              </b-table-column> 
+          
+                              <b-table-column v-if="props.row.test4 == 0" field="test4" label="Test 4 (ms)" sortable>
+                                N/A
+                              </b-table-column> 
+                              <b-table-column v-else field="test4" label="Test 4 (ms)" sortable>
+                                  {{ props.row.test4 }}
+                              </b-table-column> 
+          
+                              <b-table-column v-if="props.row.test5 == 0" field="test5" label="Test 5 (ms)" sortable>
+                                N/A
+                              </b-table-column> 
+                              <b-table-column v-else field="test5" label="Test 5 (ms)" sortable>
+                                  {{ props.row.test5 }}
+                              </b-table-column> 
+          
+                              <b-table-column v-if="props.row.total == 0" field="total" label="Total (ms)" sortable>
+                                  N/A
+                              </b-table-column> 
+                              <b-table-column v-else field="total" label="Total (ms)" sortable>
+                                  <b-tooltip v-if="getFast('Windows','WebML') == props.row.total" label="Best" always>
+                                        {{ props.row.total }} 
+                                  </b-tooltip>
+                                  <b-tooltip v-else>
+                                        {{ props.row.total }} 
+                                  </b-tooltip>
+                              </b-table-column>
 </template>
 
 <template slot="empty">

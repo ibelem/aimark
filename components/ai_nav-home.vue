@@ -52,32 +52,14 @@
             <a class="navbar-item" href="../test/SSDMobileNet">
                 SSD MobileNet
               </a>
-            <!-- 
-              <a class="navbar-item" href="../test/TensorFlow">
-                TensorFlow.js
-              </a>
-              -->
             <a class="navbar-item" href="../test/PoseNet">
                 PoseNet
               </a>
-            <!-- 
-              <hr class="navbar-divider">
-              <a class="navbar-item" href="">
-                Todo WebDNN/more
-              </a>
-              -->
           </div>
         </div>
         <nuxt-link class="navbar-item" to="../ranking">
           Ranking
         </nuxt-link>
-        <!-- <nuxt-link class="navbar-item" to="../faq">
-            FAQ
-          </nuxt-link>
-          <nuxt-link class="navbar-item" to="../about">
-            About
-          </nuxt-link>
-          -->
       </div>
     </div>
   </nav>

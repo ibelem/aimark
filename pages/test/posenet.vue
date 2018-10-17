@@ -61,25 +61,19 @@
                   <b-table-column field="test_result" label="Inference Time">
                       {{ props.row.test_result }} ms
                   </b-table-column>
-  
-                  <!-- <b-table-column field="date" label="Date" centered>
-                      <span class="tag is-success">
-                          xxx
-                      </span>
-                  </b-table-column> -->
-</template>
+              </template>
 
-<template slot="empty">
-  <section class="section">
-    <div class="content has-text-grey has-text-centered">
-      <p>
-        <b-icon icon="emoticon-sad" size="is-large">
-        </b-icon>
-      </p>
-      <p>Nothing here.</p>
-    </div>
-  </section>
-</template>
+              <template slot="empty">
+                <section class="section">
+                  <div class="content has-text-grey has-text-centered">
+                    <p>
+                      <b-icon icon="emoticon-sad" size="is-large">
+                      </b-icon>
+                    </p>
+                    <p>Nothing here.</p>
+                  </div>
+                </section>
+              </template>
             </b-table>
             <div class='mt has-text-primary is-size-7-desktop is-size-7-mobile is-size-7-tablet'>{{ nalabel }}</div>
  

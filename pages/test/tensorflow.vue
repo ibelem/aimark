@@ -26,10 +26,7 @@
         <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
           <div class="card is ic">
             <canvas class="testimage"></canvas>
-            <!-- <div v-for="u in task.test_images.image" :key="u.id"> -->
-            <!-- <img id='image' v-if="u" :src="u" alt="Test Image"> -->
             <img id='testimage' v-show='getTestImage' :src="getTestImage" alt="Test Image">
-            <!-- </div> -->
           </div>
           <div class='inference_label has-text-primary is-size-6-desktop is-size-6-mobile is-size-6-tablet'>{{ currentinference }}</div>
         </div>
@@ -48,40 +45,34 @@
           <div class="mt">
             <b-table :data="test_result" :bordered="false" :striped="true" :narrowed="false" :hoverable="true" :loading="false" :focusable="true" :mobile-cards="true">
               <template slot-scope="props">
-                    <b-table-column field="backend" label="Backend">
-                        {{ props.row.backend }}
-                    </b-table-column>
-    
-                    <b-table-column field="test_image" label="Test Image">
-                        {{ props.row.test_case }}
-                    </b-table-column>
-    
-                    <b-table-column field="best_probability" label="Best Probability">
-                        {{ props.row.probability }}
-                    </b-table-column>
-    
-                    <b-table-column field="test_result" label="Inference Time">
-                        {{ props.row.test_result }} ms
-                    </b-table-column>
-    
-                    <!-- <b-table-column field="date" label="Date" centered>
-                        <span class="tag is-success">
-                            xxx
-                        </span>
-                    </b-table-column> -->
-</template>
+                  <b-table-column field="backend" label="Backend">
+                      {{ props.row.backend }}
+                  </b-table-column>
+  
+                  <b-table-column field="test_image" label="Test Image">
+                      {{ props.row.test_case }}
+                  </b-table-column>
+  
+                  <b-table-column field="best_probability" label="Best Probability">
+                      {{ props.row.probability }}
+                  </b-table-column>
+  
+                  <b-table-column field="test_result" label="Inference Time">
+                      {{ props.row.test_result }} ms
+                  </b-table-column>
+                </template>
 
-<template slot="empty">
-  <section class="section">
-    <div class="content has-text-grey has-text-centered">
-      <p>
-        <b-icon icon="emoticon-sad" size="is-large">
-        </b-icon>
-      </p>
-      <p>Nothing here.</p>
-    </div>
-  </section>
-</template>
+                <template slot="empty">
+                  <section class="section">
+                    <div class="content has-text-grey has-text-centered">
+                      <p>
+                        <b-icon icon="emoticon-sad" size="is-large">
+                        </b-icon>
+                      </p>
+                      <p>Nothing here.</p>
+                    </div>
+                  </section>
+                </template>
             </b-table>
             <div class='mt has-text-primary is-size-7-desktop is-size-7-mobile is-size-7-tablet'>{{ nalabel }}</div> 
  

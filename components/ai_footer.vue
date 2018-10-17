@@ -7,7 +7,6 @@
       <ai_environment/>
       <br>
       <p>
-  
         &copy;2018 AIMark
         <!-- 人工智能基准测试 <br>-->
         <!-- <nuxt-link to="">WebML Team</nuxt-link> -->

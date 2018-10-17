@@ -26,10 +26,7 @@
         <div class="column is-mobile is-half-tablet is-half-desktop is-half-widescreen is-half-fullhd ic">
           <div class="card is ic">
             <canvas class="testimage"></canvas>
-            <!-- <div v-for="u in task.test_images.image" :key="u.id"> -->
-            <!-- <img id='image' v-if="u" :src="u" alt="Test Image"> -->
             <img id='testimage' :src="getTestImage" alt="Test Image">
-            <!-- </div> -->
           </div>
           <div class='inference_label has-text-primary is-size-6-desktop is-size-6-mobile is-size-6-tablet'>{{ currentinference }}</div>
         </div>
@@ -37,9 +34,7 @@
           <div v-html='log' class="card" id='log'>
           </div>
           <div class='ir'>
-            <button class="btn button ir is-small" @click="copylog" data-clipboard-target="#log">
-                                                    Copy Log
-                                                  </button>
+            <button class="btn button ir is-small" @click="copylog" data-clipboard-target="#log">Copy Log</button>
           </div>
         </div>
       </div>

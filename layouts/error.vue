@@ -4,7 +4,7 @@
       <div class="container">
         <ai_nav/>
         <div class="er">
-          <h1 v-if="error.statusCode === 404">Oops, page not found. You boldly go where no man has gone before. <br><nuxt-link to='../'>Back Home</nuxt-link></h1>
+          <h1 v-if="error.statusCode === 404">Oops, page not found. You boldly go where no man has gone before. <br><a href='../'>Back Home</a></h1>
           <h1 v-else>An error occured</h1>
         </div>
       </div>

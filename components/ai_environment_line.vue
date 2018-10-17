@@ -5,8 +5,8 @@
     </div>
     <span v-if="cpuarchitecture">{{ cpuarchitecture.toUpperCase() }} {{ cpuhardwareconcurrency }} Cores - </span>
     <span v-if="devicememory">
-          {{ devicememory }} GB -
-          </span> {{ getGPU() }} - {{ os }} {{ osversion }} {{ osplatform }} - {{ browsername }} {{ browserversion }}
+            {{ devicememory }} GB -
+            </span> {{ getGPU() }} - {{ os }} {{ osversion }} {{ osplatform }} - {{ browsername }} {{ browserversion }}
   </div>
 </template>
 

@@ -14,7 +14,8 @@
     <transition name="fade">
       <section class="section" v-if="showtask">
         <h2 class="has-text-primary is-size-5-desktop is-size-7-mobile is-size-5-tablet">
-          Test {{ running.id }}: {{ running.name }} <span v-if="running.model_version">{{ running.model_version }}</span>
+          Test {{ running.id }}: {{ running.name }} 
+          <!-- <span v-if="running.model_version">{{ running.model_version }}</span> -->
         </h2>
         <div class='mb'>{{ running.description }}</div>
         <div class="mt ic" v-if="running.backend">
@@ -40,10 +41,7 @@
               <canvas id="poseCanvas" width="513" height="513"></canvas>
               <canvas id="poseCanvasPredict" width="513" height="513"></canvas>
               <canvas class="testimage"></canvas>
-              <!-- <div v-for="u in task.test_images.image" :key="u.id"> -->
-              <!-- <img id='image' v-if="u" :src="u" alt="Test Image"> -->
               <img id='testimage' :src="running.test_image" alt="Test Image" v-bind:class="{ pnshow: pn_show }">
-              <!-- </div> -->
             </div>
             <div class='inference_label has-text-primary is-size-6-desktop is-size-6-mobile is-size-6-tablet'>{{ currentinference }}</div>
           </div>
@@ -66,10 +64,6 @@
                       <b-table-column field="Name" label="Name">
                           {{ props.row.Name }}
                       </b-table-column>
-                      <!-- <b-table-column field="model" label="Model">
-                          {{ props.row.model }}
-                      </b-table-column>
-                      -->
                       <b-table-column field="Model Version" label="Version">
                           {{ props.row.Version }}
                       </b-table-column>
@@ -84,21 +78,6 @@
                       <b-table-column field="WebML" label="WebML">
                           {{ props.row.WebML }} ms
                       </b-table-column>
-    
-                      <!-- <b-table-column field="test_image" label="Test Image">
-                          {{ props.row.test_case }}
-                      </b-table-column>
-    
-                      <b-table-column field="best_probability" label="Best Probability">
-                          {{ props.row.probability }}
-                      </b-table-column>
-                      -->
-    
-                      <!-- <b-table-column field="date" label="Date" centered>
-                          <span class="tag is-success">
-                              xxx
-                          </span>
-                      </b-table-column> -->
 </template>
 
 <template slot="empty">
@@ -642,7 +621,7 @@
             "paper_url": 'http://arxiv.org/abs/1512.00567',
             'test': {
               'resolution': '299 x 299 px',
-              'image': ['../img/mobilenet/warplane.jpg']
+              'image': ['../img/inception/warplane.jpg']
             }
           },
         ]
@@ -695,7 +674,6 @@
   .fade-enter,
   .fade-leave-to
   /* .fade-leave-active below version 2.1.8 */
-  
   {
     opacity: 0;
   }
