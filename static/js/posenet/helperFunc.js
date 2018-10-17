@@ -30,6 +30,7 @@ function getURL(version) {
   let address;
   // const urlBase = 'https://storage.googleapis.com/tfjs-models/weights/posenet/';
   // const urlBase = 'https://aimark.nos-eastchina1.126.net/model/posenet/';
+  // const urlBase = 'https://belem.oss-cn-shanghai.aliyuncs.com/aimark/model/posenet';
   const urlBase = '../model/posenet/';
   switch (version) {
     case 1.01:

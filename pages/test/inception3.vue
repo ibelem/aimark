@@ -304,6 +304,7 @@
           "model": '../model/inception/inception_v3.tflite',
           "label": '../model/inception/labels.txt',
           // "model": 'https://aimark.nos-eastchina1.126.net/model/inception/inception_v3.tflite',
+          // "model": 'https://belem.oss-cn-shanghai.aliyuncs.com/aimark/model/inception/inception_v3.tflite',
           // "label": 'https://aimark.nos-eastchina1.126.net/model/inception/labels.txt',
           "name": 'Image Classification (Inception V3)',
           "description": 'Inception-v3 is trained for the ImageNet Large Visual Recognition Challenge. Loading Inception-v3 model trained by ImageNet in TensorFlow Lite format, constructs and inferences it by WebML API.',
