@@ -106,7 +106,9 @@
     currentinference,
     bardata,
     runTest,
-    nalabel
+    nalabel,
+    getModelArrayBuffer,
+    clearModelArrayBuffer
   } from '~/static/js/main.js'
   
   
@@ -194,6 +196,7 @@
       run: async function() {
         let i = 0;
         let _this = this;
+        await getModelArrayBuffer(this.task.model);
         for (let item of this.task.backend) {
           for (let image of this.task.test.image) {
             this.currentinference = '';
@@ -219,10 +222,9 @@
             this.nalabel = nalabel;
             await this.timeout(500);
             this.progress.value = ++i;
-  
           }
         }
-  
+        await clearModelArrayBuffer();
         this.test_result = testresult;
         this.showBar = true;
   

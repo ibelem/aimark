@@ -240,7 +240,6 @@
             await this.timeout(2000);
           }
         }
-  
         this.test_result = testresult;
         this.showBar = true;
   

@@ -110,7 +110,9 @@
     currentinference,
     testresult,
     tf_init_run,
-    nalabel
+    nalabel,
+    getModelArrayBuffer,
+    clearModelArrayBuffer
   } from '~/static/js/main.js';
   
   
@@ -168,6 +170,7 @@
       run: async function() {
         let i = 0;
         this.showlog = true;
+        await getModelArrayBuffer(this.task.model);
         for (let item of this.task.backend) {
           for (let image of this.task.test.image) {
             this.currentinference = '';
@@ -191,7 +194,7 @@
           }
         }
   
-  
+        await clearModelArrayBuffer();
         this.test_result = testresult;
         this.showBar = true;
   

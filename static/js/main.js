@@ -74,6 +74,46 @@ let probability = null;
 let currentinference;
 let posenetbase64;
 let nalabel;
+let arrayBuffer;
+
+async function loadModel(url, binary) {
+  return new Promise((resolve, reject) => {
+    let request = new XMLHttpRequest();
+    request.open('GET', url, true);
+    if (binary) {
+      request.responseType = 'arraybuffer';
+    }
+    request.addEventListener("progress", function (evt) {
+      if (evt.lengthComputable) {
+          var percentComplete = evt.loaded / evt.total;
+          modelprogress = percentComplete;
+      }
+    }, false);
+    request.onload = function (ev) {
+      if (request.readyState === 4) {
+        if (request.status === 200) {
+          resolve(request.response);
+        } else {
+          reject(new Error('Failed to load ' + url + ' status: ' + request.status));
+        }
+      }
+    };
+    request.send();
+  });
+}
+
+async function getModelArrayBuffer(url) {
+  // console.log(">>>>>>>> Start to load model")
+  arrayBuffer = await loadModel(url, true);
+  // console.log(">>>>>>>> Model loaded");
+}
+
+async function clearModelArrayBuffer() {
+  // console.log(">>>>>>>>" + arrayBuffer);
+  arrayBuffer = null;
+  // console.log(">>>>>>>>" + arrayBuffer);
+  // console.log(">>>>>>>> Model ArrayBuffer cleared");
+}
 
 /**
 * Draw img and box
@@ -338,7 +378,8 @@ class WebMLJSBenchmark extends Benchmark {
   }
 
   async loadModelAndLabels() {
-    let arrayBuffer = await this.loadUrl(this.configuration.model, true);
+    // let arrayBuffer = await this.loadUrl(this.configuration.model, true);
+    // console.log('>>>>>loadModelAndLabels: ' + arrayBuffer)
     let bytes = new Uint8Array(arrayBuffer);
     let text = await this.loadUrl(this.configuration.label);
     return {
@@ -869,4 +910,4 @@ async function tf_init_run(configuration) {
 };
 // imageElement.src = imageURL;
 
-export { finallog, modelprogress, runTest, tf_init_run, testresult, bardata, currentinference, posenetbase64, nalabel };
+export { finallog, modelprogress, runTest, tf_init_run, testresult, bardata, currentinference, posenetbase64, nalabel, getModelArrayBuffer, clearModelArrayBuffer };

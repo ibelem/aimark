@@ -123,7 +123,9 @@
     bardata,
     posenetbase64,
     runTest,
-    tf_init_run
+    tf_init_run,
+    getModelArrayBuffer,
+    clearModelArrayBuffer
   } from '~/static/js/main.js'
   import {
     setTimeout
@@ -263,6 +265,7 @@
         this.showtask = true;
         let i = 0;
         this.progress.value = 0;
+        await getModelArrayBuffer(task.model);
         for (let item of task.backend) {
           for (let image of task.test.image) {
             this.currentinference = '';
@@ -299,7 +302,7 @@
             this.progress.value = ++i;
           }
         }
-  
+        await clearModelArrayBuffer();
         this.test_result = testresult;
         this.showData();
         this.showresult = true;
@@ -354,6 +357,7 @@
         let task = this.tasks[k];
         let i = 0;
         this.progress.value = 0;
+        await getModelArrayBuffer(task.model);
         for (let item of task.backend) {
           for (let image of task.test.image) {
             this.currentinference = '';
@@ -386,6 +390,7 @@
             this.progress.value = ++i;
           }
         }
+        await clearModelArrayBuffer();
         this.test_result = testresult;
         this.showData();
         this.showresult = true;
