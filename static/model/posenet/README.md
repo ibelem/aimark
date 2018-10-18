@@ -1,9 +1,8 @@
-# WebML PoseNet Sample   
+# WebML PoseNet
 This sample loads a pretrained posenet model, constructs and infers it by WebML API.    
 ## Screen Shoot    
 <p float="left">
   <img align="left" src="https://i.imgur.com/8brxB77.png" width="400px"height="300px"/>
-  <img src="https://i.imgur.com/EG1TR20.png" width="300px" height="300px"/>   
 </p> 
        
 ## Usage        

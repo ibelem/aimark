@@ -15,7 +15,7 @@ AI Benchmark for Web
 | SqueezeNet | [paper](https://arxiv.org/abs/1602.07360) |  [model file](https://s3.amazonaws.com/download.onnx/models/squeezenet.tar.gz)| 
 | Inception_V3 | [paper](http://arxiv.org/abs/1512.00567) |  [model file](https://storage.googleapis.com/download.tensorflow.org/models/tflite/model_zoo/upload_20180427/inception_v3_2018_04_27.tgz)| 
 | SSD Mobilenet | [paper](https://arxiv.org/abs/1801.04381) |  [model file](https://drive.google.com/file/d/1bKD4eK8Zh9x_R7wc9CxpLHk2hrYG5orU/view?usp=sharing)| 
-|  PoseNet | [paper](https://arxiv.org/abs/1803.08225) | [model file](https://github.com/tensorflow/tfjs-models/blob/master/posenet/src/checkpoints.ts)| 
+|  PoseNet | [paper](https://arxiv.org/abs/1803.08225) | [file](https://github.com/tensorflow/tfjs-models/blob/master/posenet/src/checkpoints.ts) [alternative](https://github.com/ibelem/aimark/tree/master/static/model/posenet)| 
 
 2. Untar or unzip downloaded models to following paths:
 
