@@ -53,7 +53,7 @@ module.exports = {
   },
   modules: [
     // Or you can customize
-    ['nuxt-buefy', { css: false, materialDesignIcons: true }],
+    ['nuxt-buefy', { css: false, materialDesignIcons: false }],
   ],
   /*
   ** Customize the progress bar color
