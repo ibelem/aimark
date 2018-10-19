@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar is-white">
     <div class="navbar-brand">
-      <nuxt-link class="navbar-item" to="/">
+      <a class="navbar-item" href="/">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 224 56" width="168" height="42">
                   <defs><clipPath id="_clipPath_NaafQerNX9oYqPYPML1NpC0noDNNJjZs"><rect width="224" height="56"/></clipPath></defs>
                   <g clip-path="url(#_clipPath_NaafQerNX9oYqPYPML1NpC0noDNNJjZs)">
@@ -18,7 +18,7 @@
                     <g transform="matrix(0.25,0,0,0.25,199.75,5.25)"><text class="l7" transform="matrix(1,0,0,1,0,64.8)" style="font-size:72px;fill:#FFFFFF;stroke:none;">b</text></g>
                   </g>
                 </svg>
-      </nuxt-link>
+      </a>
       <div class="navbar-burger burger" data-target="navMenuColorwhite" for="nav-toggle-state">
         <span></span>
         <span></span>

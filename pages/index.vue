@@ -4,9 +4,9 @@
       <div class="hero-head container ex">
         <ai_nav_home/>
       </div>
-      <div class="hero-body">
-        <div class="container has-text-left">
-          <div class="entrance">
+      <div class="hero-body container">
+        <div class="columns fw">
+          <div class="ic column is-half">
             <h2 class="featured">
               Featured
             </h2>
@@ -26,6 +26,12 @@
             <nuxt-link to="test" class="button is-non-primary ml">
               View Tests
             </nuxt-link>
+          </div>
+          <div class="content column is-half ic">
+            <canvas class="ic" id="mlcanvas"></canvas>
+            <div class="content__inner">
+              <h3 class="content__title">Artificial Intelligence</h3>
+            </div>
           </div>
         </div>
       </div>
@@ -47,6 +53,25 @@
     components: {
       ai_nav_home,
       ai_footer
+    },
+    head: {
+      script: [{
+          src: '../js/index/three.min.js',
+          defer: true
+        },
+        {
+          src: '../js/index/perlin.js',
+          defer: true
+        },
+        {
+          src: '../js/index/TweenMax.min.js',
+          defer: true
+        },
+        {
+          src: '../js/index/mlanimation.js',
+          defer: true
+        }
+      ]
     },
     data() {
       return {
@@ -84,10 +109,8 @@
     background-color: rgba(222, 12, 101, 1.0);
   }
   
-  .entrance {
-    max-width: 400px;
-    text-align: left;
-    padding: 1.5rem;
+  .fw {
+    width: 100%; 
   }
   
   .featured {
@@ -130,12 +153,57 @@
   .hero-body {
     margin-top: -4rem;
   }
+
+
+  #mlcanvas {
+    width: 240px;
+    height: 240px;
+    margin-top: -20px;
+  }
   
   @media (max-width: 768px) {
     .hero .ex {
       margin: 0 !important;
     }
+
+    #mlcanvas {
+      width: 50vw !important;
+      height: 50vw !important;
+      margin-top: 0px;
+    }
+
   }
+
+  .content__inner {
+    grid-area: 1 / 1 / 1 / 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    margin-top: -120px;
+  }
+
+  .content__title {
+    font-size: 1.0em;
+    color: rgba(255, 255, 255, 0.75);
+    padding: 0.45em 0.5em;
+    line-height: 1;
+    margin: 0;
+    letter-spacing: 0.5em;
+    text-indent: 0.5em;
+    text-transform: uppercase;
+    background-color: rgba(222, 12, 101, 0.6);
+    font-weight: 400;
+  }
+
+  @media screen and (max-width: 55em) {
+    .content__title {
+      font-size: 0.85em;
+    }
+  }
+
 </style>
 
 

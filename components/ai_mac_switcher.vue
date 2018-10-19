@@ -2,7 +2,8 @@
   <section class="section ir" v-if="ismac">
     <div class="field">
       <b-switch v-model="isSwitchedCustom" @input="getParam" true-value="MPS" false-value="BNNS">
-        {{ isSwitchedCustom }}
+        <!-- {{ isSwitchedCustom }} -->
+        {{ bk }}
       </b-switch>
     </div>
   </section>
@@ -19,8 +20,10 @@
           this.ismac = true;
           if (location.search == '?prefer=fast') {
             this.isSwitchedCustom = 'BNNS';
+            this.bk = 'MPS OFF';
           } else {
             this.isSwitchedCustom = 'MPS';
+            this.bk = 'MPS ON';
           }
         } else {
           this.ismac = false;
@@ -38,6 +41,7 @@
       return {
         ismac: false,
         isSwitchedCustom: '',
+        bk: '',
       }
     }
   }

@@ -4,13 +4,13 @@
 
 let uaparser = new UAParser();
 let uaresult = uaparser.getResult();
-let canvas, gl, glVender, glRenderer, debugInfo;
+let canvasE, gl, glVender, glRenderer, debugInfo;
 
 function getCanvas() {
-  if (canvas == null) {
-    canvas = document.createElement('canvas');
+  if (canvasE == null) {
+    canvasE = document.createElement('canvas');
   }
-  return canvas;
+  return canvasE;
 }
 
 function getGl() {

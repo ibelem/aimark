@@ -3,7 +3,7 @@
 
 AI Benchmark for Web
 
-> The AIMark for web consists of multiple AI tests performed by separate neural networks on your pc or smartphone browsers.
+The AIMark for web consists of multiple AI tests performed by separate neural networks on your pc or smartphone browsers.
 
 ## Precondition
 
@@ -25,3 +25,5 @@ $ npm start
 # generate static project
 $ npm run generate
 ```
+
+> Test images credit: Commercial use & mods allowed from flickr.com
