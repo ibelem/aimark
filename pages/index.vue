@@ -103,10 +103,12 @@
   .hero.is-primary,
   .button.is-primary {
     background-color: rgba(222, 12, 101, 0.8);
+    color: rgba(255, 255, 255, 0.8);
   }
   
   .button.is-primary:hover {
     background-color: rgba(222, 12, 101, 1.0);
+    color: rgba(255, 255, 255, 1.0);
   }
   
   .fw {
@@ -121,13 +123,10 @@
     margin-bottom: 1rem;
   }
   
-  .entrance:hover {
-    background-color: rgba(222, 12, 101, 0.1);
-  }
   
   .button.is-non-primary {
     background-color: transparent;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.8);
     border: 1px solid rgba(255, 255, 255, 0.6);
   }
   
@@ -196,6 +195,11 @@
     text-transform: uppercase;
     background-color: rgba(222, 12, 101, 0.6);
     font-weight: 400;
+  }
+
+  .content__title:hover {
+    color: rgba(255, 255, 255, 1.0);
+    background-color: rgba(222, 12, 101, 0.9);
   }
 
   @media screen and (max-width: 55em) {
