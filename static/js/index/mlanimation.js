@@ -2,8 +2,6 @@ var canvas = document.querySelector('#mlcanvas');
 var width = canvas.offsetWidth,
     height = canvas.offsetHeight;
 
-    console.log(width + ' ' + height)
-
 var renderer = new THREE.WebGLRenderer({
     canvas: canvas,
     antialias: true,

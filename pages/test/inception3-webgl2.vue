@@ -317,7 +317,7 @@
           "paper_url": 'http://arxiv.org/abs/1512.00567',
           'test': {
             'resolution': '224 x 224 px',
-            'image': ['../img/inception/cat.jpg', '../img/inception/clock.jpg', '../img/inception/warplane.jpg']
+            'image': ['../img/inception/warplane.jpg']
           }
         }
       }
